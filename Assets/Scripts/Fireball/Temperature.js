@@ -1,6 +1,6 @@
 
 var updateInterval = 0.2;
-var coolRate : float = 0.1;
+var coolRate : float = 1;
 var displayText : GUIText;
 var distanceText : GUIText;
 var initialHeat : int = 500;
@@ -58,12 +58,12 @@ function OnCollisionEnter(theCollision : Collision){
 	
 	var obj : GameObject = theCollision.gameObject;
 	
-	Debug.Log("Hit "+ obj.tag);
-	
 	if(obj.tag == 'hot') {
 		heat += 39;
+		Destroy(obj);
 	} else if (obj.tag == 'cold') {
 		heat -= 27;
+		Destroy(obj);
 	}
 	
 }
@@ -75,7 +75,7 @@ function TrackHighestTemp() {
 }
 
 function CoolOff() {
-	heat -= Mathf.Round(coolRate * distance);
+	heat -= Mathf.Round(coolRate * Mathf.Sqrt(distance));
 	if(heat <= 0) {
 		gameOver = true;
 		heat = 0;
@@ -102,5 +102,6 @@ function OnGUI() {
 }
 
 function UpdateFireball() {
-
+	var emitter : ParticleEmitter = transform.Find("Intensity").GetComponent.<ParticleEmitter>();
+	emitter.maxEmission = heat * 10;
 }
