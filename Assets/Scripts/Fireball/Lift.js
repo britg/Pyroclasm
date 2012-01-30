@@ -60,8 +60,10 @@ function ResetTouchState()
 function Update () {
 	if(thisTransform.position.y < 1.1) {
 		thisTransform.position.y = 1.1;
+		thisRigidbody.velocity.y = 0;
 	} else if (thisTransform.position.y > 7.8) {
 		thisTransform.position.y = 7.8;
+		thisRigidbody.velocity.y = 0;
 	}
 }
 

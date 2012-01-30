@@ -1,11 +1,18 @@
 
 var updateInterval = 0.2;
 var coolRate : float = 1;
+var initialHeat : int = 500;
+
 var displayText : GUIText;
 var distanceText : GUIText;
-var initialHeat : int = 500;
-var Level : GameObject;
 var gameOverText : GUIText;
+
+var tempChangeText : GUIText;
+var tempChangeHotMaterial : Material;
+var tempChangeColdMaterial : Material;
+
+var Level : GameObject;
+
 
 private var accum = 0.0; // FPS accumulated over the interval
 private var frames = 0; // Frames drawn over the interval
@@ -57,15 +64,15 @@ function Update () {
 function OnCollisionEnter(theCollision : Collision){
 	
 	var obj : GameObject = theCollision.gameObject;
+	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
 	
-	if(obj.tag == 'hot') {
-		heat += 39;
-		Destroy(obj);
-	} else if (obj.tag == 'cold') {
-		heat -= 27;
-		Destroy(obj);
+	if(tempChanger != null) {
+		TempChange(tempChanger.tempDiff, true);
+		
+		if(tempChanger.destroyOnCollision) {
+			Destroy(obj);
+		}
 	}
-	
 }
 
 function TrackHighestTemp() {
@@ -75,18 +82,39 @@ function TrackHighestTemp() {
 }
 
 function CoolOff() {
-	heat -= Mathf.Round(coolRate * Mathf.Sqrt(distance));
+	var coolAmount : int = -Mathf.Round(coolRate * Mathf.Sqrt(distance));
+	TempChange(coolAmount, false);
+}
+
+function TempChange(delta, notify) {
+	heat += delta;
+	
+	if(notify) {
+		NotifyTempChange(delta);
+	}
+	
 	if(heat <= 0) {
 		gameOver = true;
 		heat = 0;
 	}
 }
 
+function NotifyTempChange(delta) {
+	var tempChangeText : GUIText = Instantiate( tempChangeText, Vector2(0.5, 0.5), Quaternion.identity );
+	var symbol = "";
+	if(delta > 0) {
+		symbol = "+";
+	}
+	
+	tempChangeText.text = "" + symbol + delta + "°";
+}
+
 function GameOver() {
 	gameOverText.enabled = true;
-	gameOverText.text = "Game Over! Distance: " + Mathf.Round(distance) + "m / Highest Temp:" + highTemp + "°";
+	gameOverText.text = "Game Over! Distance: " + Mathf.Round(distance) + "m / Highest Temp: " + highTemp + "°";
 	var lift : Lift = gameObject.GetComponent("Lift");
 	lift.respondToTouch = false;
+	
 	ReloadAfterDelay();
 }
 
