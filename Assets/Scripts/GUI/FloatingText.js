@@ -14,7 +14,7 @@ function Start () {
 function Update () {
 	transform.position.y = currentY = Mathf.SmoothDamp(currentY, targetY, floatVelocity, floatTime);
 	
-	if((targetY - currentY) < 0.01) {
+	if(Mathf.Abs(targetY - currentY) < 0.01) {
 		Destroy(gameObject);
 	}
 }

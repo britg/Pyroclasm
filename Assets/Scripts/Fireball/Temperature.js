@@ -7,9 +7,9 @@ var displayText : GUIText;
 var distanceText : GUIText;
 var gameOverText : GUIText;
 
-var tempChangeText : GUIText;
-var tempChangeHotMaterial : Material;
-var tempChangeColdMaterial : Material;
+var tempChangeUpText : GUIText;
+var tempChangeDownText : GUIText;
+private var tempChangeText : GUIText;
 
 var Level : GameObject;
 
@@ -68,10 +68,6 @@ function OnCollisionEnter(theCollision : Collision){
 	
 	if(tempChanger != null) {
 		TempChange(tempChanger.tempDiff, true);
-		
-		if(tempChanger.destroyOnCollision) {
-			Destroy(obj);
-		}
 	}
 }
 
@@ -96,14 +92,18 @@ function TempChange(delta, notify) {
 	if(heat <= 0) {
 		gameOver = true;
 		heat = 0;
+		displayText.text = "" + heat + "°";
 	}
 }
 
 function NotifyTempChange(delta) {
-	var tempChangeText : GUIText = Instantiate( tempChangeText, Vector2(0.5, 0.5), Quaternion.identity );
+	
 	var symbol = "";
 	if(delta > 0) {
 		symbol = "+";
+		tempChangeText = Instantiate( tempChangeUpText, Vector2(0.5, 0.5), Quaternion.identity );
+	} else {
+		tempChangeText = Instantiate( tempChangeDownText, Vector2(0.5, 0.5), Quaternion.identity );
 	}
 	
 	tempChangeText.text = "" + symbol + delta + "°";

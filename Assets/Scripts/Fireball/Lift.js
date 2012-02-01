@@ -20,6 +20,9 @@ private var fingerDownFrame : int[] = new int[ 2 ];
 private var firstTouchTime : float;
 private var touched : boolean;
 
+private var maxHeight : float = 9.0;
+private var minHeight : float = 1.1;
+
 function Start()
 {
 	// Cache component lookups at startup instead of every frame
@@ -58,11 +61,11 @@ function ResetTouchState()
 }
 
 function Update () {
-	if(thisTransform.position.y < 1.1) {
-		thisTransform.position.y = 1.1;
+	if(thisTransform.position.y < minHeight) {
+		thisTransform.position.y = minHeight;
 		thisRigidbody.velocity.y = 0;
-	} else if (thisTransform.position.y > 7.8) {
-		thisTransform.position.y = 7.8;
+	} else if (thisTransform.position.y > maxHeight) {
+		thisTransform.position.y = maxHeight;
 		thisRigidbody.velocity.y = 0;
 	}
 }

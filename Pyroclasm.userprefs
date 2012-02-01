@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Lift.js">
+    <Files>
+      <File FileName="Assets/Scripts/Environment/AnimatedBackground.js" Line="13" Column="21" />
+      <File FileName="Assets/Scripts/Environment/Generator.js" Line="52" Column="34" />
+      <File FileName="Assets/Scripts/Environment/Motor.js" Line="13" Column="3" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="2" Column="21" />
+      <File FileName="Assets/Scripts/Fireball/Lift.js" Line="9" Column="37" />
+      <File FileName="Assets/Scripts/Environment/TempChanger.js" Line="3" Column="41" />
+      <File FileName="Assets/Scripts/GUI/FloatingText.js" Line="17" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
