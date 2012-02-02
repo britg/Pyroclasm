@@ -4,7 +4,6 @@ var coolRate : float = 1;
 var initialHeat : int = 500;
 
 var displayText : GUIText;
-var distanceText : GUIText;
 var gameOverText : GUIText;
 
 var tempChangeUpText : GUIText;
@@ -21,7 +20,6 @@ private var initialX : float;
 
 private var heat : int;
 private var highTemp : int;
-private var distance : float;
 
 private var Generator : Generator;
 
@@ -48,17 +46,23 @@ function Update () {
     ++frames;
     
     if(!gameOver) {
-	    distance += Generator.velocity * Time.deltaTime;
 	    
 	    if( timeleft <= 0.0 ) {
 	    	TrackHighestTemp();
 	    	CoolOff();
 	    	UpdateFireball();
-			displayText.text = "" + heat + "°";
-			distanceText.text = "" + Mathf.Round(distance) + "m";
+	    	DisplayTemp();
 			ResetTimer();
 		}
+	} else {
+		UpdateFireball();
+		DisplayTemp();
+		GameOver();
 	}
+}
+
+function DisplayTemp() {
+	displayText.text = "" + heat + "°";
 }
 
 function OnCollisionEnter(theCollision : Collision){
@@ -71,6 +75,11 @@ function OnCollisionEnter(theCollision : Collision){
 	}
 }
 
+function GetDistance() {
+	var distance : Distance = gameObject.GetComponent('Distance');
+	return distance.distance;
+}
+
 function TrackHighestTemp() {
 	if(heat > highTemp) {
 		highTemp = heat;
@@ -78,6 +87,7 @@ function TrackHighestTemp() {
 }
 
 function CoolOff() {
+	var distance = GetDistance();
 	var coolAmount : int = -Mathf.Round(coolRate * Mathf.Sqrt(distance));
 	TempChange(coolAmount, false);
 }
@@ -91,8 +101,7 @@ function TempChange(delta, notify) {
 	
 	if(heat <= 0) {
 		gameOver = true;
-		heat = 0;
-		displayText.text = "" + heat + "°";
+		heat = 0;	
 	}
 }
 
@@ -110,6 +119,8 @@ function NotifyTempChange(delta) {
 }
 
 function GameOver() {
+
+	var distance = GetDistance();
 	gameOverText.enabled = true;
 	gameOverText.text = "Game Over! Distance: " + Mathf.Round(distance) + "m / Highest Temp: " + highTemp + "°";
 	var lift : Lift = gameObject.GetComponent("Lift");
@@ -121,12 +132,6 @@ function GameOver() {
 function ReloadAfterDelay() {
 	yield WaitForSeconds(5);
 	Application.LoadLevel(0);
-}
-
-function OnGUI() {
-	if(gameOver) {
-		GameOver();
-	}
 }
 
 function UpdateFireball() {
