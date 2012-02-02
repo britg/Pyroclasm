@@ -16,7 +16,6 @@ var Level : GameObject;
 private var accum = 0.0; // FPS accumulated over the interval
 private var frames = 0; // Frames drawn over the interval
 private var timeleft : float; // Left time for current interval
-private var initialX : float;
 
 private var heat : int;
 private var highTemp : int;
@@ -30,8 +29,6 @@ function Start () {
 	Generator = Level.GetComponent("Generator");
 	ResetTimer();
 	gameOverText.enabled = false;
-	
-	initialX = gameObject.transform.position.x;
 }
 
 function ResetTimer () {
