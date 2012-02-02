@@ -24,9 +24,13 @@ private var Generator : Generator;
 
 private var gameOver : boolean;
 
+private var thisRigidbody : Rigidbody;
+private var yVelocity : float;
+
 function Start () {
 	heat = highTemp = initialHeat;
 	Generator = Level.GetComponent("Generator");
+	thisRigidbody = rigidbody;
 	ResetTimer();
 	gameOverText.enabled = false;
 }
@@ -38,12 +42,13 @@ function ResetTimer () {
 }
 
 function Update () {
+	yVelocity = thisRigidbody.velocity.y;
+	
 	timeleft -= Time.deltaTime;
     accum += Time.timeScale/Time.deltaTime;
     ++frames;
     
     if(!gameOver) {
-	    
 	    if( timeleft <= 0.0 ) {
 	    	TrackHighestTemp();
 	    	CoolOff();
@@ -63,6 +68,9 @@ function DisplayTemp() {
 }
 
 function OnCollisionEnter(theCollision : Collision){
+
+	// Cancel the collision
+	thisRigidbody.velocity.y = yVelocity;
 	
 	var obj : GameObject = theCollision.gameObject;
 	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
