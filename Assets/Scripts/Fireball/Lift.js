@@ -10,8 +10,7 @@ private var touched : boolean;
 private var maxHeight : float = 9.0;
 private var minHeight : float = 1.1;
 
-function Start()
-{
+function Start() {
 	// Cache component lookups at startup instead of every frame
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
@@ -19,9 +18,7 @@ function Start()
 	touched = false;
 }
 
-function OnEndGame()
-{
-	// Don't allow any more control changes when the game ends	
+function OnEndGame() {
 	this.enabled = false;
 }
 
@@ -47,18 +44,14 @@ function Update () {
 }
 
 
-function FixedUpdate () 
-{	
-
-	if (!touched) {
+function FixedUpdate () {	
+	if (!touched)
 		InitialFloat();
-	}
 	
 	if ( inputsForLift() ) {
 		touched = true;
 		Lift();
 	}
-			
 }
 
 function inputsForLift() {
