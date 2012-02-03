@@ -23,11 +23,13 @@ private var highTemp : int;
 private var gameOver : boolean;
 private var shouldUpdate : boolean = true;
 
+private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var yVelocity : float;
 
 function Start () {
 	heat = highTemp = initialHeat;
+	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	ResetTimer();
 	gameOverText.enabled = false;
@@ -121,6 +123,9 @@ function NotifyTempChange(delta) {
 	}
 	
 	tempChangeText.text = "" + symbol + delta + "°";
+	var objLabel : ObjectLabel = tempChangeText.GetComponent("ObjectLabel");
+	objLabel.target = thisTransform;
+	
 }
 
 function GameOver() {
