@@ -1,5 +1,5 @@
 
-var startGenerationInterval : float = 1.5;
+var startGenerationInterval : float = 1.2;
 var minGenerationInterval : float = 0.01;
 var distanceToMinGenerationInterval : int = 1200;
 

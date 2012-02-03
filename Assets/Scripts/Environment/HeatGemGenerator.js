@@ -37,13 +37,8 @@ function Update () {
 
 function Generate () {
 	var yStart = Random.value * (yMax - yMin) + yMin;
-	
-	speedFactor = 1;
-	
 	var h : Transform = Instantiate( heatGem, Vector3(xStart, yStart, -1), Quaternion.identity );
 	var motor : Motor = h.gameObject.GetComponent("Motor");
 	motor.Level = gameObject;
 	motor.factor = speedFactor;
-	
-	var tempChange : TempChanger = h.gameObject.GetComponent("TempChanger");
 }
