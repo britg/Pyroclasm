@@ -8,7 +8,7 @@ private var thisRigidbody : Rigidbody;
 private var touched : boolean;
 
 private var maxHeight : float = 9.0;
-private var minHeight : float = 1.1;
+private var minHeight : float = 0.1;
 
 function Start() {
 	// Cache component lookups at startup instead of every frame
