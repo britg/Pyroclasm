@@ -1,19 +1,19 @@
 var Level : GameObject;
 var factor : float = 1.0;
 
-private var Generator : Generator;
+private var scrolling : Scroller;
 private var minX : float = -10.0;
 
 function Start () {
-	Generator = Level.GetComponent("Generator");
+	scrolling = Level.GetComponent("Scroller");
 }
 
 function Update () {
-	if(Generator == null) {
+	if(scrolling == null) {
 		return;
 	}
 	
-	var delta = Generator.velocity * Time.deltaTime * factor;
+	var delta = scrolling.velocity * Time.deltaTime * factor;
 	transform.position.x -= delta;
 	
 	if(transform.position.x < minX) {

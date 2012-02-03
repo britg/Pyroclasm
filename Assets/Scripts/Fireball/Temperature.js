@@ -20,16 +20,14 @@ private var timeleft : float; // Left time for current interval
 private var heat : int;
 private var highTemp : int;
 
-private var Generator : Generator;
-
 private var gameOver : boolean;
+private var shouldUpdate : boolean = true;
 
 private var thisRigidbody : Rigidbody;
 private var yVelocity : float;
 
 function Start () {
 	heat = highTemp = initialHeat;
-	Generator = Level.GetComponent("Generator");
 	thisRigidbody = rigidbody;
 	ResetTimer();
 	gameOverText.enabled = false;
@@ -52,13 +50,10 @@ function Update () {
 	    if( timeleft <= 0.0 ) {
 	    	TrackHighestTemp();
 	    	CoolOff();
-	    	UpdateFireball();
 	    	DisplayTemp();
 			ResetTimer();
 		}
-	} else {
-		UpdateFireball();
-		DisplayTemp();
+	} else if(shouldUpdate) {
 		GameOver();
 	}
 }
@@ -105,9 +100,14 @@ function TempChange(delta, notify) {
 	}
 	
 	if(heat <= 0) {
-		gameOver = true;
 		heat = 0;	
+		gameOver = true;
 	}
+	
+	if(shouldUpdate) {
+		UpdateFireball();
+	}
+	
 }
 
 function NotifyTempChange(delta) {
@@ -124,7 +124,8 @@ function NotifyTempChange(delta) {
 }
 
 function GameOver() {
-
+	shouldUpdate = false;
+	
 	var distance = GetDistance();
 	gameOverText.enabled = true;
 	gameOverText.text = "Game Over! Distance: " + Mathf.Round(distance) + "m / Highest Temp: " + highTemp + "°";

@@ -5,20 +5,19 @@ private var paused : boolean = false;
 
 function Update() {
 
-	var touchCount : int = Input.touchCount;
-	
 	for (var touch : Touch in Input.touches) {
         if (touch.phase == TouchPhase.Began) {
-        	if(initiator.HitTest(touch.position, Camera.main)) {
+        	if(initiator.HitTest(touch.position)) {
         		TogglePause();
+        		return;
         	}
         }
     }
     
     if(Input.GetMouseButtonDown(0)) {
-		if(initiator.HitTest(Input.mousePosition, Camera.main)) {
+		if(initiator.HitTest(Input.mousePosition)) {
     		TogglePause();
-    	}	
+    	}
     }
 	
 }	

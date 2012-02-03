@@ -9,7 +9,7 @@ private var accum = 0.0; // FPS accumulated over the interval
 private var frames = 0; // Frames drawn over the interval
 private var timeleft : float; // Left time for current interval
 
-private var Generator : Generator;
+private var scrolling : Scroller;
 
 function ResetTimer () {
 	timeleft = updateInterval;
@@ -18,11 +18,11 @@ function ResetTimer () {
 }
 
 function Start() {
-	Generator = Level.GetComponent("Generator");
+	scrolling = Level.GetComponent("Scroller");
 }
 
 function Update () {
-	distance += Generator.velocity * Time.deltaTime;
+	distance += scrolling.velocity * Time.deltaTime;
 	
 	timeleft -= Time.deltaTime;
     accum += Time.timeScale/Time.deltaTime;
