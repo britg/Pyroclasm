@@ -12,10 +12,7 @@ private var tempChangeText : GUIText;
 
 var Level : GameObject;
 
-
-private var accum = 0.0; // FPS accumulated over the interval
-private var frames = 0; // Frames drawn over the interval
-private var timeleft : float; // Left time for current interval
+private var timeleft : float;
 
 private var heat : int;
 private var highTemp : int;
@@ -25,28 +22,29 @@ private var shouldUpdate : boolean = true;
 
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
+private var thisEmitter : ParticleEmitter;
+
 private var yVelocity : float;
 
 function Start () {
+	gameOverText.enabled = false;
+	
 	heat = highTemp = initialHeat;
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
+	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
+	
 	ResetTimer();
-	gameOverText.enabled = false;
 }
 
 function ResetTimer () {
 	timeleft = updateInterval;
-    accum = 0.0;
-    frames = 0;
 }
 
 function Update () {
 	yVelocity = thisRigidbody.velocity.y;
 	
 	timeleft -= Time.deltaTime;
-    accum += Time.timeScale/Time.deltaTime;
-    ++frames;
     
     if(!gameOver) {
 	    if( timeleft <= 0.0 ) {
@@ -146,6 +144,5 @@ function ReloadAfterDelay() {
 }
 
 function UpdateFireball() {
-	var emitter : ParticleEmitter = transform.Find("Intensity").GetComponent.<ParticleEmitter>();
-	emitter.maxEmission = heat * 10;
+	thisEmitter.maxEmission = heat * 10;
 }
