@@ -44,7 +44,7 @@ function Update () {
 function Generate () {
 	var yStart = Random.value * (yMax - yMin) + yMin;
 	
-	speedFactor = Random.value + 1.5;
+	speedFactor = Random.value*0.5 + 1.1;
 	tempChangeFactor = Random.value * 7 + 1;
 	
 	var h : Transform = Instantiate( iceBolt, Vector3(xStart, yStart, -1), Quaternion.identity );
