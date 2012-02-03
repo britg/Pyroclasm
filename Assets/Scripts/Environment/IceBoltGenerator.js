@@ -6,9 +6,7 @@ var distanceToMinGenerationInterval : int = 1200;
 var iceBolt : Transform;
 var fireball : GameObject;
 
-private var accum = 0.0; // FPS accumulated over the interval
-private var frames = 0; // Frames drawn over the interval
-private var timeleft : float; // Left time for current interval
+private var timeleft : float;
 
 private var yMin = 1.1;
 private var yMax = 9;
@@ -32,15 +30,10 @@ function ResetTimer () {
 	}
 	var delta : float = (startGenerationInterval - minGenerationInterval) * distPercent;
 	timeleft = startGenerationInterval - delta;
-	Debug.Log("Time to next icebolt is " + timeleft);
-    accum = 0.0;
-    frames = 0;
 }
 
 function Update () {
 	timeleft -= Time.deltaTime;
-    accum += Time.timeScale/Time.deltaTime;
-    ++frames;
     
     if( timeleft <= 0.0 ) {
 		ResetTimer();
