@@ -113,16 +113,18 @@ function TempChange(delta, notify) {
 function NotifyTempChange(delta) {
 	
 	var symbol = "";
+	var start : Vector2 = Camera.main.WorldToViewportPoint(thisTransform.position);
+	
 	if(delta > 0) {
 		symbol = "+";
-		tempChangeText = Instantiate( tempChangeUpText, Vector2(0.5, 0.5), Quaternion.identity );
+		tempChangeText = Instantiate( tempChangeUpText, start, Quaternion.identity );
 	} else {
-		tempChangeText = Instantiate( tempChangeDownText, Vector2(0.5, 0.5), Quaternion.identity );
+		tempChangeText = Instantiate( tempChangeDownText, start, Quaternion.identity );
 	}
 	
 	tempChangeText.text = "" + symbol + delta + "°";
-	var objLabel : ObjectLabel = tempChangeText.GetComponent("ObjectLabel");
-	objLabel.target = thisTransform;
+	var floater : FloatingText = tempChangeText.GetComponent("FloatingText");
+	floater.floatFrom = thisTransform;
 	
 }
 

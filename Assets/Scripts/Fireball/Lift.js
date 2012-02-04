@@ -7,7 +7,7 @@ private var thisRigidbody : Rigidbody;
 
 private var touched : boolean;
 
-private var maxHeight : float = 9.0;
+private var maxHeight : float = 10.0;
 private var minHeight : float = 0.1;
 
 function Start() {

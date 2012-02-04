@@ -15,10 +15,16 @@ function Start () {
     else
         cam = cameraToUse;
     camTransform = cam.transform;
+    
+    AdjustLabel();
 }
 
 function Update () {
-    if (clampToScreen) {
+    //AdjustLabel();
+}
+
+function AdjustLabel() {
+	if (clampToScreen) {
         var relativePosition = camTransform.InverseTransformPoint(target.position);
         relativePosition.z = Mathf.Max(relativePosition.z, 1.0);
         thisTransform.position = cam.WorldToViewportPoint(camTransform.TransformPoint(relativePosition + offset));
