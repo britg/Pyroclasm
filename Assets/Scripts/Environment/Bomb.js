@@ -1,11 +1,20 @@
 
 var initiator : GUITexture;
 var flashColor : Color;
+var fireball : GameObject;
+var bombCounter : GUIText;
+var distanceToNextBomb : int = 200;
 
 private var paused : boolean = false;
-private var numBombs : int;
+private var bombCount  : int = 0;
+private var cumulativeBombCount : int = 0;
 
 private var flash : GUITexture;
+private var flashAlphaVelocity : float;
+private var flashTime : float = 3.0;
+private var speedRecoverVelocity : float;
+
+private var Distance;
 
 function Start () {
 
@@ -21,6 +30,10 @@ function Start () {
     flash.color = flashColor;
     flash.texture = tex;
     flash.enabled = false;
+    
+    Distance = fireball.GetComponent("Distance");
+    
+    UpdateBombLabel();
 }
 
 function Update() {
@@ -39,12 +52,36 @@ function Update() {
     		AttemptBomb();
     	}
     }
+    
+    if(flash.enabled) {
+    	flash.color.a = Mathf.SmoothDamp(flash.color.a, 0, flashAlphaVelocity, flashTime);
+    	Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1, speedRecoverVelocity, flashTime);
+    }
+    
+    if(Mathf.Floor(Distance.distance / distanceToNextBomb) > cumulativeBombCount) {
+    	cumulativeBombCount++;
+    	bombCount++;
+    	UpdateBombLabel();
+    }
 	
 }	
 
 function AttemptBomb() {
 
-	Flash(0.1);
+	if (bombCount < 1) {
+		return;
+	}
+	
+	bombCount--;
+	UpdateBombLabel();
+
+	Flash(flashTime);
+	
+	Time.timeScale = 0.5;
+	Camera.main.animation.Play();
+	
+	var temp : Temperature = fireball.GetComponent("Temperature");
+	temp.TempChange(250, true);
 	
 	for(var bombable : GameObject in GameObject.FindGameObjectsWithTag("Bombable")) {
 		Destroy(bombable);
@@ -52,14 +89,21 @@ function AttemptBomb() {
 }
 
 function UpdateBombLabel() {
-	
+	bombCounter.text = "x" + bombCount;
 }
 
 function Flash (duration : float) {
      flash.enabled = true;
-     Invoke("Cancel", duration);
+     flash.color.a = 1.0;
+     Invoke("FadeFlash", 0.1);
+     Invoke("RemoveFlash", duration);
 }
 
-function Cancel () {
+function FadeFlash () {
+	flash.color.a = 0.3;
+}
+
+function RemoveFlash () {
     flash.enabled = false;
+    Time.timeScale = 1;
 }

@@ -49,8 +49,7 @@ function Update () {
     if(!gameOver) {
 	    if( timeleft <= 0.0 ) {
 	    	TrackHighestTemp();
-	    	CoolOff();
-	    	DisplayTemp();
+	    	CoolOff();	
 			ResetTimer();
 		}
 	} else if(shouldUpdate) {
@@ -105,6 +104,7 @@ function TempChange(delta, notify) {
 	}
 	
 	if(shouldUpdate) {
+		DisplayTemp();
 		UpdateFireball();
 	}
 	
