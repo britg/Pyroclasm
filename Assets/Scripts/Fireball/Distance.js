@@ -11,6 +11,8 @@ private var timeleft : float; // Left time for current interval
 
 private var scrolling : Scroller;
 
+private var bestDistance : int;
+
 function ResetTimer () {
 	timeleft = updateInterval;
     accum = 0.0;
@@ -19,6 +21,7 @@ function ResetTimer () {
 
 function Start() {
 	scrolling = Level.GetComponent("Scroller");
+	bestDistance = PlayerPrefs.GetInt("distance");
 }
 
 function Update () {
@@ -34,5 +37,5 @@ function Update () {
 }
 
 function DisplayDistance() {
-	distanceText.text = "" + Mathf.Round(distance) + "m";
+	distanceText.text = "" + Mathf.Round(distance) + "m (" + bestDistance +"m)";
 }

@@ -11,6 +11,7 @@ var tempChangeDownText : GUIText;
 private var tempChangeText : GUIText;
 
 var Level : GameObject;
+private var scrolling;
 
 private var timeleft : float;
 
@@ -23,16 +24,19 @@ private var shouldUpdate : boolean = true;
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
+private var thisAnimator : ParticleAnimator;
 
 private var yVelocity : float;
 
+private var moving : boolean = false;
+
 function Start () {
-	gameOverText.enabled = false;
-	
 	heat = highTemp = initialHeat;
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
+	thisAnimator = thisTransform.Find("Intensity").GetComponent.<ParticleAnimator>();
+	scrolling = Level.GetComponent("Scroller");
 	
 	ResetTimer();
 }
@@ -42,6 +46,11 @@ function ResetTimer () {
 }
 
 function Update () {
+
+	if( !moving && scrolling.started ) {
+		SimulateMotion();
+	}
+
 	yVelocity = thisRigidbody.velocity.y;
 	
 	timeleft -= Time.deltaTime;
@@ -133,9 +142,21 @@ function GameOver() {
 	
 	var distance = GetDistance();
 	gameOverText.enabled = true;
-	gameOverText.text = "Game Over! Distance: " + Mathf.Round(distance) + "m / Highest Temp: " + highTemp + "°";
+	gameOverText.text = "Game Over!\nDistance: " + Mathf.Round(distance) + "m\nHighest Temp: " + highTemp + "°";
 	var lift : Lift = gameObject.GetComponent("Lift");
 	lift.respondToTouch = false;
+	
+	var prevDistance : int = PlayerPrefs.GetInt("distance");
+	var prevTemp : int = PlayerPrefs.GetInt("temp");
+	
+	if(distance > prevDistance) {
+		PlayerPrefs.SetInt("distance", distance);
+	}
+	
+	if(highTemp > prevTemp) {
+		PlayerPrefs.SetInt("temp", highTemp);
+	}
+	
 	
 	ReloadAfterDelay();
 }
@@ -143,6 +164,12 @@ function GameOver() {
 function ReloadAfterDelay() {
 	yield WaitForSeconds(5);
 	Application.LoadLevel(0);
+}
+
+function SimulateMotion() {
+	moving = true;
+	thisAnimator.force.y = 0;
+	thisAnimator.force.x = -100;
 }
 
 function UpdateFireball() {

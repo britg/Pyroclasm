@@ -1,35 +1,54 @@
 
-var updateInterval : float = 1.4;
+var Level : GameObject;
+var fireball : GameObject;
 var p1 : Transform;
 var p2 : Transform;
 var p3 : Transform;
 var p4 : Transform;
+var p5 : Transform;
+
+var startGenerationInterval : float = 1.8;
+var minGenerationInterval : float = 0.2;
+var distanceToMinGenerationInterval : int = 1200;
 
 private var timeleft : float; // Left time for current interval
 
 private var yMin = 1.1;
 private var yMax = 9;
 private var xStart = 10;
-private var minUpdateInterval = 0.3;
 private var nextObject : Transform;
 
-private var speedFactor : float = 1;
+private var speedFactor : float = 1.2;
 
 private var Patterns : Array = [];
 
+private var Distance;
+private var scrolling;
+
 function Awake () {
-	Patterns = [p1, p2, p3, p4];
+	Patterns = [p1, p2, p3, p4, p5];
+	//Patterns = [p4];
 }
 
 function Start () {
+	Distance = fireball.GetComponent("Distance");
+	scrolling = Level.GetComponent("Scroller");
 	ResetTimer();
 }
 
 function ResetTimer () {
-	timeleft = Random.value * updateInterval + minUpdateInterval;
+	var distPercent : float = Distance.distance / distanceToMinGenerationInterval;
+	if(distPercent > 1.0) {
+		distPercent = 1.0;
+	}
+	var delta : float = (startGenerationInterval - minGenerationInterval) * distPercent;
+	timeleft = startGenerationInterval - delta;
 }
 
 function Update () {
+	if(scrolling.velocity == 0) {
+		return;
+	}
 	timeleft -= Time.deltaTime;
     
     if( timeleft <= 0.0 ) {

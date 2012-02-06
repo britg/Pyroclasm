@@ -13,6 +13,8 @@ function Start() {
 		gem.parent = transform;
 		gem.position = transform.position;
 		gem.position.x += (i * xSpacing);
+		var yPos = Mathf.Log10(i+1) * 1.5;
+		gem.position.y += yPos;
 	}
 
 }

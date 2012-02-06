@@ -2,7 +2,7 @@ var Level : GameObject;
 var factor : float = 1.0;
 
 private var scrolling : Scroller;
-private var minX : float = -10.0;
+private var minX : float = -30.0;
 
 function Start () {
 	scrolling = Level.GetComponent("Scroller");

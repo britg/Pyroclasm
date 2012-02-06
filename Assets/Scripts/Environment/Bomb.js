@@ -15,6 +15,7 @@ private var flashTime : float = 3.0;
 private var speedRecoverVelocity : float;
 
 private var Distance;
+private var Destructible;
 
 function Start () {
 
@@ -81,9 +82,17 @@ function AttemptBomb() {
 	Camera.main.animation.Play();
 	
 	var temp : Temperature = fireball.GetComponent("Temperature");
-	temp.TempChange(250, true);
+	temp.TempChange(100, true);
+	
+	var amount : int;
 	
 	for(var bombable : GameObject in GameObject.FindGameObjectsWithTag("Bombable")) {
+		Destructible = bombable.GetComponent("Destructible");
+		if(Destructible) {
+			amount = Destructible.bombTempChange;
+			temp.TempChange(amount, false);
+			Destructible.DisplayBombPoints();
+		}
 		Destroy(bombable);
 	}
 }

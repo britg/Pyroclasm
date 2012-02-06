@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Bomb.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/AnimateTexture.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/Bomb.js" Line="67" Column="26" />
-      <File FileName="Assets/Scripts/Environment/AnimatedBackground.js" Line="15" Column="58" />
-      <File FileName="Assets/Scripts/Environment/Motor.js" Line="17" Column="31" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="91" Column="70" />
-      <File FileName="Assets/Scripts/Fireball/Lift.js" Line="60" Column="1" />
-      <File FileName="Assets/Scripts/Environment/TempChanger.js" Line="2" Column="19" />
-      <File FileName="Assets/Scripts/GUI/FloatingText.js" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Bomb.js" Line="9" Column="33" />
+      <File FileName="Assets/Scripts/Environment/AnimatedBackground.js" Line="21" Column="52" />
+      <File FileName="Assets/Scripts/Environment/Motor.js" Line="5" Column="30" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="125" Column="81" />
+      <File FileName="Assets/Scripts/Environment/Destructible.js" Line="21" Column="31" />
+      <File FileName="Assets/Scripts/Environment/HeatGemGenerator.js" Line="11" Column="40" />
+      <File FileName="Assets/Scripts/Environment/IceBoltGenerator.js" Line="4" Column="42" />
+      <File FileName="Assets/Scripts/Environment/Scroller.js" Line="19" Column="100" />
+      <File FileName="Assets/Scripts/Fireball/Distance.js" Line="40" Column="55" />
+      <File FileName="Assets/Scripts/Environment/AnimateTexture.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

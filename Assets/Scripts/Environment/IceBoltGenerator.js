@@ -1,6 +1,8 @@
 
-var startGenerationInterval : float = 1.2;
-var minGenerationInterval : float = 0.01;
+var Level : GameObject;
+
+var startGenerationInterval : float = 1.0;
+var minGenerationInterval : float = 0.1;
 var distanceToMinGenerationInterval : int = 1200;
 
 var iceBolt : Transform;
@@ -17,10 +19,12 @@ private var speedFactor : float = 1;
 private var tempChangeFactor : float = 1;
 
 private var Distance;
+private var scrolling;
 
 function Start () {
 	Distance = fireball.GetComponent("Distance");
 	ResetTimer();
+	scrolling = Level.GetComponent("Scroller");
 }
 
 function ResetTimer () {
@@ -33,6 +37,10 @@ function ResetTimer () {
 }
 
 function Update () {
+	if(scrolling.velocity == 0) {
+		return;
+	}
+	
 	timeleft -= Time.deltaTime;
     
     if( timeleft <= 0.0 ) {
@@ -44,7 +52,7 @@ function Update () {
 function Generate () {
 	var yStart = Random.value * (yMax - yMin) + yMin;
 	
-	speedFactor = Random.value*0.5 + 1.1;
+	speedFactor = Random.value*0.5 + 1.3;
 	tempChangeFactor = Random.value * 7 + 1;
 	
 	var h : Transform = Instantiate( iceBolt, Vector3(xStart, yStart, -1), Quaternion.identity );

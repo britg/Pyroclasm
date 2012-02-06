@@ -10,10 +10,13 @@ private var touched : boolean;
 private var maxHeight : float = 10.0;
 private var minHeight : float = 0.1;
 
+private var initialY : float;
+
 function Start() {
 	// Cache component lookups at startup instead of every frame
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
+	initialY = thisTransform.position.y;
 	
 	touched = false;
 }
@@ -30,7 +33,8 @@ function Lift() {
 }
 
 function InitialFloat() {
-	thisRigidbody.AddForce(Vector3.up * 8);
+	thisTransform.position.y = initialY;
+	thisRigidbody.velocity.y = 0;
 }
 
 function Update () {
