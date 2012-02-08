@@ -1,4 +1,3 @@
-
 var initiator : GUITexture;
 
 private var paused : boolean = false;
@@ -25,8 +24,10 @@ function Update() {
 function TogglePause() {
 
 	if(paused) {
+		AudioListener.volume = 1;
 		Time.timeScale = 1;
 	} else {
+		AudtioListener.volume = .3;
 		Time.timeScale = 0;
 	}
 	
