@@ -27,7 +27,7 @@ function TogglePause() {
 		AudioListener.volume = 1;
 		Time.timeScale = 1;
 	} else {
-		AudtioListener.volume = .3;
+		AudioListener.volume = .3;
 		Time.timeScale = 0;
 	}
 	
