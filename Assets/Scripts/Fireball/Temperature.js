@@ -10,6 +10,9 @@ var tempChangeUpText : GUIText;
 var tempChangeDownText : GUIText;
 private var tempChangeText : GUIText;
 
+var pickupSound : AudioClip;
+var cooldownSound : AudioClip;
+
 var Level : GameObject;
 private var scrolling;
 
@@ -80,6 +83,14 @@ function OnCollisionEnter(theCollision : Collision){
 	
 	if(tempChanger != null) {
 		TempChange(tempChanger.tempDiff, true);
+		
+		if(tempChanger.playPickupSound) {
+			audio.PlayOneShot(pickupSound);
+		}
+		
+		if(tempChanger.playCooldownSound) {
+			audio.PlayOneShot(cooldownSound);
+		}
 	}
 }
 

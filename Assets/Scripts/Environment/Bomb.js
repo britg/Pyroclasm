@@ -4,6 +4,7 @@ var flashColor : Color;
 var fireball : GameObject;
 var bombCounter : GUIText;
 var distanceToNextBomb : int = 200;
+var explosionSound : AudioClip;
 
 private var paused : boolean = false;
 private var bombCount  : int = 0;
@@ -72,6 +73,8 @@ function AttemptBomb() {
 	if (bombCount < 1) {
 		return;
 	}
+	
+	audio.PlayOneShot(explosionSound);
 	
 	bombCount--;
 	UpdateBombLabel();

@@ -4,13 +4,17 @@ var tempChangeText : GUIText;
 var bombTempChange : int = 2;
 
 function OnCollisionEnter(theCollision : Collision){
-	
-	Destroy(gameObject);
-	
+
 	if(cameraShake) {
 		Camera.main.animation.Play();
 	}
 	
+	Remove();
+	
+}
+
+function Remove() {
+	Destroy(gameObject);
 }
 
 function DisplayBombPoints() {
