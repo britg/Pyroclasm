@@ -26,8 +26,10 @@ function TogglePause() {
 
 	if(paused) {
 		Time.timeScale = 1;
+		AudioListener.volume = 1;
 	} else {
 		Time.timeScale = 0;
+		AudioListener.volume = 0.3;
 	}
 	
 	paused = !paused;

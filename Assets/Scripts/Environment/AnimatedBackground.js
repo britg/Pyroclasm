@@ -17,6 +17,7 @@ function Start () {
 }
 
 function Update () {
+	return;
 	offset.x += scrolling.velocity * Time.deltaTime * factor;
 	thisMaterial.SetTextureOffset ("_MainTex", offset);
 	
