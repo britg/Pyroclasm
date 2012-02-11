@@ -3,12 +3,12 @@ guid: 1c8426ccad8394bc89949b533989378a
 TextureImporter:
   importerVersion: 2
   maxTextureSize: 1024
-  textureFormat: -1
+  textureFormat: 4
   grayscaleToAlpha: 0
   npotScale: 0
   generateCubemap: 0
   isReadable: 0
-  textureType: 2
+  textureType: 5
   mipmaps:
     generation: 0
     correctGamma: 0
