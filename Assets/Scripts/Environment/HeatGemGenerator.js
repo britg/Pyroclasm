@@ -13,8 +13,8 @@ var distanceToMinGenerationInterval : int = 1200;
 
 private var timeleft : float; // Left time for current interval
 
-private var yMin = 1.1;
-private var yMax = 9;
+private var yMin = 0.1;
+private var yMax = 8.307953;
 private var xStart = 10;
 private var nextObject : Transform;
 

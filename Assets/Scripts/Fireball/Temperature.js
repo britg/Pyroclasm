@@ -2,6 +2,7 @@
 var updateInterval = 0.2;
 var coolRate : float = 1;
 var initialHeat : int = 500;
+var maxHeat : int = 2500;
 
 var displayText : GUIText;
 var gameOverText : GUIText;
@@ -113,6 +114,8 @@ function CoolOff() {
 
 function TempChange(delta, notify) {
 	heat += delta;
+	
+	heat = Mathf.Clamp(heat, 0, maxHeat);
 	
 	if(notify) {
 		NotifyTempChange(delta);
