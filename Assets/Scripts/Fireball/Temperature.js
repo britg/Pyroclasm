@@ -16,6 +16,7 @@ private var currentTempChangeDownText : GUIText;
 
 var pickupSound : AudioClip;
 var cooldownSound : AudioClip;
+var explosionSound : AudioClip;
 
 var Level : GameObject;
 private var scrolling;
@@ -94,6 +95,10 @@ function OnCollisionEnter(theCollision : Collision){
 		
 		if(tempChanger.playCooldownSound) {
 			audio.PlayOneShot(cooldownSound);
+		}
+		
+		if(tempChanger.playExplosionSound) {
+			audio.PlayOneShot(explosionSound);
 		}
 	}
 }
