@@ -152,12 +152,11 @@ function NotifyTempChange(delta) {
 			floater.lastUpdateTime = Time.time;
 		} else {
 			currentTempChangeUpValue += delta;
+			floater = currentTempChangeUpText.GetComponent("FloatingText");
+			floater.lastUpdateTime = Time.time;
 		}
 		
 		currentTempChangeUpText.text = "+" + currentTempChangeUpValue + "°";
-		var scale : float = 1 + (currentTempChangeUpValue/10 * 0.2);
-		currentTempChangeUpText.transform.localScale.x = currentTempChangeUpText.transform.localScale.x * scale;
-		currentTempChangeUpText.transform.localScale.y = currentTempChangeUpText.transform.localScale.y * scale;
 		
 	} else {
 	
@@ -169,6 +168,8 @@ function NotifyTempChange(delta) {
 			floater.lastUpdateTime = Time.time;
 		} else {
 			currentTempChangeDownValue += delta;
+			floater = currentTempChangeDownText.GetComponent("FloatingText");
+			floater.lastUpdateTime = Time.time;
 		}
 		
 		currentTempChangeDownText.text = "" + currentTempChangeDownValue + "°";

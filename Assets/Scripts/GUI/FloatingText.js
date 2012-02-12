@@ -10,12 +10,14 @@ private var currentY : float;
 private var targetY : float;
 private var floatVelocity : float;
 
+private var maxHeight : float = 8.0;
+
 private var thisTransform : Transform;
 
 function Start () {
 	thisTransform = transform;
 	currentY = thisTransform.position.y;
-	targetY = currentY + floatHeight;
+	targetY = Mathf.Clamp(currentY + floatHeight, 0, maxHeight);
 }
 
 function Update () {
