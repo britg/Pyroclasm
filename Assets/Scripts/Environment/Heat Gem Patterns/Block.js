@@ -11,12 +11,12 @@ private var cols : int 			= 2;
 
 function Start() {
 
-	rows += Mathf.Round(Random.value * 10);
-	cols += Mathf.Round(Random.value * 3);
+	cols += Mathf.Round(Random.value * 10);
+	rows += Mathf.Round(Random.value * 3);
 	
 
-	for(var i = 0; i < rows; i++) {
-		for(var j = 0; j < cols; j++) {
+	for(var i = 0; i < cols; i++) {
+		for(var j = 0; j < rows; j++) {
 			gem = Instantiate( heatGem , transform.position, Quaternion.identity );
 			gem.parent = transform;
 			gem.position = transform.position;
