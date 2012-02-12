@@ -5,13 +5,13 @@ var startGenerationInterval : float = 1.0;
 var minGenerationInterval : float = 0.1;
 var distanceToMinGenerationInterval : int = 1200;
 
-var iceBolt : Transform;
+var gargoyle : Transform;
 var fireball : GameObject;
 
 private var timeleft : float;
 
-private var yMin : float = 0.1;
-private var yMax : float = 8.307953;
+private var yMin : float = 5;
+private var yMax : float = 7.1;
 private var xStart = 10;
 private var nextObject : Transform;
 
@@ -52,13 +52,5 @@ function Update () {
 function Generate () {
 	var yStart = Random.value * (yMax - yMin) + yMin;
 	
-	speedFactor = Random.value*0.5 + 1.3;
-	tempChangeFactor = Random.value * 7 + 1;
-	
-	var h : Transform = Instantiate( iceBolt, Vector3(xStart, yStart, -1), Quaternion.identity );
-	var motor : Motor = h.gameObject.GetComponent("Motor");
-	motor.factor = speedFactor;
-	
-	var tempChange : TempChanger = h.gameObject.GetComponent("TempChanger");
-	tempChange.tempDiff = tempChange.tempDiff * tempChangeFactor;
+	var h : Transform = Instantiate( gargoyle, Vector3(xStart, yStart, -1), Quaternion.identity );
 }

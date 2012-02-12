@@ -9,7 +9,10 @@ var gameOverText : GUIText;
 
 var tempChangeUpText : GUIText;
 var tempChangeDownText : GUIText;
-private var tempChangeText : GUIText;
+private var currentTempChangeUpValue : int;
+private var currentTempChangeUpText : GUIText;
+private var currentTempChangeDownValue : int;
+private var currentTempChangeDownText : GUIText;
 
 var pickupSound : AudioClip;
 var cooldownSound : AudioClip;
@@ -137,17 +140,40 @@ function NotifyTempChange(delta) {
 	
 	var symbol = "";
 	var start : Vector2 = Camera.main.WorldToViewportPoint(thisTransform.position);
+	var floater : FloatingText;
 	
 	if(delta > 0) {
-		symbol = "+";
-		tempChangeText = Instantiate( tempChangeUpText, start, Quaternion.identity );
+		
+		if(!currentTempChangeUpText) {
+			currentTempChangeUpValue = delta;
+			currentTempChangeUpText = Instantiate( tempChangeUpText, start, Quaternion.identity );
+			floater = currentTempChangeUpText.GetComponent("FloatingText");
+			floater.floatFrom = thisTransform;
+			floater.lastUpdateTime = Time.time;
+		} else {
+			currentTempChangeUpValue += delta;
+		}
+		
+		currentTempChangeUpText.text = "+" + currentTempChangeUpValue + "°";
+		var scale : float = 1 + (currentTempChangeUpValue/10 * 0.2);
+		currentTempChangeUpText.transform.localScale.x = currentTempChangeUpText.transform.localScale.x * scale;
+		currentTempChangeUpText.transform.localScale.y = currentTempChangeUpText.transform.localScale.y * scale;
+		
 	} else {
-		tempChangeText = Instantiate( tempChangeDownText, start, Quaternion.identity );
-	}
 	
-	tempChangeText.text = "" + symbol + delta + "°";
-	var floater : FloatingText = tempChangeText.GetComponent("FloatingText");
-	floater.floatFrom = thisTransform;
+		if(!currentTempChangeDownText) {
+			currentTempChangeDownValue = delta;
+			currentTempChangeDownText = Instantiate( tempChangeDownText, start, Quaternion.identity );
+			floater = currentTempChangeDownText.GetComponent("FloatingText");
+			floater.floatFrom = thisTransform;
+			floater.lastUpdateTime = Time.time;
+		} else {
+			currentTempChangeDownValue += delta;
+		}
+		
+		currentTempChangeDownText.text = "" + currentTempChangeDownValue + "°";
+		
+	}
 	
 }
 
@@ -176,7 +202,7 @@ function GameOver() {
 }
 
 function ReloadAfterDelay() {
-	yield WaitForSeconds(5);
+	yield WaitForSeconds(3);
 	Application.LoadLevel(0);
 }
 

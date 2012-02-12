@@ -1,11 +1,12 @@
-var Level : GameObject;
 var factor : float = 1.0;
 
 private var scrolling : Scroller;
 private var minX : float = -30.0;
 private var thisTransform : Transform;
+private var Level : GameObject;
 
 function Start () {
+	Level = GameObject.Find("Level");
 	scrolling = Level.GetComponent("Scroller");
 	thisTransform = transform;
 }

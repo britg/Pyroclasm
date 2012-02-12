@@ -18,7 +18,6 @@ private var yMax = 8.307953;
 private var xStart = 10;
 private var nextObject : Transform;
 
-private var speedFactor : float = 1.2;
 
 private var Patterns : Array = [];
 
@@ -62,6 +61,4 @@ function Generate () {
 	var yStart = Random.value * (yMax - yMin) + yMin;
 	var pattern : Transform = Instantiate( prefab , Vector3(xStart, yStart, -1), Quaternion.identity );
 	var motor : Motor = pattern.gameObject.GetComponent("Motor");
-	motor.Level = gameObject;
-	motor.factor = speedFactor;
 }

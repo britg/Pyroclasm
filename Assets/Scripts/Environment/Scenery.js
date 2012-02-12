@@ -35,8 +35,6 @@ function RemoveDestroyedBackgrounds () {
 function CreateBackground() {
 	var chosen : Transform = ChooseBackground();
 	var bg : Transform = Instantiate( chosen , Vector3(20, 0, 0), Quaternion.identity ); 
-	var motor : Motor = bg.GetComponent("Motor");
-	motor.Level = gameObject;
 	bgs.Push(bg);
 	
 	Invoke("ConnectBackgrounds", 0.1);
