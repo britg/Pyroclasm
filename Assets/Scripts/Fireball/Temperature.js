@@ -98,7 +98,16 @@ function OnCollisionEnter(theCollision : Collision){
 		}
 		
 		if(tempChanger.playExplosionSound) {
+			Debug.Log("Playing explosion sound");
 			audio.PlayOneShot(explosionSound);
+		}
+		
+		if(tempChanger.removeOnCollision) {
+			Destroy(obj);
+		}
+		
+		if(tempChanger.shakesCamera) {
+			Camera.main.animation.Play();
 		}
 	}
 }

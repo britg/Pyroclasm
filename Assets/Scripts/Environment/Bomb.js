@@ -16,7 +16,7 @@ private var flashTime : float = 3.0;
 private var speedRecoverVelocity : float;
 
 private var Distance;
-private var Destructible;
+private var Bombable;
 
 function Start () {
 
@@ -89,14 +89,14 @@ function AttemptBomb() {
 	
 	var amount : int;
 	
-	for(var bombable : GameObject in GameObject.FindGameObjectsWithTag("Bombable")) {
-		Destructible = bombable.GetComponent("Destructible");
-		if(Destructible) {
-			amount = Destructible.bombTempChange;
+	for(var obj : GameObject in FindObjectsOfType(GameObject)) {
+		Bombable = obj.GetComponent("Bombable");
+		if(Bombable) {
+			amount = Bombable.bombTempChange;
 			temp.TempChange(amount, false);
-			Destructible.DisplayBombPoints();
+			Bombable.DisplayBombPoints();
+			Destroy(obj);
 		}
-		Destroy(bombable);
 	}
 }
 
