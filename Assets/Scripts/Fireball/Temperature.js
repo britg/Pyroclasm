@@ -140,6 +140,7 @@ function NotifyTempChange(delta) {
 	
 	var symbol = "";
 	var start : Vector2 = Camera.main.WorldToViewportPoint(thisTransform.position);
+	start.x += 0.1;
 	var floater : FloatingText;
 	
 	if(delta > 0) {
