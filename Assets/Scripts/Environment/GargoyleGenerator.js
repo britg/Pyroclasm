@@ -10,8 +10,8 @@ var fireball : GameObject;
 
 private var timeleft : float;
 
-private var yMin : float = 5;
-private var yMax : float = 7.1;
+private var yMin : float = 1.5;
+private var yMax : float = 5.5;
 private var xStart = 10;
 private var nextObject : Transform;
 

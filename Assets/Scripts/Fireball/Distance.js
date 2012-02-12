@@ -37,5 +37,5 @@ function Update () {
 }
 
 function DisplayDistance() {
-	distanceText.text = "" + Mathf.Round(distance) + "m (" + bestDistance +"m)";
+	distanceText.text = "" + Mathf.Round(distance) + "m";
 }
