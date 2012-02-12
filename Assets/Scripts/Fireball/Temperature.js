@@ -34,8 +34,6 @@ private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
 private var thisAnimator : ParticleAnimator;
 
-private var yVelocity : float;
-
 private var moving : boolean = false;
 
 function Start () {
@@ -59,8 +57,6 @@ function Update () {
 		SimulateMotion();
 	}
 
-	yVelocity = thisRigidbody.velocity.y;
-	
 	timeleft -= Time.deltaTime;
     
     if(!gameOver) {
@@ -78,12 +74,12 @@ function DisplayTemp() {
 	displayText.text = "" + heat + "°";
 }
 
-function OnCollisionEnter(theCollision : Collision){
+function OnTriggerEnter(collider : Collider){
 
 	// Cancel the collision
-	thisRigidbody.velocity.y = yVelocity;
+	//thisRigidbody.velocity.y = prevYVelocity;
 	
-	var obj : GameObject = theCollision.gameObject;
+	var obj : GameObject = collider.gameObject;
 	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
 	
 	if(tempChanger != null) {
@@ -103,6 +99,7 @@ function OnCollisionEnter(theCollision : Collision){
 		}
 		
 		if(tempChanger.removeOnCollision) {
+			Debug.Log("Removing on collision");
 			Destroy(obj);
 		}
 		
@@ -110,6 +107,7 @@ function OnCollisionEnter(theCollision : Collision){
 			Camera.main.animation.Play();
 		}
 	}
+
 }
 
 function GetDistance() {

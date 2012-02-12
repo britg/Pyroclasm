@@ -24,3 +24,4 @@ function Update () {
 		Destroy(gameObject);
 	}
 }
+

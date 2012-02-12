@@ -6,6 +6,7 @@ var minGenerationInterval : float = 2.0;
 
 var gargoyle : Transform;
 var bookshelf : Transform;
+var torch : Transform;
 
 var fireball : GameObject;
 
@@ -22,7 +23,7 @@ function Start () {
 	Distance = fireball.GetComponent("Distance");
 	ResetTimer();
 	scrolling = Level.GetComponent("Scroller");
-	objects = [gargoyle, bookshelf];
+	objects = [gargoyle, bookshelf, torch];
 }
 
 function ResetTimer () {
