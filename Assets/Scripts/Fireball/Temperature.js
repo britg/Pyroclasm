@@ -173,17 +173,11 @@ function NotifyTempChange(delta) {
 		
 	} else {
 	
-		if(!currentTempChangeDownText) {
-			currentTempChangeDownValue = delta;
-			currentTempChangeDownText = Instantiate( tempChangeDownText, start, Quaternion.identity );
-			floater = currentTempChangeDownText.GetComponent("FloatingText");
-			floater.floatFrom = thisTransform;
-			floater.lastUpdateTime = Time.time;
-		} else {
-			currentTempChangeDownValue += delta;
-			floater = currentTempChangeDownText.GetComponent("FloatingText");
-			floater.lastUpdateTime = Time.time;
-		}
+		currentTempChangeDownValue = delta;
+		currentTempChangeDownText = Instantiate( tempChangeDownText, start, Quaternion.identity );
+		floater = currentTempChangeDownText.GetComponent("FloatingText");
+		floater.floatFrom = thisTransform;
+		floater.lastUpdateTime = Time.time;
 		
 		currentTempChangeDownText.text = "" + currentTempChangeDownValue + "°";
 		
