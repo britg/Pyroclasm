@@ -33,6 +33,7 @@ private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
 private var thisAnimator : ParticleAnimator;
+private var thisDistance;
 
 private var moving : boolean = false;
 
@@ -43,6 +44,7 @@ function Start () {
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
 	thisAnimator = thisTransform.Find("Intensity").GetComponent.<ParticleAnimator>();
 	scrolling = Level.GetComponent("Scroller");
+	thisDistance = gameObject.GetComponent("Distance");
 	
 	ResetTimer();
 }
@@ -111,8 +113,7 @@ function OnTriggerEnter(collider : Collider){
 }
 
 function GetDistance() {
-	var distance : Distance = gameObject.GetComponent('Distance');
-	return distance.distance;
+	return thisDistance.distance;
 }
 
 function TrackHighestTemp() {
@@ -124,6 +125,9 @@ function TrackHighestTemp() {
 function CoolOff() {
 	var distance = GetDistance();
 	var coolAmount : int = -Mathf.Round(coolRate * Mathf.Sqrt(distance));
+	if(heat + coolAmount <= 10) {
+		coolAmount = -heat + 10;
+	}
 	TempChange(coolAmount, false);
 }
 
