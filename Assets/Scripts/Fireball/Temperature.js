@@ -10,6 +10,8 @@ var gameOverText : GUIText;
 var streakText  : TextMesh;
 var powerDownText : TextMesh;
 
+private var originalStreakTextSize : float;
+
 private var streakValue : int;
 private var streakTime : float;
 var streakTimeout : float = 1.0;
@@ -49,6 +51,11 @@ function Start () {
 	thisAnimator = thisTransform.Find("Intensity").GetComponent.<ParticleAnimator>();
 	scrolling = Level.GetComponent("Scroller");
 	thisDistance = gameObject.GetComponent("Distance");
+	
+	powerDownText.renderer.material.color = Color(0.0, 0.3, 1.0, 1.0);
+	streakText.renderer.material.color = Color(1.0, 0.3, 0.2, 1.0);
+	
+	originalStreakTextSize = streakText.characterSize;
 	
 	ResetTimer();
 }
@@ -171,18 +178,18 @@ function NotifyTempChange(delta) {
 	if(delta > 0) {
 		streakTime = Time.time;
 		
-		if(!streakText.active)
-			streakText.active = true;
+		if(!streakText.gameObject.active) {
+			streakText.gameObject.active = true;
+			originalStreakTextSize = streakText.characterSize;
+		}
 		
-		streakValue += delta;
-		
-		streakText.text = "+" + streakValue + "°";
+		IncreaseStreak(delta);
 		
 	} else {
 		powerDownTime = Time.time;
 		EndStreak();
 		
-		powerDownText.active = true;
+		powerDownText.gameObject.active = true;
 		powerDownText.text = "" + delta + "°";
 		
 	}
@@ -196,13 +203,22 @@ function CheckTextTimeout () {
 	}
 	
 	if((Time.time - powerDownTime) > powerDownTimeout) {
-		powerDownText.active = false;
+		powerDownText.gameObject.active = false;
 	}
 }
 
+function IncreaseStreak(delta) {
+	streakValue += delta;
+	streakText.text = "+" + streakValue + "°";
+	
+	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/400.0), originalStreakTextSize, 3);
+	streakText.characterSize = newSize;
+}
+
 function EndStreak() {
-	streakText.active = false;
+	streakText.gameObject.active = false;
 	streakValue = 0;
+	streakText.characterSize = originalStreakTextSize;
 }
 
 function GameOver() {
