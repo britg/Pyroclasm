@@ -11,6 +11,7 @@ var streakText  : TextMesh;
 var powerDownText : TextMesh;
 
 private var originalStreakTextSize : float;
+private var originalStreakY : float;
 
 private var streakValue : int;
 private var streakTime : float;
@@ -52,10 +53,11 @@ function Start () {
 	scrolling = Level.GetComponent("Scroller");
 	thisDistance = gameObject.GetComponent("Distance");
 	
-	powerDownText.renderer.material.color = Color(0.0, 0.3, 1.0, 1.0);
-	streakText.renderer.material.color = Color(1.0, 0.3, 0.2, 1.0);
+	powerDownText.renderer.material.color = Color(0.1, 1.0, 1.0, 1.0);
+	streakText.renderer.material.color = Color(1.0, 0.15, 0.05, 1.0);
 	
 	originalStreakTextSize = streakText.characterSize;
+	originalStreakY = streakText.transform.localPosition.y;
 	
 	ResetTimer();
 }
@@ -144,7 +146,10 @@ function CoolOff() {
 	if(heat + coolAmount <= 10) {
 		coolAmount = -heat + 10;
 	}
-	TempChange(coolAmount, false);
+	
+	if(!streakText.gameObject.active) {
+		TempChange(coolAmount, false);
+	}
 }
 
 function TempChange(delta, notify) {
@@ -181,6 +186,7 @@ function NotifyTempChange(delta) {
 		if(!streakText.gameObject.active) {
 			streakText.gameObject.active = true;
 			originalStreakTextSize = streakText.characterSize;
+			originalStreakY = streakText.transform.localPosition.y;
 		}
 		
 		IncreaseStreak(delta);
@@ -212,13 +218,16 @@ function IncreaseStreak(delta) {
 	streakText.text = "+" + streakValue + "°";
 	
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/400.0), originalStreakTextSize, 3);
+	//var newY : float = originalStreakY + ((0.0+streakValue)/100.0);
 	streakText.characterSize = newSize;
+	//streakText.transform.localPosition.y = newY;
 }
 
 function EndStreak() {
 	streakText.gameObject.active = false;
 	streakValue = 0;
 	streakText.characterSize = originalStreakTextSize;
+	streakText.transform.localPosition.y = originalStreakY;
 }
 
 function GameOver() {
