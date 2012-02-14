@@ -1,30 +1,45 @@
 
+var fireball : GameObject;
 var Level : GameObject;
 
 var maxGenerationInterval : float = 7.0;
 var minGenerationInterval : float = 2.0;
 
-var gargoyle : Transform;
-var bookshelf : Transform;
-var torch : Transform;
-var tapestry : Transform;
+var gargoyle : GameObject;
+private var gargoylePool : GameObjectPool;
+var bookshelf : GameObject;
+private var bookshelfPool : GameObjectPool;
+var torch : GameObject;
+private var torchPool : GameObjectPool;
+var tapestry : GameObject;
+private var tapestryPool :GameObjectPool;
 
-var fireball : GameObject;
+private var poolSize : int = 3;
+
 
 private var timeleft : float;
-
 private var xStart = 10;
-
 private var Distance;
 private var scrolling;
 
-private var objects : Array;
+private var Pools : Array;
 
 function Start () {
 	Distance = fireball.GetComponent("Distance");
 	ResetTimer();
 	scrolling = Level.GetComponent("Scroller");
-	objects = [gargoyle, bookshelf, torch, tapestry];
+	
+	
+	gargoylePool = GameObjectPool( gargoyle, poolSize, function(target : GameObject){ target.SendMessage("SetPool", gargoylePool); }, true );
+	gargoylePool.PrePopulate(poolSize);
+	bookshelfPool = GameObjectPool( bookshelf, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bookshelfPool); }, true );
+	bookshelfPool.PrePopulate(poolSize);
+	torchPool = GameObjectPool( torch, poolSize, function(target : GameObject){ target.SendMessage("SetPool", torchPool); }, true );
+	torchPool.PrePopulate(poolSize);
+	tapestryPool = GameObjectPool( tapestry, poolSize, function(target : GameObject){ target.SendMessage("SetPool", tapestryPool); }, true );
+	tapestryPool.PrePopulate(poolSize);
+	
+	Pools = [gargoylePool, bookshelfPool, torchPool, tapestryPool];
 }
 
 function ResetTimer () {
@@ -45,8 +60,6 @@ function Update () {
 }
 
 function Generate () {
-	var ind = Mathf.Floor(Random.value * objects.length);
-	var object : Transform = objects[ind];
-	
-	var h : Transform = Instantiate( object, Vector3(xStart, object.position.y, -1), Quaternion.identity );
+	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
+	pool.Spawn(Vector3(xStart, 0, -1), Quaternion.identity);
 }
