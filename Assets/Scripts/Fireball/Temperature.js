@@ -96,13 +96,15 @@ function OnTriggerEnter(collider : Collider){
 		}
 		
 		if(tempChanger.playExplosionSound) {
-			Debug.Log("Playing explosion sound");
 			audio.PlayOneShot(explosionSound);
 		}
 		
 		if(tempChanger.removeOnCollision) {
-			Debug.Log("Removing on collision");
 			Destroy(obj);
+		}
+		
+		if(tempChanger.disableOnCollision) {
+			obj.SetActiveRecursively(false);
 		}
 		
 		if(tempChanger.shakesCamera) {

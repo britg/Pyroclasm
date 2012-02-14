@@ -1,8 +1,7 @@
 
 var velocity : float = 0;
 var startVelocity : float = 10.0;
-var acceleration : float = 0;
-var startAcceleration : float = 0.07;
+var acceleration : float = 0.07;
 var maxVelocity : float = 25.0;
 
 var started : boolean = false;
@@ -22,14 +21,14 @@ function Start() {
 function Begin() {
 	started = true;
 	velocity = startVelocity;
-	acceleration = startAcceleration;
 	titleScreen.enabled = false;
 	highScore.enabled = false;
 }
 
 function Update() {
 
-	velocity = Mathf.Clamp(velocity + (acceleration * Time.deltaTime), 0, maxVelocity);
+	if(started)
+		velocity = Mathf.Clamp(velocity + (acceleration * Time.deltaTime), 0, maxVelocity);
 	
 	if(!started && inputsForStart())
 		Begin();

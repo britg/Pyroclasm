@@ -7,12 +7,12 @@ private var xSpacing : float 	= 0.6;
 private var ySpacing : float 	= 0.6;
 
 private var rows : int 			= 2;
-private var cols : int 			= 2;
+private var cols : int 			= 1;
 
 function Start() {
 
 	cols += Mathf.Round(Random.value * 10);
-	rows += Mathf.Round(Random.value * 3);
+	rows += Mathf.Round(Random.value * 2);
 	
 
 	for(var i = 0; i < cols; i++) {

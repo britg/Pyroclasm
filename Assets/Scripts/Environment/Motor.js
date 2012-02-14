@@ -4,6 +4,7 @@ private var scrolling : Scroller;
 private var minX : float = -30.0;
 private var thisTransform : Transform;
 private var Level : GameObject;
+private var pool : GameObjectPool;
 
 function Start () {
 	Level = GameObject.Find("Level");
@@ -21,7 +22,16 @@ function Update () {
 	//thisTransform.position.x -= delta;
 	
 	if(transform.position.x < minX) {
-		Destroy(gameObject);
+	
+		if(pool) {
+			Debug.Log("Unspawning a " + gameObject + " from " + pool);
+			pool.Unspawn(gameObject);
+		} else {
+			Destroy(gameObject);
+		}
 	}
 }
 
+function SetPool(_pool : GameObjectPool) {
+	pool = _pool;
+}
