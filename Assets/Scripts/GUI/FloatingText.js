@@ -1,5 +1,5 @@
 
-var floatHeight : float = 0.2;
+var floatHeight : float = 0.0;
 var floatTime : float = 0.3;
 var floatFrom : Transform;
 

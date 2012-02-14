@@ -6,13 +6,13 @@ private var gem : Transform;
 private var xSpacing : float 	= 0.6;
 private var ySpacing : float 	= 0.6;
 
-private var rows : int 			= 2;
-private var cols : int 			= 1;
+private var rows : int 			= 1;
+private var cols : int 			= 5;
 
 function Awake() {
 
-	cols += Mathf.Round(Random.value * 10);
-	rows += Mathf.Round(Random.value * 2);
+	rows += Mathf.Round(Random.value * 1);
+	cols += Mathf.Round(Random.value * 5);
 	
 
 	for(var i = 0; i < cols; i++) {

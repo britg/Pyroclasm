@@ -59,5 +59,5 @@ function FixedUpdate () {
 }
 
 function inputsForLift() {
-	return ( Input.touchCount > 0 || Input.GetMouseButton(0) || Input.GetKey("space") );
+	return ( Input.touchCount > 0 || Input.GetMouseButton(0) || Input.GetKey("space") || Input.GetKey("up") );
 }

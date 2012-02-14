@@ -7,10 +7,13 @@ var maxHeat : int = 2500;
 var displayText : GUIText;
 var gameOverText : GUIText;
 
-var tempChangeUpText : GUIText;
+var streakText  : TextMesh;
 var tempChangeDownText : GUIText;
-private var currentTempChangeUpValue : int;
-private var currentTempChangeUpText : GUIText;
+
+private var streakValue : int;
+private var streakTime : float;
+var streakTimeout : float = 1.0;
+
 private var currentTempChangeDownValue : int;
 private var currentTempChangeDownText : GUIText;
 
@@ -62,6 +65,9 @@ function Update () {
 	timeleft -= Time.deltaTime;
     
     if(!gameOver) {
+    
+    	CheckStreakTimeout();
+    	
 	    if( timeleft <= 0.0 ) {
 	    	TrackHighestTemp();
 	    	CoolOff();	
@@ -162,23 +168,18 @@ function NotifyTempChange(delta) {
 	var floater : FloatingText;
 	
 	if(delta > 0) {
+		streakTime = Time.time;
 		
-		if(!currentTempChangeUpText) {
-			currentTempChangeUpValue = delta;
-			currentTempChangeUpText = Instantiate( tempChangeUpText, start, Quaternion.identity );
-			floater = currentTempChangeUpText.GetComponent("FloatingText");
-			floater.floatFrom = thisTransform;
-			floater.lastUpdateTime = Time.time;
-		} else {
-			currentTempChangeUpValue += delta;
-			floater = currentTempChangeUpText.GetComponent("FloatingText");
-			floater.lastUpdateTime = Time.time;
-		}
+		if(!streakText.active)
+			streakText.active = true;
 		
-		currentTempChangeUpText.text = "+" + currentTempChangeUpValue + "°";
+		streakValue += delta;
+		
+		streakText.text = "+" + streakValue + "°";
 		
 	} else {
-	
+		EndStreak();
+		
 		currentTempChangeDownValue = delta;
 		currentTempChangeDownText = Instantiate( tempChangeDownText, start, Quaternion.identity );
 		floater = currentTempChangeDownText.GetComponent("FloatingText");
@@ -189,6 +190,18 @@ function NotifyTempChange(delta) {
 		
 	}
 	
+}
+
+function CheckStreakTimeout () {
+	
+	if((Time.time - streakTime) > streakTimeout) {
+		EndStreak();
+	}
+}
+
+function EndStreak() {
+	streakText.active = false;
+	streakValue = 0;
 }
 
 function GameOver() {
