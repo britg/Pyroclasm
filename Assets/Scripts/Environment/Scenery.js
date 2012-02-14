@@ -1,15 +1,32 @@
 
-var startbg : Transform;
-var bg1 : Transform;
-var bg2 : Transform;
-var bg3 : Transform;
-var plainbg : Transform;
+var startbg : GameObject;
 
-private var bgPool : Array;
+var bg1 : GameObject;
+private var bg1Pool : GameObjectPool;
+var bg2 : GameObject;
+private var bg2Pool : GameObjectPool;
+var bg3 : GameObject;
+private var bg3Pool : GameObjectPool;
+
+var plainbg : GameObject;
+private var plainBgPool : GameObjectPool;
+
+private var poolSize : int = 3;
+
+private var Pools : Array;
 private var bgs : Array;
 
 function Start () {
-	bgPool = [bg1, bg2, bg3];
+	bg1Pool = GameObjectPool( bg1, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bg1Pool); }, true );
+	bg1Pool.PrePopulate(poolSize);
+	bg2Pool = GameObjectPool( bg2, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bg2Pool); }, true );
+	bg2Pool.PrePopulate(poolSize);
+	bg3Pool = GameObjectPool( bg3, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bg3Pool); }, true );
+	bg3Pool.PrePopulate(poolSize);
+	plainBgPool = GameObjectPool( plainbg, poolSize, function(target : GameObject){ target.SendMessage("SetPool", plainBgPool); }, true );
+	plainBgPool.PrePopulate(poolSize);
+	
+	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool];
 	bgs = [startbg];
 }
 
@@ -25,38 +42,34 @@ function Update () {
 
 function RemoveDestroyedBackgrounds () {
 	for(var i = 0; i < bgs.length; i++) {
-		var bg : Transform = bgs[i];
-		if(bg == null) {
+		var bg : GameObject = bgs[i];
+		if(bg == null || !bg.active) {
 			bgs.RemoveAt(i);
 		}
 	}
 }
 
 function CreateBackground() {
-	var chosen : Transform = ChooseBackground();
-	var bg : Transform = Instantiate( chosen , Vector3(20, 0, 0), Quaternion.identity ); 
+	var chosen : GameObjectPool  = ChooseBackgroundPool();
+	var bg : GameObject = chosen.Spawn( Vector3(20, 0, 0), Quaternion.identity ); 
 	bgs.Push(bg);
 	
 	Invoke("ConnectBackgrounds", 0.1);
 }
 
-function GetNextStartPosition() {
-
-}
-
 function ConnectBackgrounds () {
-	var left : Transform = bgs[bgs.length-2];
-	var right : Transform = bgs[bgs.length-1];
+	var left : GameObject = bgs[bgs.length-2];
+	var right : GameObject = bgs[bgs.length-1];
 	
-	right.position.x = left.position.x + left.localScale.x;
+	right.transform.position.x = left.transform.position.x + left.transform.localScale.x;
 }
 
-function ChooseBackground() {
+function ChooseBackgroundPool() {
 	var roll : float = Random.value * 10;
 	
 	if( roll <= 6 ) {
-		return plainbg;
+		return Pools[0];
 	}
 	
-	return bgPool[Mathf.Floor(Random.value*bgPool.length)];
+	return Pools[Mathf.Floor(Random.value*Pools.length)];
 }

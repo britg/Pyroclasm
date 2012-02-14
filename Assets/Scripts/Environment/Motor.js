@@ -24,7 +24,7 @@ function Update () {
 	if(transform.position.x < minX) {
 	
 		if(pool) {
-			Debug.Log("Unspawning a " + gameObject + " from " + pool);
+			//Debug.Log("Unspawning a " + gameObject + " from " + pool);
 			pool.Unspawn(gameObject);
 		} else {
 			Destroy(gameObject);

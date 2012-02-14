@@ -9,8 +9,11 @@ var maxSpeedFactor : float = 1.4;
 var minSpeedFactor : float = 1.1;
 
 
-var iceBolt : Transform;
+var iceBolt : GameObject;
 var fireball : GameObject;
+
+private var iceBoltPool : GameObjectPool;
+private var poolSize : int = 5;
 
 private var timeleft : float;
 
@@ -28,6 +31,9 @@ function Start () {
 	Distance = fireball.GetComponent("Distance");
 	ResetTimer();
 	scrolling = Level.GetComponent("Scroller");
+	
+	iceBoltPool = GameObjectPool( iceBolt, poolSize, function(target : GameObject){ target.SendMessage("SetPool", iceBoltPool); }, true );
+	iceBoltPool.PrePopulate(poolSize);
 }
 
 function ResetTimer () {
@@ -54,10 +60,9 @@ function Update () {
 
 function Generate () {
 	var yStart = Random.value * (yMax - yMin) + yMin;
-	
 	speedFactor = Random.value* (maxSpeedFactor - minSpeedFactor) + minSpeedFactor;
 	
-	var h : Transform = Instantiate( iceBolt, Vector3(xStart, yStart, -1), Quaternion.identity );
-	var motor : Motor = h.gameObject.GetComponent("Motor");
+	var bolt : GameObject = iceBoltPool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
+	var motor : Motor = bolt.gameObject.GetComponent("Motor");
 	motor.factor = speedFactor;
 }
