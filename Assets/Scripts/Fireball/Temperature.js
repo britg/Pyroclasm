@@ -8,14 +8,15 @@ var displayText : GUIText;
 var gameOverText : GUIText;
 
 var streakText  : TextMesh;
-var tempChangeDownText : GUIText;
+var powerDownText : TextMesh;
 
 private var streakValue : int;
 private var streakTime : float;
 var streakTimeout : float = 1.0;
 
-private var currentTempChangeDownValue : int;
-private var currentTempChangeDownText : GUIText;
+private var powerDownValue : int;
+private var powerDownTime : float;
+var powerDownTimeout : float = 1.0;
 
 var pickupSound : AudioClip;
 var cooldownSound : AudioClip;
@@ -66,7 +67,7 @@ function Update () {
     
     if(!gameOver) {
     
-    	CheckStreakTimeout();
+    	CheckTextTimeout();
     	
 	    if( timeleft <= 0.0 ) {
 	    	TrackHighestTemp();
@@ -178,24 +179,24 @@ function NotifyTempChange(delta) {
 		streakText.text = "+" + streakValue + "°";
 		
 	} else {
+		powerDownTime = Time.time;
 		EndStreak();
 		
-		currentTempChangeDownValue = delta;
-		currentTempChangeDownText = Instantiate( tempChangeDownText, start, Quaternion.identity );
-		floater = currentTempChangeDownText.GetComponent("FloatingText");
-		floater.floatFrom = thisTransform;
-		floater.lastUpdateTime = Time.time;
-		
-		currentTempChangeDownText.text = "" + currentTempChangeDownValue + "°";
+		powerDownText.active = true;
+		powerDownText.text = "" + delta + "°";
 		
 	}
 	
 }
 
-function CheckStreakTimeout () {
+function CheckTextTimeout () {
 	
 	if((Time.time - streakTime) > streakTimeout) {
 		EndStreak();
+	}
+	
+	if((Time.time - powerDownTime) > powerDownTimeout) {
+		powerDownText.active = false;
 	}
 }
 
