@@ -9,7 +9,7 @@ private var ySpacing : float 	= 0.6;
 private var rows : int 			= 2;
 private var cols : int 			= 1;
 
-function Start() {
+function Awake() {
 
 	cols += Mathf.Round(Random.value * 10);
 	rows += Mathf.Round(Random.value * 2);

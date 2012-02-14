@@ -94,8 +94,7 @@ function AttemptBomb() {
 		if(Bombable) {
 			amount = Bombable.bombTempChange;
 			temp.TempChange(amount, false);
-			Bombable.DisplayBombPoints();
-			Destroy(obj);
+			Bombable.React();
 		}
 	}
 }

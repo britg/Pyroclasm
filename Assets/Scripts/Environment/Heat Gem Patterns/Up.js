@@ -6,7 +6,7 @@ private var gem : Transform;
 private var numGems : int 		= 10;
 private var xSpacing : float 	= 0.75;
 
-function Start() {
+function Awake() {
 
 	for(var i = 0; i < numGems; i++) {
 		gem = Instantiate( heatGem , transform.position, Quaternion.identity );

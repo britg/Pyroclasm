@@ -9,3 +9,9 @@ function DisplayBombPoints() {
 	var floater : FloatingText = bombText.GetComponent("FloatingText");
 	floater.floatFrom = transform;
 }
+
+function React() {
+	DisplayBombPoints();
+	gameObject.SetActiveRecursively(false);
+}
+

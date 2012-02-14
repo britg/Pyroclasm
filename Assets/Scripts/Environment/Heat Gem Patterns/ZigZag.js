@@ -6,7 +6,7 @@ private var gem : Transform;
 private var numGems : int 		= 20;
 private var xSpacing : float 	= 0.75;
 
-function Start() {
+function Awake() {
 	currY = 0;
 
 	for(var i : float = 0; i < numGems; i++) {
