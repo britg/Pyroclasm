@@ -1,5 +1,7 @@
 
 var updateInterval = 0.2;
+var intensityUpdateInterval = 1.0;
+
 var coolRate : float = 1;
 var initialHeat : int = 500;
 var maxHeat : int = 2500;
@@ -29,6 +31,7 @@ var Level : GameObject;
 private var scrolling;
 
 private var timeleft : float;
+private var intensityUpdateTimeLeft : float;
 
 private var heat : int;
 private var highTemp : int;
@@ -54,16 +57,21 @@ function Start () {
 	thisDistance = gameObject.GetComponent("Distance");
 	
 	powerDownText.renderer.material.color = Color(0.1, 1.0, 1.0, 1.0);
-	streakText.renderer.material.color = Color(1.0, 0.15, 0.05, 1.0);
+	streakText.renderer.material.color = Color(1.0, 0.376, 0.203, 1.0);
 	
 	originalStreakTextSize = streakText.characterSize;
-	originalStreakY = streakText.transform.localPosition.y;
+	//originalStreakY = streakText.transform.localPosition.y;
 	
 	ResetTimer();
+	ResetIntensityUpdateTimer();
 }
 
 function ResetTimer () {
 	timeleft = updateInterval;
+}
+
+function ResetIntensityUpdateTimer() {
+	intensityUpdateTimeLeft = intensityUpdateInterval;
 }
 
 function Update () {
@@ -73,6 +81,7 @@ function Update () {
 	}
 
 	timeleft -= Time.deltaTime;
+	intensityUpdateTimeLeft -= Time.deltaTime;
     
     if(!gameOver) {
     
@@ -82,6 +91,11 @@ function Update () {
 	    	TrackHighestTemp();
 	    	CoolOff();	
 			ResetTimer();
+		}
+		
+		if( intensityUpdateTimeLeft <= 0.0 ) {
+			UpdateIntensity();
+			ResetIntensityUpdateTimer();
 		}
 	} else if(shouldUpdate) {
 		GameOver();
@@ -168,7 +182,6 @@ function TempChange(delta, notify) {
 	
 	if(shouldUpdate) {
 		DisplayTemp();
-		UpdateFireball();
 	}
 	
 }
@@ -186,7 +199,7 @@ function NotifyTempChange(delta) {
 		if(!streakText.gameObject.active) {
 			streakText.gameObject.active = true;
 			originalStreakTextSize = streakText.characterSize;
-			originalStreakY = streakText.transform.localPosition.y;
+			//originalStreakY = streakText.transform.localPosition.y;
 		}
 		
 		IncreaseStreak(delta);
@@ -217,7 +230,7 @@ function IncreaseStreak(delta) {
 	streakValue += delta;
 	streakText.text = "+" + streakValue + "°";
 	
-	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/400.0), originalStreakTextSize, 3);
+	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/200.0), originalStreakTextSize, 3);
 	//var newY : float = originalStreakY + ((0.0+streakValue)/100.0);
 	streakText.characterSize = newSize;
 	//streakText.transform.localPosition.y = newY;
@@ -262,9 +275,10 @@ function ReloadAfterDelay() {
 function SimulateMotion() {
 	moving = true;
 	thisAnimator.force.y = 0;
-	thisAnimator.force.x = -100;
+	UpdateIntensity();
 }
 
-function UpdateFireball() {
-	thisEmitter.maxEmission = heat * 10;
+function UpdateIntensity() {
+	thisEmitter.maxEmission = heat / 10 + 10;
+	thisAnimator.force.x = - 5*scrolling.velocity;
 }
