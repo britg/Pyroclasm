@@ -2,7 +2,7 @@
 private var thisFireball : GameObject;
 private var Temp;
 
-var sizeUpdateInterval : float = 1.0;
+var sizeUpdateInterval : float = 0.2;
 private var timeLeft : float;
 
 function Start() {
@@ -26,7 +26,7 @@ function Update () {
 }
 
 function UpdateSize() {
-	var size : float = (0.0 + Temp.heat)/200.0;
+	var size : float = (0.0 + Temp.heat)/250.0;
 	transform.localScale.x = size;
 	transform.localScale.y = size;
 }
