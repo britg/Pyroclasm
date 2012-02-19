@@ -57,16 +57,20 @@ function Update() {
     
     if(flash.enabled) {
     	flash.color.a = Mathf.SmoothDamp(flash.color.a, 0, flashAlphaVelocity, flashTime);
-    	Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1, speedRecoverVelocity, flashTime);
+    	//Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1, speedRecoverVelocity, flashTime);
     }
     
     if(Mathf.Floor(Distance.distance / distanceToNextBomb) > cumulativeBombCount) {
-    	cumulativeBombCount++;
-    	bombCount++;
-    	UpdateBombLabel();
+    	//AwardBomb();
     }
 	
 }	
+
+function AwardBomb() {
+	cumulativeBombCount++;
+	bombCount++;
+	UpdateBombLabel();
+}
 
 function AttemptBomb() {
 
@@ -81,7 +85,7 @@ function AttemptBomb() {
 
 	Flash(flashTime);
 	
-	Time.timeScale = 0.5;
+	//Time.timeScale = 0.5;
 	Camera.main.animation.Play();
 	
 	var temp : Temperature = fireball.GetComponent("Temperature");

@@ -29,6 +29,11 @@ function Lift() {
 	if(!respondToTouch) {
 		return;
 	}
+	var velY : float = thisRigidbody.velocity.y;
+	var minY = -3.0;
+	if(velY < minY) {
+		thisRigidbody.velocity.y = minY;
+	}
 	thisRigidbody.AddForce(Vector3.up * force);
 }
 
@@ -49,8 +54,11 @@ function Update () {
 
 
 function FixedUpdate () {	
-	if (!touched)
+	if (!touched) {
 		InitialFloat();
+	} else {
+		thisRigidbody.AddForce(Vector3.down *5.0);
+	}
 	
 	if ( inputsForLift() ) {
 		touched = true;

@@ -13,9 +13,9 @@ function Start() {
 	Time.timeScale = 1.0;
 	
 	var distance = PlayerPrefs.GetInt("distance");
-	var highTemp = PlayerPrefs.GetInt("temp");
+	var longestStreak = PlayerPrefs.GetInt("streak");
 	highScore.enabled = true;
-	highScore.text = "Best Distance: " + Mathf.Round(distance) + "m\nHighest Temp: " + highTemp + "°";
+	highScore.text = "Best Distance: " + Mathf.Round(distance) + "m\nBest Streak: +" + longestStreak + "°";
 }
 
 function Begin() {

@@ -13,6 +13,8 @@ var torch : GameObject;
 private var torchPool : GameObjectPool;
 var icicle : GameObject;
 private var iciclePool :GameObjectPool;
+var tapestry : GameObject;
+private var tapestryPool : GameObjectPool;
 
 private var poolSize : int = 3;
 
@@ -38,8 +40,10 @@ function Start () {
 	torchPool.PrePopulate(poolSize);
 	iciclePool = GameObjectPool( icicle, poolSize, function(target : GameObject){ target.SendMessage("SetPool", iciclePool); }, true );
 	iciclePool.PrePopulate(poolSize);
+	tapestryPool = GameObjectPool( tapestry, poolSize, function(target : GameObject){ target.SendMessage("SetPool", tapestryPool); }, true );
+	tapestryPool.PrePopulate(poolSize);
 	
-	Pools = [gargoylePool, bookshelfPool, torchPool, iciclePool];
+	Pools = [gargoylePool, bookshelfPool, torchPool, iciclePool, tapestryPool];
 }
 
 function ResetTimer () {

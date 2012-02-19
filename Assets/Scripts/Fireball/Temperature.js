@@ -18,6 +18,7 @@ private var originalStreakY : float;
 private var streakValue : int;
 private var streakTime : float;
 var streakTimeout : float = 1.0;
+private var longestStreak : int;
 
 private var powerDownValue : int;
 private var powerDownTime : float;
@@ -34,7 +35,6 @@ private var timeleft : float;
 private var intensityUpdateTimeLeft : float;
 
 private var heat : int;
-private var highTemp : int;
 
 private var gameOver : boolean;
 private var shouldUpdate : boolean = true;
@@ -48,7 +48,8 @@ private var thisDistance;
 private var moving : boolean = false;
 
 function Start () {
-	heat = highTemp = initialHeat;
+	heat = initialHeat;
+	longestStreak = 0;
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
@@ -88,7 +89,7 @@ function Update () {
     	CheckTextTimeout();
     	
 	    if( timeleft <= 0.0 ) {
-	    	TrackHighestTemp();
+	    	TrackLongestStreak();
 	    	CoolOff();	
 			ResetTimer();
 		}
@@ -122,11 +123,13 @@ function OnTriggerEnter(collider : Collider){
 		}
 		
 		if(tempChanger.playCooldownSound) {
-			audio.PlayOneShot(cooldownSound);
+			//audio.PlayOneShot(cooldownSound);
+			Camera.main.audio.PlayOneShot(cooldownSound);
 		}
 		
 		if(tempChanger.playExplosionSound) {
-			audio.PlayOneShot(explosionSound);
+			//audio.PlayOneShot(explosionSound);
+			Camera.main.audio.PlayOneShot(explosionSound);
 		}
 		
 		if(tempChanger.removeOnCollision) {
@@ -148,9 +151,9 @@ function GetDistance() {
 	return thisDistance.distance;
 }
 
-function TrackHighestTemp() {
-	if(heat > highTemp) {
-		highTemp = heat;
+function TrackLongestStreak() {
+	if(streakValue > longestStreak) {
+		longestStreak = streakValue;
 	}
 }
 
@@ -248,19 +251,19 @@ function GameOver() {
 	
 	var distance = GetDistance();
 	gameOverText.enabled = true;
-	gameOverText.text = "Game Over!\nDistance: " + Mathf.Round(distance) + "m\nHighest Temp: " + highTemp + "°";
+	gameOverText.text = "Game Over!\nDistance: " + Mathf.Round(distance) + "m\nBest Streak: +" + longestStreak + "°";
 	var lift : Lift = gameObject.GetComponent("Lift");
 	lift.respondToTouch = false;
 	
 	var prevDistance : int = PlayerPrefs.GetInt("distance");
-	var prevTemp : int = PlayerPrefs.GetInt("temp");
+	var prevStreak : int = PlayerPrefs.GetInt("streak");
 	
 	if(distance > prevDistance) {
 		PlayerPrefs.SetInt("distance", distance);
 	}
 	
-	if(highTemp > prevTemp) {
-		PlayerPrefs.SetInt("temp", highTemp);
+	if(longestStreak > prevStreak) {
+		PlayerPrefs.SetInt("streak", longestStreak);
 	}
 	
 	
@@ -279,6 +282,6 @@ function SimulateMotion() {
 }
 
 function UpdateIntensity() {
-	thisEmitter.maxEmission = heat / 10 + 10;
+	//thisEmitter.maxEmission = 50;
 	thisAnimator.force.x = - 5*scrolling.velocity;
 }
