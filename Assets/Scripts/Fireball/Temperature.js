@@ -9,16 +9,9 @@ var maxHeat : int = 2500;
 var displayText : GUIText;
 var gameOverText : GUIText;
 
-var streakText  : TextMesh;
+
 var powerDownText : TextMesh;
 
-private var originalStreakTextSize : float;
-private var originalStreakY : float;
-
-private var streakValue : int;
-private var streakTime : float;
-var streakTimeout : float = 1.0;
-private var longestStreak : int;
 
 private var powerDownValue : int;
 private var powerDownTime : float;
@@ -28,9 +21,6 @@ var pickupSound : AudioClip;
 var cooldownSound : AudioClip;
 var explosionSound : AudioClip;
 
-var Level : GameObject;
-private var scrolling;
-
 private var timeleft : float;
 private var intensityUpdateTimeLeft : float;
 
@@ -39,29 +29,29 @@ private var heat : int;
 private var gameOver : boolean;
 private var shouldUpdate : boolean = true;
 
+var Level : GameObject;
+private var scrolling;
+
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
 private var thisAnimator : ParticleAnimator;
 private var thisDistance;
+private var thisStreak;
 
 private var moving : boolean = false;
 
 function Start () {
 	heat = initialHeat;
-	longestStreak = 0;
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
 	thisAnimator = thisTransform.Find("Intensity").GetComponent.<ParticleAnimator>();
-	scrolling = Level.GetComponent("Scroller");
-	thisDistance = gameObject.GetComponent("Distance");
+	scrolling = Level.GetComponent("Scroller") as Scroller;
+	thisDistance = gameObject.GetComponent("Distance") as Distance;
+	thisStreak = gameObject.GetComponent("Streak") as Streak;
 	
 	powerDownText.renderer.material.color = Color(0.1, 1.0, 1.0, 1.0);
-	streakText.renderer.material.color = Color(1.0, 0.376, 0.203, 1.0);
-	
-	originalStreakTextSize = streakText.characterSize;
-	//originalStreakY = streakText.transform.localPosition.y;
 	
 	ResetTimer();
 	ResetIntensityUpdateTimer();
@@ -89,7 +79,6 @@ function Update () {
     	CheckTextTimeout();
     	
 	    if( timeleft <= 0.0 ) {
-	    	TrackLongestStreak();
 	    	CoolOff();	
 			ResetTimer();
 		}
@@ -123,12 +112,10 @@ function OnTriggerEnter(collider : Collider){
 		}
 		
 		if(tempChanger.playCooldownSound) {
-			//audio.PlayOneShot(cooldownSound);
 			Camera.main.audio.PlayOneShot(cooldownSound);
 		}
 		
 		if(tempChanger.playExplosionSound) {
-			//audio.PlayOneShot(explosionSound);
 			Camera.main.audio.PlayOneShot(explosionSound);
 		}
 		
@@ -151,12 +138,6 @@ function GetDistance() {
 	return thisDistance.distance;
 }
 
-function TrackLongestStreak() {
-	if(streakValue > longestStreak) {
-		longestStreak = streakValue;
-	}
-}
-
 function CoolOff() {
 	var distance = GetDistance();
 	var coolAmount : int = -Mathf.Round(coolRate * Mathf.Sqrt(distance));
@@ -164,7 +145,7 @@ function CoolOff() {
 		coolAmount = -heat + 10;
 	}
 	
-	if(!streakText.gameObject.active) {
+	if(!thisStreak.ongoing) {
 		TempChange(coolAmount, false);
 	}
 }
@@ -191,26 +172,12 @@ function TempChange(delta, notify) {
 
 function NotifyTempChange(delta) {
 	
-	var symbol = "";
-	var start : Vector2 = Camera.main.WorldToViewportPoint(thisTransform.position);
-	start.x += 0.1;
-	var floater : FloatingText;
+	thisStreak.UpdateStreak(delta);
 	
 	if(delta > 0) {
-		streakTime = Time.time;
-		
-		if(!streakText.gameObject.active) {
-			streakText.gameObject.active = true;
-			originalStreakTextSize = streakText.characterSize;
-			//originalStreakY = streakText.transform.localPosition.y;
-		}
-		
-		IncreaseStreak(delta);
-		
+	
 	} else {
 		powerDownTime = Time.time;
-		EndStreak();
-		
 		powerDownText.gameObject.active = true;
 		powerDownText.text = "" + delta + "°";
 		
@@ -220,38 +187,18 @@ function NotifyTempChange(delta) {
 
 function CheckTextTimeout () {
 	
-	if((Time.time - streakTime) > streakTimeout) {
-		EndStreak();
-	}
-	
 	if((Time.time - powerDownTime) > powerDownTimeout) {
 		powerDownText.gameObject.active = false;
 	}
 }
 
-function IncreaseStreak(delta) {
-	streakValue += delta;
-	streakText.text = "+" + streakValue + "°";
-	
-	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/200.0), originalStreakTextSize, 3);
-	//var newY : float = originalStreakY + ((0.0+streakValue)/100.0);
-	streakText.characterSize = newSize;
-	//streakText.transform.localPosition.y = newY;
-}
-
-function EndStreak() {
-	streakText.gameObject.active = false;
-	streakValue = 0;
-	streakText.characterSize = originalStreakTextSize;
-	streakText.transform.localPosition.y = originalStreakY;
-}
 
 function GameOver() {
 	shouldUpdate = false;
 	
 	var distance = GetDistance();
 	gameOverText.enabled = true;
-	gameOverText.text = "Game Over!\nDistance: " + Mathf.Round(distance) + "m\nBest Streak: +" + longestStreak + "°";
+	gameOverText.text = "Game Over!\nDistance: " + Mathf.Round(distance) + "m\nBest Streak: +" + thisStreak.longestStreak + "°";
 	var lift : Lift = gameObject.GetComponent("Lift");
 	lift.respondToTouch = false;
 	
@@ -262,8 +209,8 @@ function GameOver() {
 		PlayerPrefs.SetInt("distance", distance);
 	}
 	
-	if(longestStreak > prevStreak) {
-		PlayerPrefs.SetInt("streak", longestStreak);
+	if(thisStreak.longestStreak > prevStreak) {
+		PlayerPrefs.SetInt("streak", thisStreak.longestStreak);
 	}
 	
 	
