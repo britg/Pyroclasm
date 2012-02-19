@@ -1,6 +1,5 @@
 
 var updateInterval = 0.2;
-var intensityUpdateInterval = 1.0;
 
 var coolRate : float = 1;
 var initialHeat : int = 500;
@@ -9,9 +8,7 @@ var maxHeat : int = 2500;
 var displayText : GUIText;
 var gameOverText : GUIText;
 
-
 var powerDownText : TextMesh;
-
 
 private var powerDownValue : int;
 private var powerDownTime : float;
@@ -22,7 +19,6 @@ var cooldownSound : AudioClip;
 var explosionSound : AudioClip;
 
 private var timeleft : float;
-private var intensityUpdateTimeLeft : float;
 
 private var heat : int;
 
@@ -31,7 +27,6 @@ private var shouldUpdate : boolean = true;
 
 var Level : GameObject;
 private var scrolling;
-
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
@@ -54,15 +49,10 @@ function Start () {
 	powerDownText.renderer.material.color = Color(0.1, 1.0, 1.0, 1.0);
 	
 	ResetTimer();
-	ResetIntensityUpdateTimer();
 }
 
 function ResetTimer () {
 	timeleft = updateInterval;
-}
-
-function ResetIntensityUpdateTimer() {
-	intensityUpdateTimeLeft = intensityUpdateInterval;
 }
 
 function Update () {
@@ -72,7 +62,6 @@ function Update () {
 	}
 
 	timeleft -= Time.deltaTime;
-	intensityUpdateTimeLeft -= Time.deltaTime;
     
     if(!gameOver) {
     
@@ -83,10 +72,6 @@ function Update () {
 			ResetTimer();
 		}
 		
-		if( intensityUpdateTimeLeft <= 0.0 ) {
-			UpdateIntensity();
-			ResetIntensityUpdateTimer();
-		}
 	} else if(shouldUpdate) {
 		GameOver();
 	}
@@ -98,9 +83,6 @@ function DisplayTemp() {
 
 function OnTriggerEnter(collider : Collider){
 
-	// Cancel the collision
-	//thisRigidbody.velocity.y = prevYVelocity;
-	
 	var obj : GameObject = collider.gameObject;
 	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
 	
@@ -225,10 +207,10 @@ function ReloadAfterDelay() {
 function SimulateMotion() {
 	moving = true;
 	thisAnimator.force.y = 0;
+	thisAnimator.force.x = - 5*scrolling.velocity;
 	UpdateIntensity();
 }
 
 function UpdateIntensity() {
-	//thisEmitter.maxEmission = 50;
-	thisAnimator.force.x = - 5*scrolling.velocity;
+	//thisAnimator.force.x = - 5*scrolling.velocity;
 }

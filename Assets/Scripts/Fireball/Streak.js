@@ -19,8 +19,6 @@ function Start() {
 }
 
 function Update () {
-
-	TrackLongestStreak();
 	
 	if((Time.time - streakTime) > streakTimeout) {
 		EndStreak();
@@ -44,13 +42,16 @@ function UpdateStreak (delta) {
 	streakTime = Time.time;
 	
 	if(!ongoing) {
-		ongoing = true;
-		streakText.gameObject.active = true;
-		originalStreakTextSize = streakText.characterSize;
+		StartStreak();
 	}
 	
-	
 	IncreaseStreak(delta);
+}
+
+function StartStreak() {
+	ongoing = true;
+	streakText.gameObject.active = true;
+	originalStreakTextSize = streakText.characterSize;
 }
 
 function IncreaseStreak(delta) {
@@ -59,6 +60,7 @@ function IncreaseStreak(delta) {
 	
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/200.0), originalStreakTextSize, 3);
 	streakText.characterSize = newSize;
+	TrackLongestStreak();
 }
 
 function EndStreak() {
