@@ -20,7 +20,7 @@ var explosionSound : AudioClip;
 
 private var timeleft : float;
 
-private var heat : int;
+var heat : int;
 
 private var gameOver : boolean;
 private var shouldUpdate : boolean = true;
@@ -82,7 +82,7 @@ function DisplayTemp() {
 }
 
 function OnTriggerEnter(collider : Collider){
-
+	//Debug.Log("On Trigger Enter");
 	var obj : GameObject = collider.gameObject;
 	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
 	
