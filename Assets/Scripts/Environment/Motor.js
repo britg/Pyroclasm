@@ -1,4 +1,5 @@
 var factor : float = 1.0;
+var removeOffScreen : boolean = true;
 
 private var scrolling : Scroller;
 private var minX : float = -30.0;
@@ -21,7 +22,7 @@ function Update () {
 	thisTransform.position.x = Mathf.Lerp(thisTransform.position.x, thisTransform.position.x - delta, 1);
 	//thisTransform.position.x -= delta;
 	
-	if(transform.position.x < minX) {
+	if(removeOffScreen && (transform.position.x < minX)) {
 	
 		if(pool) {
 			//Debug.Log("Unspawning a " + gameObject + " from " + pool);
