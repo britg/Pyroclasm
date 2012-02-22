@@ -207,10 +207,9 @@ function ReloadAfterDelay() {
 function SimulateMotion() {
 	moving = true;
 	thisAnimator.force.y = 0;
-	thisAnimator.force.x = - 5*scrolling.velocity;
 	UpdateIntensity();
 }
 
 function UpdateIntensity() {
-	//thisAnimator.force.x = - 5*scrolling.velocity;
+	thisAnimator.force.x = - 5*scrolling.velocity;
 }
