@@ -1,9 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Motor.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Temperature.js">
     <Files>
+      <File FileName="Assets/Scripts/GameObjectPool.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="22" Column="1" />
       <File FileName="Assets/Scripts/Fireball/Streak.js" Line="20" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="85" Column="4" />
       <File FileName="Assets/Scripts/Environment/Interactables/Exploder.js" Line="16" Column="15" />
       <File FileName="Assets/Scripts/Environment/Bomb.js" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Environment/Interactables/Attracted.js" Line="28" Column="4" />
