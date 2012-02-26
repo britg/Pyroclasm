@@ -13,7 +13,9 @@ function OnTriggerEnter (collider : Collider) {
 
 	var obj = collider.gameObject;
 	var isFireball = obj.GetComponent("Temperature");
-	if(isFireball) {
+	var isCollector = obj.GetComponent("Collector");
+	
+	if(isFireball || (isCollector && isCollector.wallActive)) {
 		emitter.emit = true;
 	}
 }

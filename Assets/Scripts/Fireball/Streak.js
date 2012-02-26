@@ -1,5 +1,6 @@
 
-var streakText  : TextMesh;
+var streakText : TextMesh;
+var splashText : TextMesh;
 private var streakValue : int;
 private var streakTime : float;
 
@@ -10,12 +11,16 @@ private var originalStreakTextSize : float;
 private var originalStreakY : float;
 
 var streakBombReq : int = 250;
-var streakTwinsReq : int = 500;
-var streakWallReq : int = 750;
+var streakTwinsReq : int = 300;
+var streakWallReq : int = 600;
 
-private var streakBombRewarded : boolean;
-private var streakTwinsRewarded : boolean;
-private var streakWallRewarded : boolean;
+private var streakBombRewarded : boolean = false;
+private var streakTwinsRewarded : boolean = false;
+private var streakWallRewarded : boolean = false;
+
+var topSatellite : GameObject;
+var bottomSatellite : GameObject;
+var collector;
 
 var ongoing : boolean;
 
@@ -23,7 +28,11 @@ function Start() {
 	ongoing = false;
 	longestStreak = 0;
 	streakText.renderer.material.color = Color(1.0, 0.376, 0.203, 1.0);
+	splashText.renderer.material.color = Color(1.0, 0.376, 0.203, 1.0);
 	originalStreakTextSize = streakText.characterSize;
+	
+	var collectorObject = GameObject.Find("Collector");
+	collector = collectorObject.GetComponent("Collector");
 }
 
 function Update () {
@@ -31,8 +40,8 @@ function Update () {
 	if((Time.time - streakTime) > streakTimeout) {
 		EndStreak();
 	}
+	
 }
-
 
 function TrackLongestStreak() {
 	if(streakValue > longestStreak) {
@@ -67,15 +76,15 @@ function IncreaseStreak(delta) {
 	streakText.text = "+" + streakValue + "°";
 
     if(streakValue >= streakBombReq && !streakBombRewarded) {
-        RewardBomb();
+        //RewardBomb();
     }
 
-    if(streakValue >= streakTwinsReq && !streakTwinsRewarded) {
-        RewardTwins();
+    if((streakValue >= streakTwinsReq) && !streakTwinsRewarded) {
+        ActivateTwins();
     }
 
-    if(streakValue >= streakWallReq && !streakWallRewarded) {
-        RewardWall();
+    if((streakValue >= streakWallReq) && !streakWallRewarded) {
+        ActivateWall();
     }
 	
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/200.0), originalStreakTextSize, 3);
@@ -84,16 +93,46 @@ function IncreaseStreak(delta) {
 }
 
 function RewardBomb() {
-    Debug.Log("Rewarding bomb!");
     streakBombRewarded = true;
 }
 
-function RewardTwins() {
+function ActivateTwins() {
     streakTwinsRewarded = true;
+    topSatellite.SetActiveRecursively(true);
+    bottomSatellite.SetActiveRecursively(true);
+    
+    splashText.text = "HEAT WAVE!";
+    splashText.gameObject.SetActiveRecursively(true);
+    yield WaitForSeconds(1);
+    splashText.gameObject.SetActiveRecursively(false);
+    
+    yield WaitForSeconds(10);
+    DeactivateTwins();
 }
 
-function RewardWall() {
+function DeactivateTwins() {
+	streakTwinsRewarded = false;
+    topSatellite.SetActiveRecursively(false);
+    bottomSatellite.SetActiveRecursively(false);
+}
+
+function ActivateWall() {
     streakWallRewarded = true;
+    collector.ActivateWall();
+    
+    splashText.text = "FIREWALL ACTIVATED!";
+    splashText.gameObject.SetActiveRecursively(true);
+    yield WaitForSeconds(1);
+    splashText.gameObject.SetActiveRecursively(false);
+    
+    yield WaitForSeconds(5);
+    DeactivateWall();
+}
+
+
+function DeactivateWall() {
+    streakWallRewarded = false;
+    collector.DeactivateWall();
 }
 
 function EndStreak() {
@@ -102,8 +141,4 @@ function EndStreak() {
 	streakValue = 0;
 	streakText.characterSize = originalStreakTextSize;
 	streakText.transform.localPosition.y = originalStreakY;
-
-    streakBombRewarded = false;
-    streakTwinsRewarded = false;
-    streakWallRewarded = false;
 }

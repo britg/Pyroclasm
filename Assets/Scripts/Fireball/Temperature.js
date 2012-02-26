@@ -14,10 +14,6 @@ private var powerDownValue : int;
 private var powerDownTime : float;
 var powerDownTimeout : float = 1.0;
 
-var pickupSound : AudioClip;
-var cooldownSound : AudioClip;
-var explosionSound : AudioClip;
-
 private var timeleft : float;
 
 var heat : int;
@@ -81,40 +77,6 @@ function DisplayTemp() {
 	displayText.text = "" + heat + "°";
 }
 
-function OnTriggerEnter(collider : Collider){
-	//Debug.Log("On Trigger Enter");
-	var obj : GameObject = collider.gameObject;
-	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
-	
-	if(tempChanger != null) {
-		TempChange(tempChanger.tempDiff, true);
-		
-		if(tempChanger.playPickupSound) {
-			audio.PlayOneShot(pickupSound);
-		}
-		
-		if(tempChanger.playCooldownSound) {
-			Camera.main.audio.PlayOneShot(cooldownSound);
-		}
-		
-		if(tempChanger.playExplosionSound) {
-			Camera.main.audio.PlayOneShot(explosionSound);
-		}
-		
-		if(tempChanger.removeOnCollision) {
-			Destroy(obj);
-		}
-		
-		if(tempChanger.disableOnCollision) {
-			obj.SetActiveRecursively(false);
-		}
-		
-		if(tempChanger.shakesCamera) {
-			Camera.main.animation.Play();
-		}
-	}
-
-}
 
 function GetDistance() {
 	return thisDistance.distance;
