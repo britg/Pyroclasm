@@ -18,13 +18,15 @@ function OnTriggerEnter(collider : Collider){
 	var obj : GameObject = collider.gameObject;
 	var tempChanger : TempChanger = obj.GetComponent("TempChanger");
 	
-	if(tempChanger != null) {
+	if(tempChanger != null && !tempChanger.used) {
 	
 		if(tempChanger.tempDiff < 0 && !coolsDown) {
-			return;
+		
+		} else {
+			fireballTemperature.TempChange(tempChanger.tempDiff, true);
+			tempChanger.used = true;
 		}
 		
-		fireballTemperature.TempChange(tempChanger.tempDiff, true);
 		
 		if(tempChanger.playPickupSound) {
 			thisFireball.audio.PlayOneShot(pickupSound);

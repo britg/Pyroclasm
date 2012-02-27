@@ -10,7 +10,7 @@ TextureImporter:
   isReadable: 0
   textureType: 5
   mipmaps:
-    generation: 1
+    generation: 0
     correctGamma: 0
     border: 0
     filter: 0
@@ -22,7 +22,7 @@ TextureImporter:
     bumpyness: 0.25
     filter: 0
   textureSettings:
-    filterMode: -1
-    anisoLevel: -1
+    filterMode: 1
+    anisoLevel: 1
     mipmapBias: -1
-    wrapMode: -1
+    wrapMode: 1

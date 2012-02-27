@@ -32,6 +32,10 @@ function OnTriggerStay(collider : Collider) {
 	
 	if(collector) {
 		transform.position = Vector3.Lerp(thisTransform.position, fireball.transform.position, 0.3);
+		var yDelta : float = Mathf.Abs(fireball.transform.position.y - transform.position.y);
+		if(yDelta < 0.1) {
+			transform.position = fireball.transform.position;
+		}
 	}
 	
 }

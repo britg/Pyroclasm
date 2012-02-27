@@ -11,8 +11,8 @@ private var originalStreakTextSize : float;
 private var originalStreakY : float;
 
 var streakBombReq : int = 250;
-var streakTwinsReq : int = 300;
-var streakWallReq : int = 600;
+var streakTwinsReq : int = 500;
+var streakWallReq : int = 1000;
 
 private var streakBombRewarded : boolean = false;
 private var streakTwinsRewarded : boolean = false;
@@ -32,7 +32,7 @@ function Start() {
 	originalStreakTextSize = streakText.characterSize;
 	
 	var collectorObject = GameObject.Find("Collector");
-	collector = collectorObject.GetComponent("Collector");
+	collector = collectorObject.GetComponent("Collector") as Collector;
 }
 
 function Update () {

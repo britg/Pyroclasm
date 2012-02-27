@@ -1,14 +1,14 @@
 
 private var thisTransform : Transform;
 var direction : String;
-var range : float = 10.0;
+var range : float = 5.0;
 
 function Start() {
 	thisTransform = transform;
 }
 
 function Update () {
-
+	Spin();
 }
 
 function Spin() {
@@ -23,7 +23,7 @@ function Spin() {
 		direction = "up";
 	}
 	
-	var delta = Time.deltaTime * 50/(Mathf.Abs(y) + 1);
+	var delta = Time.deltaTime * 25;
 
 	if(direction == "up") {
 		thisTransform.localPosition.y += delta;
