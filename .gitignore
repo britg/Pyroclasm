@@ -36,4 +36,5 @@ profile
 *.moved-aside
 
 iOS/
+Android/
 obj/
