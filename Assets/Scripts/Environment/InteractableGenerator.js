@@ -7,6 +7,8 @@ var minGenerationInterval : float = 2.0;
 
 var gargoyle : GameObject;
 private var gargoylePool : GameObjectPool;
+var gargoyleWithGem : GameObject;
+private var gargoyleWithGemPool : GameObjectPool;
 var bookshelf : GameObject;
 private var bookshelfPool : GameObjectPool;
 var torch : GameObject;
@@ -34,6 +36,8 @@ function Start () {
 	
 	gargoylePool = GameObjectPool( gargoyle, poolSize, function(target : GameObject){ target.SendMessage("SetPool", gargoylePool); }, true );
 	gargoylePool.PrePopulate(poolSize);
+	gargoyleWithGemPool = GameObjectPool( gargoyleWithGem, poolSize, function(target : GameObject){ target.SendMessage("SetPool", gargoyleWithGemPool); }, true );
+	gargoyleWithGemPool.PrePopulate(poolSize);
 	bookshelfPool = GameObjectPool( bookshelf, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bookshelfPool); }, true );
 	bookshelfPool.PrePopulate(poolSize);
 	torchPool = GameObjectPool( torch, poolSize, function(target : GameObject){ target.SendMessage("SetPool", torchPool); }, true );
@@ -43,7 +47,7 @@ function Start () {
 	tapestryPool = GameObjectPool( tapestry, poolSize, function(target : GameObject){ target.SendMessage("SetPool", tapestryPool); }, true );
 	tapestryPool.PrePopulate(poolSize);
 	
-	Pools = [gargoylePool, bookshelfPool, torchPool, iciclePool, tapestryPool];
+	Pools = [gargoylePool, gargoyleWithGemPool, bookshelfPool, torchPool, iciclePool, tapestryPool];
 }
 
 function ResetTimer () {

@@ -80,11 +80,11 @@ function IncreaseStreak(delta) {
     }
 
     if((streakValue >= streakTwinsReq) && !streakTwinsRewarded) {
-        ActivateTwins();
+        //ActivateTwins();
     }
 
     if((streakValue >= streakWallReq) && !streakWallRewarded) {
-        ActivateWall();
+        //ActivateWall();
     }
 	
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/200.0), originalStreakTextSize, 3);
