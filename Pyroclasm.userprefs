@@ -1,10 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/InteractableGenerator.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Streak.js">
     <Files>
+      <File FileName="Assets/Shaders/UnlitAlpha.shader" Line="27" Column="1" />
       <File FileName="Assets/Scripts/Environment/InteractableGenerator.js" Line="50" Column="33" />
-      <File FileName="Assets/Scripts/Environment/Interactables/Gargoyle.js" Line="15" Column="2" />
+      <File FileName="Assets/Scripts/Environment/Interactables/Gargoyle.js" Line="15" Column="1" />
       <File FileName="Assets/Scripts/Environment/Interactables/GargoyleWithGem.js" Line="3" Column="22" />
+      <File FileName="Assets/Scripts/Fireball/Absorber.js" Line="27" Column="27" />
+      <File FileName="Assets/Scripts/Environment/TempChanger.js" Line="12" Column="21" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="87" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
