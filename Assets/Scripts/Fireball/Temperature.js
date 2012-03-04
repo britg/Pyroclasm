@@ -173,5 +173,5 @@ function SimulateMotion() {
 }
 
 function UpdateIntensity() {
-	thisAnimator.force.x = - 5*scrolling.velocity;
+	thisAnimator.force.x = - 10*scrolling.velocity;
 }
