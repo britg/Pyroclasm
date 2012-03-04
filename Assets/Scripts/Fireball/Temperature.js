@@ -119,12 +119,12 @@ function NotifyTempChange(delta) {
 	thisStreak.UpdateStreak(delta);
 	
 	if(delta > 0) {
-	
+		// positive temp changes have been moved to the Streak behaviour
 	} else {
 		powerDownTime = Time.time;
 		powerDownText.gameObject.active = true;
 		powerDownText.text = "" + delta + "°";
-		
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.POWERDOWN);
 	}
 	
 }

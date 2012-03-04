@@ -1,50 +1,38 @@
 
-private var thisFireball : GameObject;
-private var Temp;
+private var thisTransform : Transform;
 
-var sizeUpdateInterval : float = 0.2;
-private var timeLeft : float;
-
-var wallActive : boolean = false;
+private var startScale : Vector3 = Vector3(10, 9, 9);
+private var isActive : boolean = false;
 
 function Start() {
-	thisFireball = GameObject.Find("Fireball");
-	Temp = thisFireball.GetComponent("Temperature");
-	ResetTimer();
-}
-
-function ResetTimer() {
-	timeLeft = sizeUpdateInterval;
+	thisTransform = transform;
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_LEVEL_CHANGED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POWERDOWN);
 }
 
 function Update () {
-	timeLeft -= Time.deltaTime;
+	thisTransform.Rotate(Time.deltaTime*140, 0, 0);
+}
+
+function OnStreakLevelChange (notification : Notification) {
+	var streakLevel : int = notification.data;
 	
-	if(timeLeft <= 0) {
-		UpdateSize();
-		ResetTimer();
+	if(streakLevel >= 1 && !isActive) {
+		Activate();
 	}
 }
 
-function UpdateSize() {
-
-	if(wallActive) {
-		return;
-	}
-	
-	var size : float = (0.0 + Temp.heat)/250.0;
-	transform.localScale.x = size;
-	transform.localScale.y = size;
+function OnPowerDown (notification : Notification) {
+	Deactivate();
 }
 
-function ActivateWall() {
-	wallActive = true;
-	transform.localScale.x = 50;
-	transform.localScale.y = 50;
+function Activate () {
+	isActive = true;
+	thisTransform.localScale = startScale;
 }
 
-function DeactivateWall() {
-	wallActive = false;
-	UpdateSize();
+function Deactivate() {
+	isActive = false;
+	thisTransform.localScale = Vector3(0, 0, 0);
 }
-

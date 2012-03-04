@@ -1,9 +1,10 @@
+import System.Collections.Generic;
 //    NotificationCenter is used for handling messages between GameObjects.
-    
+   
 //    GameObjects can register to receive specific notifications.  When another objects sends a notification of that type, all GameObjects that registered for it and implement the appropriate message will receive that notification.
-    
-//    Observing GameObjetcs must register to receive notifications with the AddObserver function, and pass their selves, and the name of the notification.  Observing GameObjects can also unregister themselves with the RemoveObserver function.  GameObjects must request to receive and remove notification types on a type by type basis.
-    
+   
+//    Observing GameObjects must register to receive notifications with the AddObserver function, and pass their selves, and the name of the notification.  Observing GameObjects can also unregister themselves with the RemoveObserver function.  GameObjects must request to receive and remove notification types on a type by type basis.
+   
 //    Posting notifications is done by creating a Notification object and passing it to PostNotification.  All receiving GameObjects will accept that Notification object.  The Notification object contains the sender, the notification type name, and an option hashtable containing data.
 
 //    To use NotificationCenter, either create and manage a unique instance of it somewhere, or use the static NotificationCenter.
@@ -20,7 +21,7 @@ static function DefaultCenter () {
         // Add the NotificationCenter component, and set it as the defaultCenter
         defaultCenter = notificationObject.AddComponent(NotificationCenter);
     }
-    
+   
     return defaultCenter;
 }
 
@@ -34,19 +35,19 @@ function AddObserver (observer, name: String, sender) {
     if (name == null || name == "") { Debug.Log("Null name specified for notification in AddObserver."); return; }
     // If this specific notification doens't exist yet, then create it.
     if (!notifications[name]) {
-        notifications[name] = new ArrayList();
+        notifications[name] = new List.<Component>();
     }
-    
-    var notifyList: ArrayList = notifications[name];
-    
-    // If the list of observers doesn't already contains the one that's registering, then add it.
+   
+    var notifyList: List.<Component> = notifications[name];
+   
+    // If the list of observers doesn't already contain the one that's registering, then add it.
     if (!notifyList.Contains(observer)) { notifyList.Add(observer); }
 }
 
 // RemoveObserver removes the observer from the notification list for the specified notification type
 function RemoveObserver (observer, name: String) {
-    var notifyList: ArrayList = notifications[name];
-    
+    var notifyList: List.<Component> = notifications[name]; //change from original
+   
     // Assuming that this is a valid notification type, remove the observer from the list.
     // If the list of observers is now empty, then remove that notification type from the notifications hash.  This is for housekeeping purposes.
     if (notifyList) {
@@ -60,14 +61,16 @@ function RemoveObserver (observer, name: String) {
 function PostNotification (aSender, aName: String) { PostNotification(aSender, aName, null); }
 function PostNotification (aSender, aName: String, aData) { PostNotification(new Notification(aSender, aName, aData)); }
 function PostNotification (aNotification: Notification) {
+
+	
     // First make sure that the name of the notification is valid.
     if (aNotification.name == null || aNotification.name == "") { Debug.Log("Null name sent to PostNotification."); return; }
     // Obtain the notification list, and make sure that it is valid as well
-    var notifyList: ArrayList = notifications[aNotification.name];
+    var notifyList: List.<Component> = notifications[aNotification.name]; //change from original
     if (!notifyList) { Debug.Log("Notify list not found in PostNotification."); return; }
-    
+   
     // Create an array to keep track of invalid observers that we need to remove
-    var observersToRemove = new Array();
+    var observersToRemove = new List.<Component>(); //change from original
 
     // Itterate through all the objects that have signed up to be notified by this type of notification.
     for (var observer in notifyList) {
@@ -79,14 +82,14 @@ function PostNotification (aNotification: Notification) {
             observer.SendMessage(aNotification.name, aNotification, SendMessageOptions.DontRequireReceiver);
         }
     }
-    
+   
     // Remove all the invalid observers
     for (observer in observersToRemove) {
         notifyList.Remove(observer);
     }
 }
 
-// The Notification class is the object that is send to receiving objects of a notification type.
+// The Notification class is the object that is sent to receiving objects of a notification type.
 // This class contains the sending GameObject, the name of the notification, and optionally a hashtable containing data.
 class Notification {
     var sender;

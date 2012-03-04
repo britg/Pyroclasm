@@ -20,14 +20,11 @@ function React() {
 function OnTriggerEnter (collider : Collider) {
 
 	var obj = collider.gameObject;
-	var isCollector = obj.GetComponent("Collector") as Collector;
 	var isSatellite = obj.GetComponent("Satellite") as Satellite;
 	
-	if((isCollector && isCollector.wallActive) || isSatellite) {
+	if(isSatellite) {
 		React();
-		
 		fireballTemperature.TempChange(wallTempChange, true);
-		
 	}
 }
 
