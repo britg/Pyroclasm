@@ -27,7 +27,7 @@ function Update () {
 }
 
 function UpdateSize() {
-	return;
+
 	if(wallActive) {
 		return;
 	}

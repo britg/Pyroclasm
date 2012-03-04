@@ -32,7 +32,6 @@ function Start() {
 	originalStreakTextSize = streakText.characterSize;
 	
 	var collectorObject = GameObject.Find("Collector");
-	collector = collectorObject.GetComponent("Collector") as Collector;
 }
 
 function Update () {
