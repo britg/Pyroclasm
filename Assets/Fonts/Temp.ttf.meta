@@ -3,7 +3,7 @@ guid: de799c61ecc054ed9979367849c0dfd1
 TrueTypeFontImporter:
   importerVersion: 1
   size: 42
-  case: -1
+  case: 0
   antiAlias: 1
   includeFontData: 1
   use2xBehaviour: 0

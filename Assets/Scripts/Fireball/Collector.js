@@ -6,7 +6,7 @@ private var isActive : boolean = false;
 
 function Start() {
 	thisTransform = transform;
-	
+	SendMessage("Update");
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_LEVEL_CHANGED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POWERDOWN);
 }

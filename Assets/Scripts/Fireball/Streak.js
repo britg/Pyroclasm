@@ -9,6 +9,7 @@ var longestStreak : int;
 
 private var originalStreakTextSize : float;
 private var originalStreakY : float;
+var maxStreakTextScale : float = 1.0;
 
 var streakTrigger : int = 250;
 private var streakLevel : int = 0;
@@ -81,7 +82,7 @@ function UpdateStreakLevel() {
 
 function UpdateStreakDisplay() {
 	streakText.text = "+" + streakValue + "°";
-	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/200.0), originalStreakTextSize, 3);
+	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/500.0), originalStreakTextSize, maxStreakTextScale);
 	streakText.characterSize = newSize;
 }
 
