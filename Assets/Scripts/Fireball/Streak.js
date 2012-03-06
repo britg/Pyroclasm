@@ -75,7 +75,7 @@ function UpdateStreakLevel() {
 	streakLevel = Mathf.FloorToInt(streakValue / streakTrigger);
 	
 	if(streakLevel != previousStreakLevel) {
-		Debug.Log("Notifying streak level changed " + streakLevel);
+		//Debug.Log("Notifying streak level changed " + streakLevel);
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.STREAK_LEVEL_CHANGED, streakLevel);
 	}
 }
