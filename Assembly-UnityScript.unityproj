@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{97232E3D-EDE9-6F27-14CC-84199EF5A55C}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_0;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_IOS;UNITY_IPHONE;ENABLE_GENERICS;ENABLE_TERRAIN;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\Environment\AnimateTexture.js" />
+     <Compile Include="Assets\Scripts\Environment\AnimatedBackground.js" />
+     <Compile Include="Assets\Scripts\Environment\Heat Gem Patterns\Block.js" />
+     <Compile Include="Assets\Scripts\Environment\Heat Gem Patterns\Down.js" />
+     <Compile Include="Assets\Scripts\Environment\Heat Gem Patterns\Line.js" />
+     <Compile Include="Assets\Scripts\Environment\Heat Gem Patterns\Up.js" />
+     <Compile Include="Assets\Scripts\Environment\Heat Gem Patterns\ZigZag.js" />
+     <Compile Include="Assets\Scripts\Environment\HeatGemGenerator.js" />
+     <Compile Include="Assets\Scripts\Environment\IceBoltGenerator.js" />
+     <Compile Include="Assets\Scripts\Environment\InteractableGenerator.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Attracted.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Bookshelf.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Exploder.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Gargoyle.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\GargoyleWithGem.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Icicle.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Tapestry.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\Torch.js" />
+     <Compile Include="Assets\Scripts\Environment\Motor.js" />
+     <Compile Include="Assets\Scripts\Environment\Scenery.js" />
+     <Compile Include="Assets\Scripts\Environment\Scroller.js" />
+     <Compile Include="Assets\Scripts\Environment\TempChanger.js" />
+     <Compile Include="Assets\Scripts\Environment\Trees.js" />
+     <Compile Include="Assets\Scripts\Fireball\Absorber.js" />
+     <Compile Include="Assets\Scripts\Fireball\Collector.js" />
+     <Compile Include="Assets\Scripts\Fireball\Distance.js" />
+     <Compile Include="Assets\Scripts\Fireball\Flareable.js" />
+     <Compile Include="Assets\Scripts\Fireball\Lift.js" />
+     <Compile Include="Assets\Scripts\Fireball\Satellite.js" />
+     <Compile Include="Assets\Scripts\Fireball\Streak.js" />
+     <Compile Include="Assets\Scripts\Fireball\Temperature.js" />
+     <Compile Include="Assets\Scripts\GUI\FPS.js" />
+     <Compile Include="Assets\Scripts\GUI\FloatingText.js" />
+     <Compile Include="Assets\Scripts\GUI\ObjectLabel.js" />
+     <Compile Include="Assets\Scripts\GUI\Pause.js" />
+     <Compile Include="Assets\Scripts\Smokey\FractalTexture.js" />
+     <Compile Include="Assets\Scripts\Smokey\MouseOrbit.js" />
+     <Compile Include="Assets\Scripts\Smokey\SmoothRandomPosition.js" />
+     <Compile Include="Assets\Scripts\lib\GameObjectPool.js" />
+     <Compile Include="Assets\Scripts\lib\NotificationCenter.js" />
+     <Compile Include="Assets\Scripts\lib\Notifications.js" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\Shaders\UnlitAlpha.shader" />
+     <None Include="Assets\Shaders\Particle Sep-Alpha Blend.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{2C82CEC1-C495-CBFB-C395-FDE43C3130E3}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
+      <Project>{8485D1FD-2E23-D072-F479-756F34ACBE03}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

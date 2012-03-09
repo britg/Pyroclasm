@@ -22,13 +22,13 @@ private var gameOver : boolean;
 private var shouldUpdate : boolean = true;
 
 var Level : GameObject;
-private var scrolling;
+private var scrolling : Scroller;
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
 private var thisAnimator : ParticleAnimator;
-private var thisDistance;
-private var thisStreak;
+private var thisDistance : Distance;
+private var thisStreak : Streak;
 
 private var moving : boolean = false;
 
@@ -94,7 +94,7 @@ function CoolOff() {
 	}
 }
 
-function TempChange(delta, notify) {
+function TempChange(delta : int, notify : boolean) {
 	heat += delta;
 	
 	heat = Mathf.Clamp(heat, 0, maxHeat);
@@ -114,7 +114,7 @@ function TempChange(delta, notify) {
 	
 }
 
-function NotifyTempChange(delta) {
+function NotifyTempChange(delta : int) {
 	
 	thisStreak.UpdateStreak(delta);
 	

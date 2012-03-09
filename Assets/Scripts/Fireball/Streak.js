@@ -38,7 +38,7 @@ function TrackLongestStreak() {
 	}
 }
 
-function UpdateStreak (delta) {
+function UpdateStreak (delta : int) {
 
 	if(delta < 0) {
 		EndStreak();
@@ -63,7 +63,7 @@ function StartStreak() {
 	originalStreakTextSize = streakText.characterSize;
 }
 
-function IncreaseStreak(delta) {
+function IncreaseStreak(delta : int) {
 	streakValue += delta;
 	UpdateStreakDisplay();
 	TrackLongestStreak();

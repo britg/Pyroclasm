@@ -5,6 +5,7 @@ private var gem : Transform;
 
 private var numGems : int 		= 20;
 private var xSpacing : float 	= 0.75;
+private var currY : float = 0.0;
 
 function Awake() {
 	currY = 0;

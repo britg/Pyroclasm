@@ -24,11 +24,11 @@ private var nextObject : Transform;
 
 private var speedFactor : float = 1;
 
-private var Distance;
-private var scrolling;
+private var distance : Distance;
+private var scrolling : Scroller;
 
 function Start () {
-	Distance = fireball.GetComponent("Distance");
+	distance = fireball.GetComponent("Distance");
 	ResetTimer();
 	scrolling = Level.GetComponent("Scroller");
 	
@@ -37,7 +37,7 @@ function Start () {
 }
 
 function ResetTimer () {
-	var distPercent : float = Distance.distance / distanceToMinGenerationInterval;
+	var distPercent : float = distance.distance / distanceToMinGenerationInterval;
 	if(distPercent > 1.0) {
 		distPercent = 1.0;
 	}

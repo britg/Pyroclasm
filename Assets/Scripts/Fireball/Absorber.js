@@ -2,7 +2,7 @@
 var coolsDown : boolean = true;
 
 private var thisFireball : GameObject;
-private var fireballTemperature;
+private var fireballTemperature : Temperature;
 
 var pickupSound : AudioClip;
 var cooldownSound : AudioClip;

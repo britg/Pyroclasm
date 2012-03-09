@@ -1,16 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/InteractableGenerator.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Bomb.js">
     <Files>
-      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="4" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="142" Column="2" />
-      <File FileName="Assets/Scripts/Fireball/Collector.js" Line="10" Column="91" />
-      <File FileName="Assets/Scripts/Environment/AnimateTexture.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Satellite.js" Line="21" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Flareable.js" Line="26" Column="4" />
-      <File FileName="Assets/Scripts/Fireball/Absorber.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/lib/GameObjectPool.js" Line="54" Column="1" />
-      <File FileName="Assets/Scripts/Environment/InteractableGenerator.js" Line="46" Column="2" />
+      <File FileName="Assets/Scripts/Environment/Bomb.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

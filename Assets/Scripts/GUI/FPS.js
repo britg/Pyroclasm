@@ -9,7 +9,7 @@
 // correct overall FPS even if the interval renders something like
 // 5.5 frames.
 
-var updateInterval = 0.5;
+var updateInterval = 0.1;
 
 private var accum = 0.0; // FPS accumulated over the interval
 private var frames = 0; // Frames drawn over the interval

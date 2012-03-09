@@ -25,8 +25,8 @@ private var nextObject : Transform;
 
 private var Pools : Array = [];
 
-private var Distance;
-private var scrolling;
+private var distance : Distance;
+private var scrolling : Scroller;
 
 function Awake () {
 
@@ -43,13 +43,13 @@ function Awake () {
 }
 
 function Start () {
-	Distance = fireball.GetComponent("Distance");
+	distance = fireball.GetComponent("Distance") as Distance;
 	scrolling = Level.GetComponent("Scroller");
 	ResetTimer();
 }
 
 function ResetTimer () {
-	var distPercent : float = Distance.distance / distanceToMinGenerationInterval;
+	var distPercent : float = distance.distance / distanceToMinGenerationInterval;
 	if(distPercent > 1.0) {
 		distPercent = 1.0;
 	}

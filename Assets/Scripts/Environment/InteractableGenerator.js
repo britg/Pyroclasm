@@ -23,16 +23,17 @@ private var poolSize : int = 3;
 
 private var timeleft : float;
 private var xStart = 10;
-private var Distance;
-private var scrolling;
+
+private var distance : Distance;
+private var scrolling : Scroller;
 
 private var Pools : Array;
 
 function Start () {
-	Distance = fireball.GetComponent("Distance");
-	ResetTimer();
+	distance = fireball.GetComponent("Distance");
 	scrolling = Level.GetComponent("Scroller");
 	
+	ResetTimer();
 	
 	gargoylePool = GameObjectPool( gargoyle, poolSize, function(target : GameObject){ target.SendMessage("SetPool", gargoylePool); }, true );
 	gargoylePool.PrePopulate(poolSize);
