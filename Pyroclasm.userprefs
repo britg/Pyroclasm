@@ -1,15 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Interactables/GargoyleWithGem.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/InteractableGenerator.js">
     <Files>
-      <File FileName="Assets/Scripts/Fireball/Collector.js" Line="24" Column="15" />
-      <File FileName="Assets/Scripts/Environment/Interactables/GargoyleWithGem.js" Line="8" Column="1" />
-      <File FileName="Assets/Shaders/UnlitAlpha.shader" Line="27" Column="1" />
-      <File FileName="Assets/Scripts/Environment/InteractableGenerator.js" Line="50" Column="33" />
-      <File FileName="Assets/Scripts/Environment/Interactables/Gargoyle.js" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Absorber.js" Line="27" Column="27" />
-      <File FileName="Assets/Scripts/Environment/TempChanger.js" Line="12" Column="21" />
-      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="87" Column="11" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="4" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="142" Column="2" />
+      <File FileName="Assets/Scripts/Fireball/Collector.js" Line="10" Column="91" />
+      <File FileName="Assets/Scripts/Environment/AnimateTexture.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Satellite.js" Line="21" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Flareable.js" Line="26" Column="4" />
+      <File FileName="Assets/Scripts/Fireball/Absorber.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/lib/GameObjectPool.js" Line="54" Column="1" />
+      <File FileName="Assets/Scripts/Environment/InteractableGenerator.js" Line="46" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
