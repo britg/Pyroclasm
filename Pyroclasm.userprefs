@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Bomb.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/FPS.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/Bomb.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="117" Column="37" />
+      <File FileName="Assets/Scripts/GUI/FPS.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
