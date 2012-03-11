@@ -86,8 +86,6 @@
      <Compile Include="Assets\Scripts\lib\NotificationCenter.js" />
      <Compile Include="Assets\Scripts\lib\Notifications.js" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
-     <None Include="Assets\Shaders\UnlitAlpha.shader" />
-     <None Include="Assets\Shaders\Particle Sep-Alpha Blend.shader" />
  <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
