@@ -79,9 +79,6 @@
      <Compile Include="Assets\Scripts\GUI\FloatingText.js" />
      <Compile Include="Assets\Scripts\GUI\ObjectLabel.js" />
      <Compile Include="Assets\Scripts\GUI\Pause.js" />
-     <Compile Include="Assets\Scripts\Smokey\FractalTexture.js" />
-     <Compile Include="Assets\Scripts\Smokey\MouseOrbit.js" />
-     <Compile Include="Assets\Scripts\Smokey\SmoothRandomPosition.js" />
      <Compile Include="Assets\Scripts\lib\GameObjectPool.js" />
      <Compile Include="Assets\Scripts\lib\NotificationCenter.js" />
      <Compile Include="Assets\Scripts\lib\Notifications.js" />
