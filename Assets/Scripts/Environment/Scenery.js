@@ -17,13 +17,13 @@ private var Pools : Array;
 private var bgs : Array;
 
 function Start () {
-	bg1Pool = GameObjectPool( bg1, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bg1Pool); }, true );
+	bg1Pool = GameObjectPool( bg1, poolSize, true );
 	bg1Pool.PrePopulate(poolSize);
-	bg2Pool = GameObjectPool( bg2, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bg2Pool); }, true );
+	bg2Pool = GameObjectPool( bg2, poolSize, true );
 	bg2Pool.PrePopulate(poolSize);
-	bg3Pool = GameObjectPool( bg3, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bg3Pool); }, true );
+	bg3Pool = GameObjectPool( bg3, poolSize, true );
 	bg3Pool.PrePopulate(poolSize);
-	plainBgPool = GameObjectPool( plainbg, poolSize, function(target : GameObject){ target.SendMessage("SetPool", plainBgPool); }, true );
+	plainBgPool = GameObjectPool( plainbg, poolSize, true );
 	plainBgPool.PrePopulate(poolSize);
 	
 	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool];

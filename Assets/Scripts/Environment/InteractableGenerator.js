@@ -35,17 +35,17 @@ function Start () {
 	
 	ResetTimer();
 	
-	gargoylePool = GameObjectPool( gargoyle, poolSize, function(target : GameObject){ target.SendMessage("SetPool", gargoylePool); }, true );
+	gargoylePool = GameObjectPool( gargoyle, poolSize, true );
 	gargoylePool.PrePopulate(poolSize);
-	gargoyleWithGemPool = GameObjectPool( gargoyleWithGem, poolSize, function(target : GameObject){ target.SendMessage("SetPool", gargoyleWithGemPool); }, true );
+	gargoyleWithGemPool = GameObjectPool( gargoyleWithGem, poolSize, true );
 	gargoyleWithGemPool.PrePopulate(poolSize);
-	bookshelfPool = GameObjectPool( bookshelf, poolSize, function(target : GameObject){ target.SendMessage("SetPool", bookshelfPool); }, true );
+	bookshelfPool = GameObjectPool( bookshelf, poolSize, true );
 	bookshelfPool.PrePopulate(poolSize);
-	torchPool = GameObjectPool( torch, poolSize, function(target : GameObject){ target.SendMessage("SetPool", torchPool); }, true );
+	torchPool = GameObjectPool( torch, poolSize, true );
 	torchPool.PrePopulate(poolSize);
-	iciclePool = GameObjectPool( icicle, poolSize, function(target : GameObject){ target.SendMessage("SetPool", iciclePool); }, true );
+	iciclePool = GameObjectPool( icicle, poolSize, true );
 	iciclePool.PrePopulate(poolSize);
-	tapestryPool = GameObjectPool( tapestry, poolSize, function(target : GameObject){ target.SendMessage("SetPool", tapestryPool); }, true );
+	tapestryPool = GameObjectPool( tapestry, poolSize, true );
 	tapestryPool.PrePopulate(poolSize);
 	
 	Pools = [gargoylePool, gargoyleWithGemPool, bookshelfPool, torchPool, iciclePool, tapestryPool];

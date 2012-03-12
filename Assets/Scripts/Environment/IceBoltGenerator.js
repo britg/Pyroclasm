@@ -1,5 +1,9 @@
 
 var Level : GameObject;
+var iceBolt : GameObject;
+var fireball : GameObject;
+private var distance : Distance;
+private var scrolling : Scroller;
 
 var startGenerationInterval : float = 1.0;
 var minGenerationInterval : float = 0.1;
@@ -8,9 +12,6 @@ var distanceToMinGenerationInterval : int = 1200;
 var maxSpeedFactor : float = 1.4;
 var minSpeedFactor : float = 1.1;
 
-
-var iceBolt : GameObject;
-var fireball : GameObject;
 
 private var iceBoltPool : GameObjectPool;
 private var poolSize : int = 5;
@@ -24,15 +25,13 @@ private var nextObject : Transform;
 
 private var speedFactor : float = 1;
 
-private var distance : Distance;
-private var scrolling : Scroller;
 
 function Start () {
 	distance = fireball.GetComponent("Distance");
 	ResetTimer();
 	scrolling = Level.GetComponent("Scroller");
 	
-	iceBoltPool = GameObjectPool( iceBolt, poolSize, function(target : GameObject){ target.SendMessage("SetPool", iceBoltPool); }, true );
+	iceBoltPool = GameObjectPool( iceBolt, poolSize, true );
 	iceBoltPool.PrePopulate(poolSize);
 }
 

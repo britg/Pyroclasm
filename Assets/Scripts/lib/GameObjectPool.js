@@ -31,7 +31,7 @@ class GameObjectPool {
 	// collection with game objects. For that, see the PrePopulate function.
 	// If an initialCapacity that is <= to zero is provided, the pool uses the default
 	// initial capacities of its internal .NET collections.
-	function GameObjectPool(prefab : GameObject, initialCapacity : int, initializationFunction : Function, setActiveRecursively : boolean){
+	function GameObjectPool(prefab : GameObject, initialCapacity : int, setActiveRecursively : boolean){
 		this.prefab = prefab;
 		if(initialCapacity > 0){
 			this.available = Stack(initialCapacity);
@@ -41,7 +41,11 @@ class GameObjectPool {
 			this.available = Stack();
 			this.all = ArrayList();
 		}
-		this.initializationFunction = initializationFunction;
+		
+		this.initializationFunction = function (target : GameObject) {
+			target.SendMessage("SetPool", this); 
+		};
+		
 		this.setActiveRecursively = setActiveRecursively;
 	}
 	
@@ -144,4 +148,7 @@ class GameObjectPool {
 		else
 			obj.active = val;
 	}
+	
+	// Generates a generic callback function that sets the pool on the child object
+	
 }

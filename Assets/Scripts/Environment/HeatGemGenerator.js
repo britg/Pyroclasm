@@ -30,13 +30,13 @@ private var scrolling : Scroller;
 
 function Awake () {
 
-	blockPool = GameObjectPool( block, poolSize, function(target : GameObject){ target.SendMessage("SetPool", blockPool); }, true );
+	blockPool = GameObjectPool( block, poolSize, true );
 	blockPool.PrePopulate(poolSize);
-	upPool = GameObjectPool( up, poolSize, function(target : GameObject){ target.SendMessage("SetPool", upPool); }, true );
+	upPool = GameObjectPool( up, poolSize, true );
 	upPool.PrePopulate(poolSize);
-	downPool = GameObjectPool( down, poolSize, function(target : GameObject){ target.SendMessage("SetPool", downPool); }, true );
+	downPool = GameObjectPool( down, poolSize, true );
 	downPool.PrePopulate(poolSize);
-	zigzagPool = GameObjectPool( zigzag, poolSize, function(target : GameObject){ target.SendMessage("SetPool", zigzagPool); }, true );
+	zigzagPool = GameObjectPool( zigzag, poolSize, true );
 	zigzagPool.PrePopulate(poolSize);
 	
 	Pools = [blockPool, upPool, downPool, zigzagPool];
