@@ -16,13 +16,12 @@ private var streakLevel : int = 0;
 
 var ongoing : boolean;
 
+var heatBarVertical : boolean;
 var heatBar : GameObject;
 
 function Start() {
 	ongoing = false;
 	longestStreak = 0;
-	//streakText.renderer.material.color = Color(1.0, 0.376, 0.203, 1.0);
-	//splashText.renderer.material.color = Color(1.0, 0.376, 0.203, 1.0);
 	originalStreakTextSize = streakText.characterSize;
 	originalStreakY = streakText.transform.position.y;
 }
@@ -77,7 +76,6 @@ function UpdateStreakLevel() {
 	streakLevel = Mathf.FloorToInt(streakValue / streakTrigger);
 	
 	if(streakLevel != previousStreakLevel) {
-		//Debug.Log("Notifying streak level changed " + streakLevel);
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.STREAK_LEVEL_CHANGED, streakLevel);
 	}
 	
@@ -88,7 +86,10 @@ function UpdateStreakDisplay() {
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/500.0), originalStreakTextSize, maxStreakTextScale);
 	streakText.characterSize = newSize;
 	
-	
+	PositionStreakDisplay();
+}
+
+function PositionStreakDisplay() {
 	var y : float = heatBar.transform.position.y;
 	y += heatBar.transform.localScale.y;
 	streakText.transform.position.y = y + streakText.transform.localScale.y;
