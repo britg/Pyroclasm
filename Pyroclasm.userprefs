@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Streak.js">
+    <Files>
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="86" Column="2" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="2" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Scenery.js" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Motor.js" Line="15" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

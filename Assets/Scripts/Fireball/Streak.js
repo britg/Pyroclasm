@@ -1,5 +1,4 @@
 
-var streakText : TextMesh;
 var splashText : TextMesh;
 private var streakValue : int;
 private var streakTime : float;
@@ -7,23 +6,14 @@ private var streakTime : float;
 var streakTimeout : float = 1.0;
 var longestStreak : int;
 
-private var originalStreakTextSize : float;
-private var originalStreakY : float;
-var maxStreakTextScale : float = 1.0;
-
 var streakTrigger : int = 250;
 private var streakLevel : int = 0;
 
 var ongoing : boolean;
 
-var heatBarVertical : boolean;
-var heatBar : GameObject;
-
 function Start() {
 	ongoing = false;
 	longestStreak = 0;
-	originalStreakTextSize = streakText.characterSize;
-	originalStreakY = streakText.transform.position.y;
 }
 
 function Update () {
@@ -44,6 +34,7 @@ function UpdateStreak (delta : int) {
 
 	if(delta < 0) {
 		EndStreak();
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.POWERDOWN, delta);
 	} else {
 
 		streakTime = Time.time;
@@ -61,14 +52,13 @@ function UpdateStreak (delta : int) {
 
 function StartStreak() {
 	ongoing = true;
-	streakText.gameObject.active = true;
-	originalStreakTextSize = streakText.characterSize;
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.STREAK_STARTED);
 }
 
 function IncreaseStreak(delta : int) {
 	streakValue += delta;
-	UpdateStreakDisplay();
 	TrackLongestStreak();
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.STREAK_UPDATED, streakValue);
 }
 
 function UpdateStreakLevel() {
@@ -81,24 +71,8 @@ function UpdateStreakLevel() {
 	
 }
 
-function UpdateStreakDisplay() {
-	streakText.text = "+" + streakValue + "°";
-	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/500.0), originalStreakTextSize, maxStreakTextScale);
-	streakText.characterSize = newSize;
-	
-	PositionStreakDisplay();
-}
-
-function PositionStreakDisplay() {
-	var y : float = heatBar.transform.position.y;
-	y += heatBar.transform.localScale.y;
-	streakText.transform.position.y = y + streakText.transform.localScale.y;
-}
-
 function EndStreak() {
 	ongoing = false;
-	streakText.gameObject.active = false;
 	streakValue = 0;
-	streakText.characterSize = originalStreakTextSize;
-	streakText.transform.localPosition.y = originalStreakY;
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.STREAK_ENDED);
 }

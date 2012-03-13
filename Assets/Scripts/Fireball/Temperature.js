@@ -5,17 +5,7 @@ var coolRate : float = 1;
 var initialHeat : int = 500;
 var maxHeat : int = 2500;
 
-var displayText : GUIText;
-var heatBar : GameObject;
-private var originalHeatBarY : float;
-private var originalHeatBarTiling : float;
-
 var gameOverText : GUIText;
-var powerDownText : TextMesh;
-
-private var powerDownValue : int;
-private var powerDownTime : float;
-var powerDownTimeout : float = 1.0;
 
 private var timeleft : float;
 
@@ -36,7 +26,9 @@ private var thisStreak : Streak;
 private var moving : boolean = false;
 
 function Start () {
+
 	heat = initialHeat;
+	
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
@@ -45,16 +37,17 @@ function Start () {
 	thisDistance = gameObject.GetComponent("Distance") as Distance;
 	thisStreak = gameObject.GetComponent("Streak") as Streak;
 	
-	powerDownText.renderer.material.color = Color(0.1, 1.0, 1.0, 1.0);
-	
-	originalHeatBarY = heatBar.transform.localScale.y;
-	originalHeatBarTiling = heatBar.renderer.material.mainTextureScale.y;
 	
 	ResetTimer();
+	AnnounceMaxTemperature();
 }
 
 function ResetTimer () {
 	timeleft = updateInterval;
+}
+
+function AnnounceMaxTemperature () {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCE_MAX_TEMPERATURE, maxHeat);
 }
 
 function Update () {
@@ -67,8 +60,6 @@ function Update () {
     
     if(!gameOver) {
     
-    	CheckTextTimeout();
-    	
 	    if( timeleft <= 0.0 ) {
 	    	CoolOff();	
 			ResetTimer();
@@ -78,15 +69,6 @@ function Update () {
 		GameOver();
 	}
 }
-
-function DisplayTemp() {
-	//displayText.text = "" + heat + "°";
-	
-	var pct : float = (0.0 + heat) / (0.0 + maxHeat);
-	heatBar.transform.localScale.y = originalHeatBarY * pct;
-	heatBar.renderer.material.mainTextureScale = Vector2(1, originalHeatBarTiling * pct);
-}
-
 
 function GetDistance() {
 	return thisDistance.distance;
@@ -104,13 +86,13 @@ function CoolOff() {
 	}
 }
 
-function TempChange(delta : int, notify : boolean) {
+function TempChange(delta : int, isPublic : boolean) {
 	heat += delta;
 	
 	heat = Mathf.Clamp(heat, 0, maxHeat);
 	
-	if(notify) {
-		NotifyTempChange(delta);
+	if(isPublic) {
+		thisStreak.UpdateStreak(delta);
 	}
 	
 	if(heat <= 0) {
@@ -119,31 +101,9 @@ function TempChange(delta : int, notify : boolean) {
 	}
 	
 	if(shouldUpdate) {
-		DisplayTemp();
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TEMPERATURE_CHANGED, heat);
 	}
 	
-}
-
-function NotifyTempChange(delta : int) {
-	
-	thisStreak.UpdateStreak(delta);
-	
-	if(delta > 0) {
-		// positive temp changes have been moved to the Streak behaviour
-	} else {
-		powerDownTime = Time.time;
-		powerDownText.gameObject.active = true;
-		powerDownText.text = "" + delta + "°";
-		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.POWERDOWN);
-	}
-	
-}
-
-function CheckTextTimeout () {
-	
-	if((Time.time - powerDownTime) > powerDownTimeout) {
-		powerDownText.gameObject.active = false;
-	}
 }
 
 
