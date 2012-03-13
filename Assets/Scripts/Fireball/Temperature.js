@@ -6,8 +6,11 @@ var initialHeat : int = 500;
 var maxHeat : int = 2500;
 
 var displayText : GUIText;
-var gameOverText : GUIText;
+var heatBar : GameObject;
+private var originalHeatBarY : float;
+private var originalHeatBarTiling : float;
 
+var gameOverText : GUIText;
 var powerDownText : TextMesh;
 
 private var powerDownValue : int;
@@ -44,6 +47,9 @@ function Start () {
 	
 	powerDownText.renderer.material.color = Color(0.1, 1.0, 1.0, 1.0);
 	
+	originalHeatBarY = heatBar.transform.localScale.y;
+	originalHeatBarTiling = heatBar.renderer.material.mainTextureScale.y;
+	
 	ResetTimer();
 }
 
@@ -74,7 +80,11 @@ function Update () {
 }
 
 function DisplayTemp() {
-	displayText.text = "" + heat + "°";
+	//displayText.text = "" + heat + "°";
+	
+	var pct : float = (0.0 + heat) / (0.0 + maxHeat);
+	heatBar.transform.localScale.y = originalHeatBarY * pct;
+	heatBar.renderer.material.mainTextureScale = Vector2(1, originalHeatBarTiling * pct);
 }
 
 

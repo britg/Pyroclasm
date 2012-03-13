@@ -1,5 +1,6 @@
 
-var startbg : GameObject;
+var startbg1 : GameObject;
+var startbg2 : GameObject;
 
 var bg1 : GameObject;
 private var bg1Pool : GameObjectPool;
@@ -27,7 +28,7 @@ function Start () {
 	plainBgPool.PrePopulate(poolSize);
 	
 	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool];
-	bgs = [startbg];
+	bgs = [startbg1, startbg2];
 }
 
 function Update () {
