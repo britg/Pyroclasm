@@ -1,7 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Streak.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/HorizontalHeatBar.js">
     <Files>
+      <File FileName="Assets/Scripts/GUI/HorizontalHeatBar.js" Line="66" Column="36" />
       <File FileName="Assets/Scripts/Fireball/Streak.js" Line="16" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>

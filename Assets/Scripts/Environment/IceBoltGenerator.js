@@ -12,19 +12,19 @@ var distanceToMinGenerationInterval : int = 1200;
 var maxSpeedFactor : float = 1.4;
 var minSpeedFactor : float = 1.1;
 
-
 private var iceBoltPool : GameObjectPool;
 private var poolSize : int = 5;
 
 private var timeleft : float;
 
 private var yMin : float = 0.1;
-private var yMax : float = 8.307953;
-private var xStart = 10;
+private var yMax : float = 7.307953;
+private var xStart = 7.57;
 private var nextObject : Transform;
 
 private var speedFactor : float = 1;
 
+var warningTime : float = 1.5;
 
 function Start () {
 	distance = fireball.GetComponent("Distance");
@@ -63,5 +63,10 @@ function Generate () {
 	
 	var bolt : GameObject = iceBoltPool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
 	var motor : Motor = bolt.gameObject.GetComponent("Motor");
+	motor.factor = 0.0;
+	yield WaitForSeconds(warningTime);
+	var warning : GameObject = bolt.Find("Warning");
+	warning.SetActiveRecursively(false);
 	motor.factor = speedFactor;
+
 }
