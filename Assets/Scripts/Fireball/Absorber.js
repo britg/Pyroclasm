@@ -24,8 +24,6 @@ function OnTriggerEnter(collider : Collider){
 	
 		if(tempChanger.tempDiff < 0 && numActiveFlares > 0) {
 			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_USED, numActiveFlares);
-			numActiveFlares--;
-			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Protected!");
 		} else {
 			fireballTemperature.TempChange(tempChanger.tempDiff, true);
 		}

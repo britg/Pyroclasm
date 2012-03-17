@@ -67,6 +67,7 @@ function Activate () {
 
 function Deactivate () {
 	intensity.SetActiveRecursively(false);
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_COUNT_CHANGED, which-1);
 }
 
 function OnFlareUsed (notification : Notification) {
