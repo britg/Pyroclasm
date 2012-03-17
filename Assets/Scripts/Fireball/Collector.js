@@ -46,9 +46,15 @@ function Rotate() {
 
 function CheckTimeout() {
 	currActiveTime += Time.deltaTime;
-
-	if(currActiveTime >= activeTime && !streak.ongoing) {
-		Deactivate();
+	
+	if(currActiveTime >= activeTime ) {
+		if(isPowerUpActive) {
+			Deactivate();
+		}
+		
+		if(!streak.ongoing) {
+			Deactivate();
+		}
 	}
 }
 
