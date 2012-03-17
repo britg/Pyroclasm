@@ -72,5 +72,8 @@ function Deactivate() {
 }
 
 function ChangeSize() {
+	if(thisTransform.localScale == targetScale)
+		return;
+		
 	thisTransform.localScale = Vector3.SmoothDamp(thisTransform.localScale, targetScale, scaleVelocity, scaleTime);
 }

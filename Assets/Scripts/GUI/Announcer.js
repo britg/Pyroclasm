@@ -103,13 +103,12 @@ function OnStreakLevelChange (notification : Notification) {
 	
 	switch(streakLevel) {
 		case 1:
-			Queue("Hot Streak!");
 		break;
 		case 2:
-			Queue("Mega Streak!");
+			Queue("Mega Burn!");
 		break;
 		case 3:
-			Queue("ULTRA Streak!");
+			Queue("ULTRA Burn!");
 		break;
 	}
 
