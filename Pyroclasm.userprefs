@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/HorizontalHeatBar.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/IceBoltGenerator.js">
     <Files>
-      <File FileName="Assets/Scripts/GUI/HorizontalHeatBar.js" Line="66" Column="36" />
-      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="16" Column="19" />
+      <File FileName="Assets/Scripts/Environment/IceBoltGenerator.js" Line="21" Column="29" />
+      <File FileName="Assets/Scripts/Environment/Motor.js" Line="12" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
