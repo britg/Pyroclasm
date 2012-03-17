@@ -1,17 +1,33 @@
 
+var which : int = 1;
+
 private var thisTransform : Transform;
-var direction : String;
-var range : float = 5.0;
-
-private var rotation : Quaternion;
-private var radius : Vector3 = Vector3(0.1, 0, 0);
-private var currentRotation : float = 0.0;
-
+private var intensity : GameObject;
 private var fireball : GameObject;
 
 function Start() {
 	thisTransform = transform;
+	intensity = gameObject.Find("Intensity");
+	
+	Deactivate();
+	
 	fireball = GameObject.Find("Fireball");
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_LEVEL_CHANGED);
+	
+	switch(which) {
+	
+		case 1:
+			transform.localPosition = Vector3(1.414, 1.414, 0);
+		break;
+		case 2:
+			transform.localPosition = Vector3(-2.0, 0, 0);
+		break;
+		case 3:
+			transform.localPosition = Vector3(1.414, -1.414, 0);
+		break;
+	
+	}
 }
 
 function Update () {
@@ -19,5 +35,25 @@ function Update () {
 }
 
 function Spin() {
-	transform.RotateAround(fireball.transform.position, Vector3(0, 0, 1), 500*Time.deltaTime);
+	transform.RotateAround(fireball.transform.position, Vector3(0, 0, 1), 300*Time.deltaTime);
+}
+
+function OnStreakLevelChange (notification : Notification) {
+	var streakLevel : int = notification.data;
+	
+	var whichFlare = (streakLevel - 1);
+	
+	if (which == whichFlare) {
+		Activate();
+	} 
+	
+}
+
+function Activate () {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Flare!");
+	intensity.SetActiveRecursively(true);
+}
+
+function Deactivate () {
+	intensity.SetActiveRecursively(false);
 }

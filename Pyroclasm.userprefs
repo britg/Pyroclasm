@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Flareable.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Flare.js">
     <Files>
-      <File FileName="Assets/Scripts/Fireball/Flareable.js" Line="36" Column="97" />
+      <File FileName="Assets/Scripts/Fireball/Flare.js" Line="19" Column="2" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="34" Column="80" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
