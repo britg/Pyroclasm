@@ -5,6 +5,11 @@ private var thisTransform : Transform;
 private var intensity : GameObject;
 private var fireball : GameObject;
 
+var flareSounds : Array = [];
+var flare1Sound : AudioClip;
+var flare2Sound : AudioClip;
+var flare3Sound : AudioClip;
+
 function Start() {
 	thisTransform = transform;
 	intensity = gameObject.Find("Trail");
@@ -29,6 +34,8 @@ function Start() {
 		break;
 	
 	}
+	
+	flareSounds = [flare1Sound, flare2Sound, flare3Sound];
 }
 
 function Update () {
@@ -54,6 +61,8 @@ function Activate () {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Flare!");
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_COUNT_CHANGED, which);
 	intensity.SetActiveRecursively(true);
+	
+	Camera.main.audio.PlayOneShot(flareSounds[which-1]);
 }
 
 function Deactivate () {

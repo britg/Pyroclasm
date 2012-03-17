@@ -14,3 +14,5 @@ static var ANNOUNCEMENT : String = "OnAnnouncement";
 
 static var FLARE_COUNT_CHANGED : String = "OnFlareCountChange";
 static var FLARE_USED : String = "OnFlareUsed";
+
+static var GARGOYLE_ACTIVATED : String = "OnGargoyleActivate";

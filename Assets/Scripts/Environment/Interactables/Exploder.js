@@ -13,9 +13,8 @@ function OnTriggerEnter (collider : Collider) {
 
 	var obj = collider.gameObject;
 	var isFireball = obj.GetComponent("Temperature");
-	var isSatellite = obj.GetComponent("Satellite");
 	
-	if(isFireball || isSatellite) {
+	if(isFireball) {
 		emitter.emit = true;
 	}
 }
