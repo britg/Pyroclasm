@@ -1,7 +1,7 @@
 
 private var thisTransform : Transform;
 
-private var startScale : Vector3 = Vector3(7, 6, 6);
+private var startScale : Vector3 = Vector3(5, 4.5, 4.5);
 private var targetScale : Vector3;
 private var isActive : boolean = false;
 

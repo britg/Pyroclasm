@@ -7,7 +7,7 @@ private var fireball : GameObject;
 
 function Start() {
 	thisTransform = transform;
-	intensity = gameObject.Find("Intensity");
+	intensity = gameObject.Find("Trail");
 	
 	Deactivate();
 	
