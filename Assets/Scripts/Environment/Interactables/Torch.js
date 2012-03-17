@@ -1,6 +1,6 @@
 
-var minY : float = 5.5;
-var maxY : float = 7.5;
+var minY : float = 3.5;
+var maxY : float = 5.5;
 
 function Start () {
 	SetHeight();
