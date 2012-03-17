@@ -2,13 +2,18 @@
 private var thisTransform : Transform;
 
 private var startScale : Vector3 = Vector3(7, 6, 6);
+private var targetScale : Vector3;
 private var isActive : boolean = false;
+
+private var scaleVelocity : Vector3;
+var scaleTime : float = 0.5;
 
 private var currActiveTime : float = 0.0;
 var activeTime : float = 5.0;
 
 private var fireball : GameObject;
 private var streak : Streak;
+
 
 function Start() {
 	thisTransform = transform;
@@ -26,6 +31,8 @@ function Update () {
 	if(isActive) {
 		CheckTimeout();
 	}
+	
+	ChangeSize();
 }
 
 function Rotate() {
@@ -54,12 +61,16 @@ function OnPowerDown (notification : Notification) {
 
 function Activate () {
 	isActive = true;
-	thisTransform.localScale = startScale;
+	targetScale = startScale;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Corona Activated!");
 }
 
 function Deactivate() {
 	isActive = false;
 	currActiveTime = 0.0;
-	thisTransform.localScale = Vector3(0, 0, 0);
+	targetScale = Vector3(0, 0, 0);
+}
+
+function ChangeSize() {
+	thisTransform.localScale = Vector3.SmoothDamp(thisTransform.localScale, targetScale, scaleVelocity, scaleTime);
 }

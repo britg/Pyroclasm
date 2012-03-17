@@ -18,8 +18,6 @@ function Update () {
 function OnStreakLevelChange (notification : Notification) {
 	var streakLevel : int = notification.data;
 	
-	Debug.Log("Flareable streak level notification arrived " + streakLevel);
-	
 	if (activeFlares.length < streakLevel-1 && activeFlares.length < flares.length) {
 		ActivateFlare();
 	} else {
@@ -34,6 +32,8 @@ function ActivateFlare () {
 	flare.SetActiveRecursively(true);
 	
 	activeFlares.push(flare);
+	
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Flare!");
 }
 
 function DeactivateFlare () {
