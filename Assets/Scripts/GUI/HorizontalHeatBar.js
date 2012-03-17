@@ -15,6 +15,12 @@ var powerDownTimeout : float = 1.0;
 private var powerDownValue : int;
 private var powerDownTime : float;
 
+private var fillChangeTime : float = 0.3;
+private var targetFillScale : float;
+private var targetFillTiling : float;
+private var fillScaleChangeVelocity : float;
+private var fillTilingChangeVelocity : float;
+
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.ANNOUNCE_MAX_TEMPERATURE);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TEMPERATURE_CHANGED);
@@ -38,6 +44,16 @@ function OnMaxTemperatureAnnouncement (notification : Notification) {
 
 function Update () {
     CheckPowerDownTimeout();
+    
+	var currFillScale : float = heatBar.transform.localScale.y;
+	var newFillScale : float = Mathf.SmoothDamp(currFillScale, targetFillScale, fillScaleChangeVelocity, fillChangeTime);
+	
+	heatBar.transform.localScale.y = newFillScale;
+	
+	var currFillTiling : float = heatBar.renderer.material.mainTextureScale.y;
+	var newFillTiling : float = Mathf.SmoothDamp(currFillTiling, targetFillTiling, fillTilingChangeVelocity, fillChangeTime);
+	
+	heatBar.renderer.material.mainTextureScale = Vector2(1, newFillTiling);
 }
 
 function OnTemperatureChange (notification : Notification) {
@@ -46,8 +62,8 @@ function OnTemperatureChange (notification : Notification) {
 	//Debug.Log("New temperature is " + temperature);
 	
 	var pct : float = Mathf.Clamp(((0.0 + temperature) / (0.0 + maxTemperature)), 0, 1);
-	heatBar.transform.localScale.y = originalHeatBarY * pct;
-	heatBar.renderer.material.mainTextureScale = Vector2(1, originalHeatBarTiling * pct);
+	targetFillScale = originalHeatBarY * pct;
+	targetFillTiling = originalHeatBarTiling * pct;
 }
 
 function OnStreakStart (notification : Notification) {
@@ -62,10 +78,10 @@ function OnStreakUpdate (notification : Notification) {
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/500.0), originalStreakTextSize, maxStreakTextScale);
 	streakText.characterSize = newSize;
 
-	var y : float = heatBar.transform.position.x;
-	y += heatBar.transform.localScale.y;
-	streakText.transform.position.x = y + streakText.transform.localScale.x;
-	streakText.transform.position.x = y;
+	var newFill : float = heatBar.transform.position.x;
+	newFill += heatBar.transform.localScale.y;
+	
+	streakText.transform.position.x = newFill;
 }
 
 function OnStreakEnd (notification : Notification) {
