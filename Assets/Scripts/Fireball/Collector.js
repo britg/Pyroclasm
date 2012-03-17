@@ -55,6 +55,7 @@ function OnPowerDown (notification : Notification) {
 function Activate () {
 	isActive = true;
 	thisTransform.localScale = startScale;
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Corona Activated!");
 }
 
 function Deactivate() {

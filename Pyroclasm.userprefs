@@ -1,9 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/IceBoltGenerator.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Collector.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/IceBoltGenerator.js" Line="21" Column="29" />
-      <File FileName="Assets/Scripts/Environment/Motor.js" Line="12" Column="44" />
+      <File FileName="Assets/Scripts/Fireball/Collector.js" Line="11" Column="27" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GUI/HorizontalHeatBar.js" Line="54" Column="78" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="30" Column="20" />
+      <File FileName="Assets/Scripts/Environment/IceBoltGenerator.js" Line="65" Column="59" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -9,3 +9,5 @@ static var STREAK_LEVEL_CHANGED : String 	= "OnStreakLevelChange";
 static var STREAK_ENDED : String 			= "OnStreakEnd";
 
 static var POWERDOWN : String = "OnPowerDown";
+
+static var ANNOUNCEMENT : String = "OnAnnouncement";
