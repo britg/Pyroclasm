@@ -14,6 +14,7 @@ function Start() {
 	fireball = GameObject.Find("Fireball");
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_LEVEL_CHANGED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.FLARE_USED);
 	
 	switch(which) {
 	
@@ -51,9 +52,18 @@ function OnStreakLevelChange (notification : Notification) {
 
 function Activate () {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Flare!");
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_COUNT_CHANGED, which);
 	intensity.SetActiveRecursively(true);
 }
 
 function Deactivate () {
 	intensity.SetActiveRecursively(false);
+}
+
+function OnFlareUsed (notification : Notification) {
+	var whichFlare : int = notification.data;
+	
+	if(whichFlare == which) {
+		Deactivate();
+	}
 }

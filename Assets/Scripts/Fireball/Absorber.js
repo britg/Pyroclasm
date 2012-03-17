@@ -1,6 +1,4 @@
 
-var coolsDown : boolean = true;
-
 private var thisFireball : GameObject;
 private var fireballTemperature : Temperature;
 
@@ -8,9 +6,13 @@ var pickupSound : AudioClip;
 var cooldownSound : AudioClip;
 var explosionSound : AudioClip;
 
+var numActiveFlares : int = 0;
+
 function Start () {
 	thisFireball = GameObject.Find("Fireball");
 	fireballTemperature = thisFireball.GetComponent("Temperature");
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.FLARE_COUNT_CHANGED);
 }
 
 function OnTriggerEnter(collider : Collider){
@@ -20,13 +22,15 @@ function OnTriggerEnter(collider : Collider){
 	
 	if(tempChanger != null && !tempChanger.used) {
 	
-		if(tempChanger.tempDiff < 0 && !coolsDown) {
-		
+		if(tempChanger.tempDiff < 0 && numActiveFlares > 0) {
+			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_USED, numActiveFlares);
+			numActiveFlares--;
+			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Protected!");
 		} else {
 			fireballTemperature.TempChange(tempChanger.tempDiff, true);
-			tempChanger.used = true;
 		}
 		
+		tempChanger.used = true;
 		
 		if(tempChanger.playPickupSound) {
 			thisFireball.audio.PlayOneShot(pickupSound);
@@ -53,4 +57,8 @@ function OnTriggerEnter(collider : Collider){
 		}
 	}
 
+}
+
+function OnFlareCountChange(notification : Notification) {
+	numActiveFlares = notification.data;
 }

@@ -11,3 +11,6 @@ static var STREAK_ENDED : String 			= "OnStreakEnd";
 static var POWERDOWN : String = "OnPowerDown";
 
 static var ANNOUNCEMENT : String = "OnAnnouncement";
+
+static var FLARE_COUNT_CHANGED : String = "OnFlareCountChange";
+static var FLARE_USED : String = "OnFlareUsed";

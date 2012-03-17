@@ -37,7 +37,6 @@ function Start () {
 	thisDistance = gameObject.GetComponent("Distance") as Distance;
 	thisStreak = gameObject.GetComponent("Streak") as Streak;
 	
-	
 	ResetTimer();
 	AnnounceMaxTemperature();
 }
