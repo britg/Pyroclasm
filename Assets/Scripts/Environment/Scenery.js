@@ -17,7 +17,8 @@ private var Pools : Array;
 private var bgs : Array;
 
 function Awake() {
-	Application.targetFrameRate = 30.0;
+	//Application.targetFrameRate = 30.0;
+	Application.targetFrameRate = 3000.0;
 }
 
 function Start () {
