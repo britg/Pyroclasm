@@ -9,6 +9,10 @@ var started : boolean = false;
 var titleScreen : GUITexture;
 var highScore : GUIText;
 
+function Awake() {
+	Application.targetFrameRate = 30.0;
+}
+
 function Start() {
 	Time.timeScale = 1.0;
 	

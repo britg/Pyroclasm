@@ -54,7 +54,8 @@ function CreateBackground() {
 	var bg : GameObject = chosen.Spawn( Vector3(20, 0, 0), Quaternion.identity ); 
 	bgs.Push(bg);
 	
-	Invoke("ConnectBackgrounds", 0.1);
+	yield WaitForSeconds(0.1);
+	ConnectBackgrounds();
 }
 
 function ConnectBackgrounds () {
