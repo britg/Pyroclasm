@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Environment\Interactables\Icicle.js" />
      <Compile Include="Assets\Scripts\Environment\Interactables\Tapestry.js" />
      <Compile Include="Assets\Scripts\Environment\Interactables\Torch.js" />
+     <Compile Include="Assets\Scripts\Environment\Interactables\TorchGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Motor.js" />
      <Compile Include="Assets\Scripts\Environment\Scenery.js" />
      <Compile Include="Assets\Scripts\Environment\Scroller.js" />

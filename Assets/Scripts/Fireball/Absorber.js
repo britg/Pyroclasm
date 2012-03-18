@@ -31,7 +31,7 @@ function OnTriggerEnter(collider : Collider){
 		tempChanger.used = true;
 		
 		if(tempChanger.playPickupSound) {
-			thisFireball.audio.PlayOneShot(pickupSound);
+			Camera.main.audio.PlayOneShot(pickupSound);
 		}
 		
 		if(tempChanger.playCooldownSound) {
@@ -51,7 +51,7 @@ function OnTriggerEnter(collider : Collider){
 		}
 		
 		if(tempChanger.shakesCamera) {
-			Camera.main.animation.Play();
+			//Camera.main.animation.Play();
 		}
 	}
 

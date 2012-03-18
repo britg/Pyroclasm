@@ -32,7 +32,7 @@ private var lastX : float = 10.0;
 private var lastMark : float;
 
 var patternPaddingMax : float = 1.0;
-var patternPaddingMin : float = 10.0;
+var patternPaddingMin : float = 20.0;
 private var patternPadding : float = 5.0;
 
 function Awake () {
@@ -92,8 +92,15 @@ function DistanceBasedGeneration () {
 		Generate();
 		lastMark = distance.distance;
 		patternPadding = Random.value * (patternPaddingMax - patternPaddingMin) + patternPaddingMin;
-		Debug.Log("New patter padding " + patternPadding);
+		
+		if(patternPadding > 10.0) {
+			RequestInterstitial();
+		}
 	}
+}
+
+function RequestInterstitial () {
+	
 }
 
 function Generate () {
