@@ -16,3 +16,5 @@ static var FLARE_COUNT_CHANGED : String = "OnFlareCountChange";
 static var FLARE_USED : String = "OnFlareUsed";
 
 static var GARGOYLE_ACTIVATED : String = "OnGargoyleActivate";
+
+static var HEAT_PATTERN_END : String = "OnHeatPatternEnd";

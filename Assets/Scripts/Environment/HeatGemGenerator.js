@@ -17,7 +17,7 @@ var distanceToMinGenerationInterval : int = 1200;
 
 private var timeleft : float; // Left time for current interval
 
-private var poolSize : int = 5;
+private var poolSize : int = 3;
 private var yMin = 2;
 private var yMax = 7;
 private var xStart = 10;
@@ -27,6 +27,13 @@ private var Pools : Array = [];
 
 private var distance : Distance;
 private var scrolling : Scroller;
+
+private var lastX : float = 10.0;
+private var lastMark : float;
+
+var patternPaddingMax : float = 1.0;
+var patternPaddingMin : float = 10.0;
+private var patternPadding : float = 5.0;
 
 function Awake () {
 
@@ -46,6 +53,8 @@ function Start () {
 	distance = fireball.GetComponent("Distance") as Distance;
 	scrolling = Level.GetComponent("Scroller");
 	ResetTimer();
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.HEAT_PATTERN_END);
 }
 
 function ResetTimer () {
@@ -61,6 +70,13 @@ function Update () {
 	if(scrolling.velocity == 0) {
 		return;
 	}
+	
+	//TimerBasedGeneration();
+	DistanceBasedGeneration();
+}
+
+function TimerBasedGeneration () {
+
 	timeleft -= Time.deltaTime;
     
     if( timeleft <= 0.0 ) {
@@ -69,8 +85,25 @@ function Update () {
 	}
 }
 
+function DistanceBasedGeneration () {
+	var distDelta : float = distance.distance - lastMark;
+	
+	if(distDelta > (lastX + patternPadding)) {
+		Generate();
+		lastMark = distance.distance;
+		patternPadding = Random.value * (patternPaddingMax - patternPaddingMin) + patternPaddingMin;
+		Debug.Log("New patter padding " + patternPadding);
+	}
+}
+
 function Generate () {
 	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
 	var yStart = Random.value * (yMax - yMin) + yMin;
 	pool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
+}
+
+function OnHeatPatternEnd (notification : Notification) {
+	lastX = notification.data;
+	lastMark = distance.distance;
+	Debug.Log("Received end X notification " + lastX);
 }
