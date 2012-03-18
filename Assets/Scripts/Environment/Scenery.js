@@ -16,6 +16,10 @@ private var poolSize : int = 3;
 private var Pools : Array;
 private var bgs : Array;
 
+function Awake() {
+	Application.targetFrameRate = 30.0;
+}
+
 function Start () {
 	bg1Pool = GameObjectPool( bg1, poolSize, true );
 	bg1Pool.PrePopulate(poolSize);
@@ -50,12 +54,13 @@ function RemoveDestroyedBackgrounds () {
 }
 
 function CreateBackground() {
-	var chosen : GameObjectPool  = ChooseBackgroundPool();
-	var bg : GameObject = chosen.Spawn( Vector3(20, 0, 0), Quaternion.identity ); 
-	bgs.Push(bg);
+	var pool : GameObjectPool  = ChooseBackgroundPool();
+	var screen : GameObject = pool.Spawn( Vector3(20, 0, 0), Quaternion.identity ); 
+	bgs.Push(screen);
 	
 	yield WaitForSeconds(0.1);
 	ConnectBackgrounds();
+	FillScreen(screen);
 }
 
 function ConnectBackgrounds () {
@@ -63,6 +68,10 @@ function ConnectBackgrounds () {
 	var right : GameObject = bgs[bgs.length-1];
 	
 	right.transform.position.x = left.transform.position.x + left.transform.localScale.x;
+}
+
+function FillScreen(screen : GameObject) {
+	screen.SendMessage("OnScreenActivate", UnityEngine.SendMessageOptions.DontRequireReceiver);
 }
 
 function ChooseBackgroundPool() {
