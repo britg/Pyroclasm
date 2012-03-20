@@ -11,7 +11,7 @@ class GameObjectPool {
 	// The prefab that the game objects will be instantiated from.
 	private var prefab : GameObject;
 	// The list of available game objects (initially empty by default).
-	private var available : Stack;
+	private var available : Array;
 	// The list of all game objects created thus far (used for efficiently 
 	// unspawning all of them at once, see UnspawnAll).
 	private var all : ArrayList;
@@ -34,11 +34,11 @@ class GameObjectPool {
 	function GameObjectPool(prefab : GameObject, initialCapacity : int, setActiveRecursively : boolean){
 		this.prefab = prefab;
 		if(initialCapacity > 0){
-			this.available = Stack(initialCapacity);
+			this.available = [];
 			this.all = ArrayList(initialCapacity);
 		} else {
 			// Use the .NET defaults
-			this.available = Stack();
+			this.available = [];
 			this.all = ArrayList();
 		}
 		
@@ -62,7 +62,10 @@ class GameObjectPool {
 			// Keep track of it.
 			all.Add(result);
 		} else {
-			result = available.Pop() as GameObject;
+			//result = available.Pop() as GameObject;
+			var i : int = Mathf.Floor(Random.value * available.length);
+			result = available[i];
+			available.RemoveAt(i);
 			// Get the result's transform and reuse for efficiency.
 			// Calling gameObject.transform is expensive.
 			var resultTrans = result.transform;
@@ -79,7 +82,8 @@ class GameObjectPool {
 	// safe, since it first checks to see if the provided object is already unspawned.
 	// Returns true if the unspawn succeeded, false if the object was already unspawned.
 	function Unspawn(obj : GameObject) : boolean {
-		if(!available.Contains(obj)){ // Make sure we don't insert it twice.
+		//if(!available.Contains(obj)){ // Make sure we don't insert it twice.
+		if(true) {
 			available.Push(obj);
 			this.SetActive(obj, false);
 			return true; // Object inserted back in stack.
