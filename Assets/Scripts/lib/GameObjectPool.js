@@ -82,13 +82,9 @@ class GameObjectPool {
 	// safe, since it first checks to see if the provided object is already unspawned.
 	// Returns true if the unspawn succeeded, false if the object was already unspawned.
 	function Unspawn(obj : GameObject) : boolean {
-		//if(!available.Contains(obj)){ // Make sure we don't insert it twice.
-		if(true) {
-			available.Push(obj);
-			this.SetActive(obj, false);
-			return true; // Object inserted back in stack.
-		}
-		return false; // Object already in stack.
+		available.Push(obj);
+		this.SetActive(obj, false);
+		return true; // Object inserted back in stack.
 	}
 	
 	// Pre-populates the pool with the provided number of game objects.

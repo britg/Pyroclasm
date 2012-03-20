@@ -20,7 +20,7 @@ var distanceToMinGenerationInterval : int = 1200;
 
 private var timeleft : float; // Left time for current interval
 
-private var poolSize : int = 3;
+private var poolSize : int = 5;
 private var yMin = 2;
 private var yMax = 7;
 private var xStart = 10;

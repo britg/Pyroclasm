@@ -44,13 +44,15 @@ function Start () {
 	bgs = [startbg1];
 	
 	activeTrees = [startTrees];
+	CreateBackground();
+	ConnectBackgrounds();
 }
 
 function Update () {
 
 	RemoveDestroyedScenery();
 
-	if(bgs.length < 2) {
+	if(bgs.length < 3) {
 		CreateBackground();
 	}
 	
@@ -87,7 +89,14 @@ function CreateBackground() {
 }
 
 function ConnectBackgrounds () {
-	var left : GameObject = bgs[bgs.length-2];
+	var left : GameObject;
+	
+	if(bgs.length < 2) {
+		left = bgs[0];
+	} else {
+	  	left = bgs[bgs.length-2];
+	}
+	
 	var right : GameObject = bgs[bgs.length-1];
 	
 	right.transform.position.x = left.transform.position.x + left.transform.localScale.x;

@@ -6,8 +6,8 @@ private var gem : Transform;
 private var xSpacing : float 	= 0.6;
 private var ySpacing : float 	= 0.6;
 
-private var rows : int 			= 1;
-private var cols : int 			= 3;
+private var rows : int 			= 2;
+private var cols : int 			= 4;
 
 private var endX : float;
 
