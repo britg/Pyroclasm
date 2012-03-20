@@ -2,6 +2,9 @@
 var Level : GameObject;
 var fireball : GameObject;
 
+
+var line : GameObject;
+private var linePool : GameObjectPool;
 var block : GameObject;
 private var blockPool : GameObjectPool;
 var down : GameObject;
@@ -31,12 +34,14 @@ private var scrolling : Scroller;
 private var lastX : float = 10.0;
 private var lastMark : float;
 
-var patternPaddingMax : float = 1.0;
-var patternPaddingMin : float = 20.0;
-private var patternPadding : float = 5.0;
+var patternPaddingMin : float = 10.0;
+var patternPaddingMax : float = 20.0;
+private var patternPadding : float = 10.0;
 
 function Awake () {
 
+	linePool = GameObjectPool( line, poolSize, true );
+	linePool.PrePopulate(poolSize);	
 	blockPool = GameObjectPool( block, poolSize, true );
 	blockPool.PrePopulate(poolSize);
 	upPool = GameObjectPool( up, poolSize, true );
@@ -46,7 +51,7 @@ function Awake () {
 	zigzagPool = GameObjectPool( zigzag, poolSize, true );
 	zigzagPool.PrePopulate(poolSize);
 	
-	Pools = [blockPool, upPool, downPool, zigzagPool];
+	Pools = [linePool, blockPool, upPool, downPool, zigzagPool];
 }
 
 function Start () {
@@ -90,12 +95,10 @@ function DistanceBasedGeneration () {
 	
 	if(distDelta > (lastX + patternPadding)) {
 		Generate();
+		RequestInterstitial();
+		
 		lastMark = distance.distance;
 		patternPadding = Random.value * (patternPaddingMax - patternPaddingMin) + patternPaddingMin;
-		
-		if(patternPadding > 10.0) {
-			RequestInterstitial();
-		}
 	}
 }
 
