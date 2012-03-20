@@ -20,6 +20,7 @@ private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
 private var thisAnimator : ParticleAnimator;
+private var thisSmokeAnimator : ParticleAnimator;
 private var thisDistance : Distance;
 private var thisStreak : Streak;
 
@@ -33,6 +34,7 @@ function Start () {
 	thisRigidbody = rigidbody;
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
 	thisAnimator = thisTransform.Find("Intensity").GetComponent.<ParticleAnimator>();
+	thisSmokeAnimator = thisTransform.Find("Smoke").GetComponent.<ParticleAnimator>();
 	scrolling = Level.GetComponent("Scroller") as Scroller;
 	thisDistance = gameObject.GetComponent("Distance") as Distance;
 	thisStreak = gameObject.GetComponent("Streak") as Streak;
@@ -138,9 +140,11 @@ function ReloadAfterDelay() {
 function SimulateMotion() {
 	moving = true;
 	thisAnimator.force.y = 0;
+	thisSmokeAnimator.force.y = 0;
 	UpdateIntensity();
 }
 
 function UpdateIntensity() {
 	thisAnimator.force.x = - 5*scrolling.velocity;
+	thisSmokeAnimator.force.x = - 5*scrolling.velocity;
 }

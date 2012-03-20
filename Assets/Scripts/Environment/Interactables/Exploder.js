@@ -17,4 +17,5 @@ function OnTriggerEnter (collider : Collider) {
 	if(isFireball) {
 		emitter.emit = true;
 	}
+	
 }

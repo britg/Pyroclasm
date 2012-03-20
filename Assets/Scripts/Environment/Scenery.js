@@ -20,6 +20,7 @@ private var poolSize : int = 3;
 private var Pools : Array;
 private var bgs : Array;
 private var activeTrees : Array;
+private var treeStart : Vector3 = Vector3(12.2, 2, 5);
 
 function Awake() {
 	//Application.targetFrameRate = 30.0;
@@ -108,7 +109,7 @@ function ChooseBackgroundPool() {
 
 
 function CreateTrees() {
-	var tree : GameObject = treePool.Spawn( Vector3(12.2, 2, 5), Quaternion.identity ); 
+	var tree : GameObject = treePool.Spawn( treeStart, Quaternion.identity ); 
 	activeTrees.Push(tree);
 	
 	yield WaitForSeconds(0.1);

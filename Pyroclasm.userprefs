@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Interactables/TorchGenerator.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Scenery.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/Interactables/TorchGenerator.js" Line="7" Column="1" />
-      <File FileName="Assets/Scripts/Environment/InteractableGenerator.js" Line="14" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Interactables/TorchGenerator.js" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Scenery.js" Line="111" Column="53" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

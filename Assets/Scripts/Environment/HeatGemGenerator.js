@@ -112,5 +112,5 @@ function Generate () {
 function OnHeatPatternEnd (notification : Notification) {
 	lastX = notification.data;
 	lastMark = distance.distance;
-	Debug.Log("Received end X notification " + lastX);
+	//Debug.Log("Received end X notification " + lastX);
 }

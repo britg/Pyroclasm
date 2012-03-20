@@ -2,10 +2,6 @@
 private var thisFireball : GameObject;
 private var fireballTemperature : Temperature;
 
-var pickupSound : AudioClip;
-var cooldownSound : AudioClip;
-var explosionSound : AudioClip;
-
 var numActiveFlares : int = 0;
 
 function Start () {
@@ -30,29 +26,18 @@ function OnTriggerEnter(collider : Collider){
 		
 		tempChanger.used = true;
 		
-		if(tempChanger.playPickupSound) {
-			Camera.main.audio.PlayOneShot(pickupSound);
+		if(obj.audio) {
+			obj.audio.Play();
 		}
 		
-		if(tempChanger.playCooldownSound) {
-			Camera.main.audio.PlayOneShot(cooldownSound);
-		}
-		
-		if(tempChanger.playExplosionSound) {
-			Camera.main.audio.PlayOneShot(explosionSound);
-		}
-		
-		if(tempChanger.removeOnCollision) {
-			Destroy(obj);
+		if(tempChanger.isHeatGem) {
+			thisFireball.audio.Play();
 		}
 		
 		if(tempChanger.disableOnCollision) {
 			obj.SetActiveRecursively(false);
 		}
 		
-		if(tempChanger.shakesCamera) {
-			//Camera.main.animation.Play();
-		}
 	}
 
 }

@@ -32,16 +32,10 @@ function Start() {
 
 function Update () {
 	Rotate();
-	
-	if(isActive) {
-		CheckTimeout();
-	}
-	
-	ChangeSize();
 }
 
 function Rotate() {
-	thisTransform.Rotate(Time.deltaTime*140, 0, 0);
+	thisTransform.Rotate(Time.deltaTime*140, 3, 0);
 }
 
 function CheckTimeout() {
@@ -74,7 +68,7 @@ function Activate () {
 	isActive = true;
 	targetScale = startScale;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Corona Activated!");
-	audio.PlayOneShot(activateSound);
+	Camera.mainCamera.audio.PlayOneShot(activateSound);
 }
 
 function Deactivate() {
