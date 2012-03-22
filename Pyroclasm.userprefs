@@ -1,10 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Scenery.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Hot/TapestryGenerator.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/IceBoltGenerator.js" Line="41" Column="20" />
-      <File FileName="Assets/Scripts/Environment/Interactables/TorchGenerator.js" Line="18" Column="20" />
-      <File FileName="Assets/Scripts/Environment/Scenery.js" Line="88" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Hot/TapestryGenerator.js" Line="13" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

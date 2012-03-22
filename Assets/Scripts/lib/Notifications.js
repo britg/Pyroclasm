@@ -19,4 +19,8 @@ static var GARGOYLE_ACTIVATED : String = "OnGargoyleActivate";
 
 static var HEAT_PATTERN_END : String = "OnHeatPatternEnd";
 
-static var GENERATE_TORCH : String = "OnGenerateTorch";
+static var OBJECT_REQUESTED : String 	= "OnObjectRequest";
+static var GENERATE_TORCH : String 		= "OnGenerateTorch";
+static var GENERATE_BOOKCASE : String	= "OnGenerateBookcase";
+static var GENERATE_GARGOYLE_BONUS : String	= "OnGenerateGargoyleBonus";
+static var GENERATE_TAPESTRY : String	= "OnGenerateTapestry";

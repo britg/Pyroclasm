@@ -100,6 +100,6 @@ function OnGargoyleActivate () {
 	isActive = true;
 	isPowerUpActive = true;
 	targetScale = powerUpScale;
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Ginger's Rage!");
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Demon's Rage!");
 	Camera.mainCamera.audio.PlayOneShot(powerUpSound);
 }

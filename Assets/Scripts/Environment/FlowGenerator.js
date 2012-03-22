@@ -2,7 +2,6 @@
 var Level : GameObject;
 var fireball : GameObject;
 
-
 var line : GameObject;
 private var linePool : GameObjectPool;
 var block : GameObject;
@@ -34,9 +33,16 @@ private var scrolling : Scroller;
 private var lastX : float = 10.0;
 private var lastMark : float;
 
-var patternPaddingMin : float = 10.0;
-var patternPaddingMax : float = 20.0;
+var patternPaddingMin : float = 5.0;
+var patternPaddingMax : float = 15.0;
 private var patternPadding : float = 10.0;
+
+private var objectRequested : boolean = false;
+
+var bonusChance : float 			= 60.0;
+private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
+private var bonusTiers : Array 		= [60.0, 	70.0, 		80.0, 		100.0];
+private var obstacles : Array 		= ["iceshard", "gargoyle"];
 
 function Awake () {
 
@@ -93,17 +99,68 @@ function TimerBasedGeneration () {
 function DistanceBasedGeneration () {
 	var distDelta : float = distance.distance - lastMark;
 	
+	if(!objectRequested && (distDelta > (lastX + patternPadding/2))) {
+		//RequestObject(lastX);
+	}
+	
 	if(distDelta > (lastX + patternPadding)) {
 		Generate();
-		RequestInterstitial();
-		
+		objectRequested = false;
 		lastMark = distance.distance;
 		patternPadding = Random.value * (patternPaddingMax - patternPaddingMin) + patternPaddingMin;
 	}
 }
 
-function RequestInterstitial () {
+function RequestObject (x : float) {
 	
+	
+	
+	var bonusRoll : float = Mathf.Floor(Random.value * 100.0);
+	
+	if(bonusRoll <= bonusChance) {
+		RequestBonus(x);
+	} else {
+		RequestObstacle(x);
+	}
+	
+	objectRequested = true;
+}
+
+function RequestBonus (x : float) {
+
+	var roll : float = Mathf.Floor(Random.value * 100.0);
+	var which : int;
+	var tier : float;
+	
+	for ( which = 0; which < bonusTiers.length; which++ ) {
+		tier = bonusTiers[which];
+		if(roll <= tier) {
+			break;
+		}
+	}
+	
+	var obj : String = bonuses[which];
+	var note : String;
+	switch (obj) {
+		case "torch":
+			note = Notifications.GENERATE_TORCH;
+		break;
+		case "bookcase":
+			note = Notifications.GENERATE_BOOKCASE;
+		break;
+		case "gargoyle":
+			note = Notifications.GENERATE_GARGOYLE_BONUS;
+		break;
+		case "tapestry":
+			note = Notifications.GENERATE_TAPESTRY;
+		break;
+	}
+	
+	NotificationCenter.DefaultCenter().PostNotification(this, note, x);
+}
+
+function RequestObstacle (x : float) {
+
 }
 
 function Generate () {
@@ -115,5 +172,7 @@ function Generate () {
 function OnHeatPatternEnd (notification : Notification) {
 	lastX = notification.data;
 	lastMark = distance.distance;
-	//Debug.Log("Received end X notification " + lastX);
+	
+	var objPos : float = lastX + xStart + patternPadding/2;
+	RequestObject(objPos);
 }
