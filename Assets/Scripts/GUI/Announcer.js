@@ -32,7 +32,6 @@ function Start () {
 	targetSize = originalSize * scale;
 	
 	splashTime = activeTime/10.0;
-	Debug.Log("Splash time is: " + splashTime);
 }
 
 function Update () {

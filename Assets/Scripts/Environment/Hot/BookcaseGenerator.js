@@ -12,7 +12,6 @@ function Start () {
 
 function OnGenerateBookcase (notification : Notification) {
 	var x : float = notification.data;
-	Debug.Log("x is " + x);
 	bookcasePool.Spawn(Vector3(x, 3.5, -1), Quaternion.identity);
 }
 

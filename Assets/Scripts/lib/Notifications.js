@@ -24,3 +24,6 @@ static var GENERATE_TORCH : String 		= "OnGenerateTorch";
 static var GENERATE_BOOKCASE : String	= "OnGenerateBookcase";
 static var GENERATE_GARGOYLE_BONUS : String	= "OnGenerateGargoyleBonus";
 static var GENERATE_TAPESTRY : String	= "OnGenerateTapestry";
+
+static var GENERATE_GARGOYLE_OBSTACLE : String	= "OnGenerateGargoyleObstacle";
+static var GENERATE_ICESHARDS : String	= "OnGenerateIceShards";

@@ -67,7 +67,7 @@ function PostNotification (aNotification: Notification) {
     if (aNotification.name == null || aNotification.name == "") { Debug.Log("Null name sent to PostNotification."); return; }
     // Obtain the notification list, and make sure that it is valid as well
     var notifyList: List.<Component> = notifications[aNotification.name]; //change from original
-    if (!notifyList) { Debug.Log("Notify list not found in PostNotification."); return; }
+    if (!notifyList) { /*Debug.Log("Notify list not found in PostNotification.");*/ return; }
    
     // Create an array to keep track of invalid observers that we need to remove
     var observersToRemove = new List.<Component>(); //change from original

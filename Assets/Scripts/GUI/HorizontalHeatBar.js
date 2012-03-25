@@ -103,3 +103,7 @@ function CheckPowerDownTimeout () {
 		powerDownText.gameObject.active = false;
 	}
 }
+
+function Shake() {
+
+}

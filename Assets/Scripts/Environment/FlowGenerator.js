@@ -39,10 +39,10 @@ private var patternPadding : float = 10.0;
 
 private var objectRequested : boolean = false;
 
-var bonusChance : float 			= 60.0;
+var bonusChance : float 			= 40.0;
 private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
 private var bonusTiers : Array 		= [60.0, 	70.0, 		80.0, 		100.0];
-private var obstacles : Array 		= ["iceshard", "gargoyle"];
+private var obstacles : Array 		= ["iceshards", "gargoyle"];
 
 function Awake () {
 
@@ -112,8 +112,15 @@ function DistanceBasedGeneration () {
 }
 
 function RequestObject (x : float) {
+
+	var hit : RaycastHit;
 	
+	objectRequested = true;
 	
+	if(Physics.Raycast(Vector3(x, 1, -10), Vector3(0, 0, 1), hit, 20.0)) {
+		Debug.Log("Hit occurred on " + hit.collider.gameObject);
+		return;
+	}
 	
 	var bonusRoll : float = Mathf.Floor(Random.value * 100.0);
 	
@@ -123,11 +130,10 @@ function RequestObject (x : float) {
 		RequestObstacle(x);
 	}
 	
-	objectRequested = true;
 }
 
 function RequestBonus (x : float) {
-
+	Debug.Log("Bonus Requested!");
 	var roll : float = Mathf.Floor(Random.value * 100.0);
 	var which : int;
 	var tier : float;
@@ -160,6 +166,23 @@ function RequestBonus (x : float) {
 }
 
 function RequestObstacle (x : float) {
+	Debug.Log("Obstacle Requested!");
+	
+	var obstacle : String = obstacles[Mathf.Floor(Random.value * obstacles.length)];
+	var note: String;
+	
+	switch(obstacle) {
+		
+		case "gargoyle":
+			note = Notifications.GENERATE_GARGOYLE_OBSTACLE;
+		break;
+		case "iceshards":
+			note = Notifications.GENERATE_ICESHARDS;
+		break;
+	
+	}
+	
+	NotificationCenter.DefaultCenter().PostNotification(this, note, x);
 
 }
 
