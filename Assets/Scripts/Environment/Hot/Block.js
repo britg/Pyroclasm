@@ -3,8 +3,8 @@ var heatGem : Transform;
 
 private var gem : Transform;
 
-private var xSpacing : float 	= 0.6;
-private var ySpacing : float 	= 0.6;
+private var xSpacing : float 	= 0.75;
+private var ySpacing : float 	= 0.75;
 
 private var rows : int 			= 2;
 private var cols : int 			= 4;

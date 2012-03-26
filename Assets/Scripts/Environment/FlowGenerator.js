@@ -21,7 +21,7 @@ private var timeleft : float; // Left time for current interval
 
 private var poolSize : int = 5;
 private var yMin = 2;
-private var yMax = 7;
+private var yMax = 6;
 private var xStart = 10;
 private var nextObject : Transform;
 
