@@ -38,6 +38,12 @@ function OnTriggerEnter(collider : Collider){
 			obj.SetActiveRecursively(false);
 		}
 		
+		var heatBarCollected : HeatBarCollected = obj.GetComponent("HeatBarCollected");
+		
+		if(heatBarCollected != null) {
+			heatBarCollected.TravelToHeatBar();
+		}
+		
 	}
 
 }

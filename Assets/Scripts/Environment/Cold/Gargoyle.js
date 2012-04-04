@@ -13,3 +13,7 @@ function OnEnable() {
 function SetHeight () {
 	transform.position.y = Random.value * (maxY - minY) + minY;
 }
+
+function OnBecameVisible () {
+	gameObject.audio.Play();
+}
