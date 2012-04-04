@@ -7,6 +7,8 @@ var bg2 : GameObject;
 private var bg2Pool : GameObjectPool;
 var bg3 : GameObject;
 private var bg3Pool : GameObjectPool;
+var bg4 : GameObject;
+private var bg4Pool : GameObjectPool;
 
 var plainbg : GameObject;
 private var plainBgPool : GameObjectPool;
@@ -34,13 +36,15 @@ function Start () {
 	bg2Pool.PrePopulate(poolSize);
 	bg3Pool = GameObjectPool( bg3, poolSize, true );
 	bg3Pool.PrePopulate(poolSize);
+	bg4Pool = GameObjectPool( bg4, poolSize, true );
+	bg4Pool.PrePopulate(poolSize);
 	plainBgPool = GameObjectPool( plainbg, poolSize, true );
 	plainBgPool.PrePopulate(poolSize);
 	
 	treePool = GameObjectPool( trees, 10, true );
 	treePool.PrePopulate(10);
 	
-	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool];
+	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool, bg4Pool];
 	bgs = [startbg1];
 	
 	activeTrees = [startTrees];
@@ -109,7 +113,7 @@ function FillScreen(screen : GameObject) {
 function ChooseBackgroundPool() {
 	var roll : float = Random.value * 10;
 	
-	if( roll <= 6 ) {
+	if( roll <= 3 ) {
 		return Pools[0];
 	}
 	
