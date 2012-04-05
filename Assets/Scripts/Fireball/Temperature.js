@@ -122,6 +122,9 @@ function GameOver() {
 	
 	if(distance > prevDistance) {
 		PlayerPrefs.SetInt("distance", distance);
+		if(GameCenterBinding.isGameCenterAvailable()) {
+			GameCenterBinding.reportScore(distance, "pyrodev.run");
+		}
 	}
 	
 	if(thisStreak.longestStreak > prevStreak) {

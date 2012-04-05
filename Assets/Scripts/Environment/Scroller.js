@@ -8,7 +8,7 @@ var started : boolean = false;
 
 var titleScreen : GUITexture;
 var highScore : GUIText;
-
+var gameCenterButton : GUITexture;
 
 function Start() {
 	Time.timeScale = 1.0;
@@ -17,6 +17,13 @@ function Start() {
 	var longestStreak = PlayerPrefs.GetInt("streak");
 	highScore.enabled = true;
 	highScore.text = "Best Distance: " + Mathf.Round(distance) + "m\nBest Streak: +" + longestStreak + "°";
+	
+	if(GameCenterBinding.isGameCenterAvailable()) {
+		GameCenterBinding.authenticateLocalPlayer();
+		gameCenterButton.enabled = true;
+	} else {
+		gameCenterButton.enabled = false;
+	}
 }
 
 function Begin() {
@@ -24,6 +31,7 @@ function Begin() {
 	velocity = startVelocity;
 	titleScreen.enabled = false;
 	highScore.enabled = false;
+	gameCenterButton.enabled = false;
 }
 
 function Update() {
@@ -31,8 +39,24 @@ function Update() {
 	if(started)
 		velocity = Mathf.Clamp(velocity + (acceleration * Time.deltaTime), 0, maxVelocity);
 	
-	if(!started && inputsForStart())
+	if(!started && inputsForStart()) {
+	
+		for (var touch : Touch in Input.touches) {
+	        if (touch.phase == TouchPhase.Began) {
+	        	if(gameCenterButton.HitTest(touch.position)) {
+	        		return;
+	        	}
+	        }
+	    }
+	    
+	    if(Input.GetMouseButtonDown(0)) {
+			if(gameCenterButton.HitTest(Input.mousePosition)) {
+	        	return;
+	    	}
+	    }
+	    
 		Begin();
+	}
 
 }
 

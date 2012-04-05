@@ -1,14 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Hot/HeatBarCollected.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Scroller.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/Hot/HeatBarCollected.js" Line="15" Column="20" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/Hot/Exploder.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/TempChanger.js" Line="11" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Absorber.js" Line="44" Column="39" />
-      <File FileName="Assets/Scripts/Environment/Attracted.js" Line="35" Column="3" />
-      <File FileName="Assets/Scripts/Environment/Cold/Gargoyle.js" Line="18" Column="26" />
+      <File FileName="Assets/Scripts/Environment/Scroller.js" Line="52" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
