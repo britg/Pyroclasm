@@ -1,12 +1,14 @@
-fileFormatVersion: 1
+fileFormatVersion: 2
 guid: de799c61ecc054ed9979367849c0dfd1
 TrueTypeFontImporter:
-  importerVersion: 1
-  size: 42
-  case: 0
-  antiAlias: 1
+  serializedVersion: 2
+  fontSize: 42
+  fontColor: {r: 1, g: 1, b: 1, a: 1}
+  forceTextureCase: 3
+  renderMode: 1
+  style: 0
   includeFontData: 1
   use2xBehaviour: 0
-  style: 0
   fontNames:
-    name: 
+  - 
+  customCharacters: "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtVvUuWwXxYyZz:!\xB0 0123456789"

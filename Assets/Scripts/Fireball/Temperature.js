@@ -113,7 +113,7 @@ function GameOver() {
 	
 	var distance = GetDistance();
 	gameOverText.enabled = true;
-	gameOverText.text = "Game Over!\nDistance: " + Mathf.Round(distance) + "m\nBest Streak: +" + thisStreak.longestStreak + "°";
+	gameOverText.text = "Game Over!\nThis Run: " + Mathf.Round(distance) + "m\nLongest Streak: +" + thisStreak.longestStreak + "°";
 	var lift : Lift = gameObject.GetComponent("Lift");
 	lift.respondToTouch = false;
 	

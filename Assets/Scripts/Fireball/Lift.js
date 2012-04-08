@@ -12,6 +12,8 @@ private var minHeight : float = 0.1;
 
 private var initialY : float;
 
+private var started : boolean = false;
+
 function Start() {
 	// Cache component lookups at startup instead of every frame
 	thisTransform = transform;
@@ -19,6 +21,8 @@ function Start() {
 	initialY = thisTransform.position.y;
 	
 	touched = false;
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 }
 
 function OnEndGame() {
@@ -66,6 +70,13 @@ function FixedUpdate () {
 	}
 }
 
+function OnGameStart () {
+	started = true;
+}
+
 function inputsForLift() {
+	if(!started) {
+		return;
+	}
 	return ( Input.touchCount > 0 || Input.GetMouseButton(0) || Input.GetKey("space") || Input.GetKey("up") );
 }

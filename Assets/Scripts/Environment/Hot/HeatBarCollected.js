@@ -2,7 +2,7 @@
 
 private var HeatBar : GameObject;
 
-private var shouldMove : boolean = false;
+private var shouldTrigger : boolean = false;
 private var thisTransform : Transform;
 private var target : Vector3;
 
@@ -14,19 +14,25 @@ function Start () {
 
 function Update () {
 
-	if(shouldMove) {
-		transform.position = Vector3.Lerp(thisTransform.position, target, 0.3);
-		
-		var yDelta : float = Mathf.Abs(target.y - transform.position.y);
-		if(yDelta < 0.1) {
-			shouldMove = false;
-			gameObject.SetActiveRecursively(false);
-		}
+	if(shouldTrigger) {
+		TravelToHeatBar();
 	}
 
 }
 
+function Trigger() {
+	//shouldTrigger = true;
+	
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.HEAT_COLLECTED);
+}
+
 function TravelToHeatBar () {
 	//Debug.Log("Travelling to heat bar!");
-	shouldMove = true;
+	transform.position = Vector3.Lerp(thisTransform.position, target, 0.3);
+		
+	var yDelta : float = Mathf.Abs(target.y - transform.position.y);
+	if(yDelta < 0.1) {
+		shouldTrigger = false;
+		gameObject.SetActiveRecursively(false);
+	}
 }

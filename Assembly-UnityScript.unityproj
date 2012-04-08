@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\GUI\FPS.js" />
      <Compile Include="Assets\Scripts\GUI\FloatingText.js" />
      <Compile Include="Assets\Scripts\GUI\GameCenterButton.js" />
+     <Compile Include="Assets\Scripts\GUI\HeatBarEyes.js" />
      <Compile Include="Assets\Scripts\GUI\HorizontalHeatBar.js" />
      <Compile Include="Assets\Scripts\GUI\ObjectLabel.js" />
      <Compile Include="Assets\Scripts\GUI\Pause.js" />

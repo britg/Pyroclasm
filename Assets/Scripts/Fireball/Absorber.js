@@ -41,7 +41,7 @@ function OnTriggerEnter(collider : Collider){
 		var heatBarCollected : HeatBarCollected = obj.GetComponent("HeatBarCollected");
 		
 		if(heatBarCollected != null) {
-			heatBarCollected.TravelToHeatBar();
+			heatBarCollected.Trigger();
 		}
 		
 	}
