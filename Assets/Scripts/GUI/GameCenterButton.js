@@ -25,6 +25,7 @@ function Update() {
         if (touch.phase == TouchPhase.Began) {
         	if(initiator.enabled && initiator.HitTest(touch.position)) {
         		GameCenterBinding.showLeaderboardWithTimeScope(GameCenterLeaderboardTimeScope.AllTime);
+        		//GameCenterBinding.showAchievements();
         		return;
         	}
         }
