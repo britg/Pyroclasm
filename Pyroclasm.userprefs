@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Hot/HeatBarCollected.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/GameCenterButton.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/Scroller.js" Line="47" Column="86" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="116" Column="43" />
-      <File FileName="Assets/Scripts/Fireball/Lift.js" Line="74" Column="17" />
-      <File FileName="Assets/Scripts/lib/Notifications.js" Line="13" Column="55" />
-      <File FileName="Assets/Scripts/Fireball/Absorber.js" Line="44" Column="27" />
-      <File FileName="Assets/Scripts/Environment/Hot/HeatBarCollected.js" Line="26" Column="90" />
+      <File FileName="Assets/Scripts/GUI/HeatBarEyes.js" Line="21" Column="27" />
+      <File FileName="Assets/Scripts/Environment/Scroller.js" Line="43" Column="2" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/lib/Notifications.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Hot/Exploder.js" Line="5" Column="39" />
+      <File FileName="Assets/Scripts/GUI/GameCenterButton.js" Line="28" Column="13" />
+      <File FileName="Assets/Scripts/GUI/HorizontalHeatBar.js" Line="9" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

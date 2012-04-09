@@ -28,7 +28,7 @@ function Start() {
 		GameCenterBinding.authenticateLocalPlayer();
 		gameCenterButton.enabled = true;
 	} else {
-		//gameCenterButton.enabled = false;
+		gameCenterButton.enabled = false;
 	}
 	
 	pauseButton.enabled = false;

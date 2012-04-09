@@ -14,7 +14,6 @@ function Update() {
 
 	if (!loaded) {
 		CheckLoaded();
-		return;
 	}
 	
 	if(started) {
@@ -23,11 +22,20 @@ function Update() {
 
 	for (var touch : Touch in Input.touches) {
         if (touch.phase == TouchPhase.Began) {
-        	if(initiator.enabled && initiator.HitTest(touch.position)) {
-        		GameCenterBinding.showLeaderboardWithTimeScope(GameCenterLeaderboardTimeScope.AllTime);
-        		//GameCenterBinding.showAchievements();
-        		return;
-        	}
+        
+        	if(loaded) {
+	        	if(initiator.enabled && initiator.HitTest(touch.position)) {
+	        		GameCenterBinding.showLeaderboardWithTimeScope(GameCenterLeaderboardTimeScope.AllTime);
+	        		//GameCenterBinding.showAchievements();
+	        		return;
+	        	}
+	        } else {
+	        	if(loader.enabled && loader.HitTest(touch.position)) {
+	        		GameCenterBinding.authenticateLocalPlayer();
+	        		return;
+	        	}
+	        }
+        	
         }
     }
 	
