@@ -109,13 +109,13 @@ function TempChange(delta : int, isPublic : boolean) {
 
 
 function GameOver() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_END);
+	
 	shouldUpdate = false;
 	
 	var distance = GetDistance();
 	gameOverText.enabled = true;
 	gameOverText.text = "Game Over!\nThis Run: " + Mathf.Round(distance) + "m\nLongest Streak: +" + thisStreak.longestStreak + "°";
-	var lift : Lift = gameObject.GetComponent("Lift");
-	lift.respondToTouch = false;
 	
 	var prevDistance : int = PlayerPrefs.GetInt("distance");
 	var prevStreak : int = PlayerPrefs.GetInt("streak");
@@ -130,7 +130,6 @@ function GameOver() {
 	if(thisStreak.longestStreak > prevStreak) {
 		PlayerPrefs.SetInt("streak", thisStreak.longestStreak);
 	}
-	
 	
 	ReloadAfterDelay();
 }

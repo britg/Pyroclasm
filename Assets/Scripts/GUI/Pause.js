@@ -1,25 +1,12 @@
-var initiator : GUITexture;
-
 private var paused : boolean = false;
 
-function Update() {
+function Start() {
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_PAUSE);
+}
 
-	for (var touch : Touch in Input.touches) {
-        if (touch.phase == TouchPhase.Began) {
-        	if(initiator.HitTest(touch.position)) {
-        		TogglePause();
-        		return;
-        	}
-        }
-    }
-    
-    if(Input.GetMouseButtonDown(0)) {
-		if(initiator.HitTest(Input.mousePosition)) {
-    		TogglePause();
-    	}
-    }
-	
-}	
+function OnTouchPause ( notification : Notification ) {
+	TogglePause();
+}
 
 function TogglePause() {
 

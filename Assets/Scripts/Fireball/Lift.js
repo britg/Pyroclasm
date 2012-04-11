@@ -1,11 +1,8 @@
 
 var force : float = 10.0;
-var respondToTouch : boolean = true;
 
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
-
-private var touched : boolean;
 
 private var maxHeight : float = 8.307953;
 private var minHeight : float = 0.1;
@@ -13,16 +10,18 @@ private var minHeight : float = 0.1;
 private var initialY : float;
 
 private var started : boolean = false;
+private var ended : boolean = false;
+private var touchDown : boolean = false;
 
 function Start() {
-	// Cache component lookups at startup instead of every frame
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	initialY = thisTransform.position.y;
 	
-	touched = false;
-	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LIFT_START);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LIFT_END);
 }
 
 function OnEndGame() {
@@ -30,9 +29,6 @@ function OnEndGame() {
 }
 
 function Lift() {
-	if(!respondToTouch) {
-		return;
-	}
 	var velY : float = thisRigidbody.velocity.y;
 	var minY = -3.0;
 	if(velY < minY) {
@@ -58,14 +54,17 @@ function Update () {
 
 
 function FixedUpdate () {	
-	if (!touched) {
+
+	if(ended)
+		return;
+
+	if (!started) {
 		InitialFloat();
 	} else {
 		thisRigidbody.AddForce(Vector3.down *5.0);
 	}
 	
-	if ( inputsForLift() ) {
-		touched = true;
+	if ( touchDown ) {
 		Lift();
 	}
 }
@@ -74,9 +73,14 @@ function OnGameStart () {
 	started = true;
 }
 
-function inputsForLift() {
-	if(!started) {
-		return;
-	}
-	return ( Input.touchCount > 0 || Input.GetMouseButton(0) || Input.GetKey("space") || Input.GetKey("up") );
+function OnGameEnd () {
+	ended = true;
+}
+
+function OnTouchStart () {
+	touchDown = true;
+}
+
+function OnTouchEnd () {
+	touchDown = false;
 }
