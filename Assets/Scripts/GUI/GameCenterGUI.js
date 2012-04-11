@@ -20,13 +20,14 @@ function Start () {
 	
 	if(GameCenterBinding.isGameCenterAvailable()) {
 		GameCenterBinding.authenticateLocalPlayer();
+		GameCenterBinding.showCompletionBannerForAchievements();
+	} else {
+		DisableGUI();
 	}
 }
 
 function Update() {
 	
-	AnimateButtons();
-
 	if (!loaded) {
 		CheckLoaded();
 	}
@@ -70,6 +71,10 @@ function AnimateButtons() {
 }
 
 function OnGameStart() {
+	DisableGUI();
+}
+
+function DisableGUI() {
 	shouldAnimate = false;
 	achievementButton.enabled = false;
 	leaderBoardButton.enabled = false;

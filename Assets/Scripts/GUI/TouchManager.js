@@ -58,12 +58,12 @@ function Update() {
 
 function TestAchievementsButton() {
 	for (var touch : Touch in Input.touches) {
-        if (touch.phase == TouchPhase.Began) {
-			if(achievementsButton.enabled && achievementsButton.HitTest(touch.position)) {
+		if(achievementsButton.enabled && achievementsButton.HitTest(touch.position)) {
+			if (touch.phase == TouchPhase.Began) {
 				NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_ACHIEVEMENTS);
-				return true;
 			}
-        }
+			return true;
+		}
     }
 	
 	return false;
@@ -71,11 +71,11 @@ function TestAchievementsButton() {
 
 function TestLeaderBoardButton() {
 	for (var touch : Touch in Input.touches) {
-        if (touch.phase == TouchPhase.Began) {
-			if(leaderBoardButton.enabled && leaderBoardButton.HitTest(touch.position)) {
+		if(leaderBoardButton.enabled && leaderBoardButton.HitTest(touch.position)) {
+			if (touch.phase == TouchPhase.Began) {
 				NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_LEADERBOARD);
-				return true;
 			}
+			return true;
 		}
 	}
 	
@@ -88,11 +88,11 @@ function TestPauseButton() {
 		return;
 
 	for (var touch : Touch in Input.touches) {
-        if (touch.phase == TouchPhase.Began) {
-        	if(pauseButton.HitTest(touch.position)) {
+    	if(pauseButton.HitTest(touch.position)) {
+    		if (touch.phase == TouchPhase.Began) {
 				NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
-        		return true;
-        	}
+			}
+        	return true;
         }
     }
 

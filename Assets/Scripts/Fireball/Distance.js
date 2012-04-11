@@ -34,6 +34,7 @@ function Update () {
     if(timeleft <= 0.0) {
     	DisplayDistance();
     }
+    
 }
 
 function DisplayDistance() {

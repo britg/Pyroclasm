@@ -131,6 +131,18 @@ function GameOver() {
 		PlayerPrefs.SetInt("streak", thisStreak.longestStreak);
 	}
 	
+	if(distance > 1000) {
+    	GameCenterBinding.reportAchievement("pyrodev.1000m", 100.0);
+	}
+	
+	if(distance > 2000) {
+    	GameCenterBinding.reportAchievement("pyrodev.2000m", 100.0);
+	}
+	
+	if(distance > 3000) {
+    	GameCenterBinding.reportAchievement("pyrodev.3000m", 100.0);
+	}
+	
 	ReloadAfterDelay();
 }
 
