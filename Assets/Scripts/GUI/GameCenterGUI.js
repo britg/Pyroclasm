@@ -6,8 +6,10 @@ private var loaded : boolean = false;
 
 // -9.25
 private var shouldAnimate : boolean = false;
-private var achievementTargetX : float = -9.07;
-private var leaderBoardTargetX : float = -9.43;
+private var buttonStart : float = -9.26;
+private var buttonSpread : float = 0.15;
+private var achievementTargetX : float = buttonStart + buttonSpread;
+private var leaderBoardTargetX : float = buttonStart - buttonSpread;
 private var achievementAnimateVelocity : float;
 private var leaderBoardAnimateVelocity : float;
 private var animateTime : float = 0.3;
@@ -27,7 +29,7 @@ function Start () {
 }
 
 function Update() {
-	
+
 	if (!loaded) {
 		CheckLoaded();
 	}
