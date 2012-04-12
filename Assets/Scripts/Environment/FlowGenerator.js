@@ -78,7 +78,6 @@ function ResetTimer () {
 }
 
 function Update () {
-	return;
 	
 	if(scrolling.velocity == 0) {
 		return;
@@ -101,10 +100,6 @@ function TimerBasedGeneration () {
 function DistanceBasedGeneration () {
 	var distDelta : float = distance.distance - lastMark;
 	
-	if(!objectRequested && (distDelta > (lastX + patternPadding/2))) {
-		//RequestObject(lastX);
-	}
-	
 	if(distDelta > (lastX + patternPadding)) {
 		Generate();
 		objectRequested = false;
@@ -114,6 +109,8 @@ function DistanceBasedGeneration () {
 }
 
 function RequestObject (x : float) {
+
+	return;
 
 	var hit : RaycastHit;
 	
