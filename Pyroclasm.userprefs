@@ -1,14 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/Temperature.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/FlowGenerator.js">
     <Files>
-      <File FileName="Assets/Scripts/lib/Notifications.js" Line="9" Column="42" />
-      <File FileName="Assets/Scripts/Fireball/Lift.js" Line="58" Column="11" />
-      <File FileName="Assets/Scripts/GUI/TouchManager.js" Line="102" Column="16" />
-      <File FileName="Assets/Scripts/GUI/GameCenterGUI.js" Line="23" Column="58" />
-      <File FileName="Assets/Scripts/GUI/Announcer.js" Line="86" Column="96" />
-      <File FileName="Assets/Scripts/Fireball/Distance.js" Line="38" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="143" Column="51" />
+      <File FileName="Assets/Scripts/Environment/Scenery.js" Line="88" Column="100" />
+      <File FileName="Assets/Scripts/Environment/Cold/IceBoltGenerator.js" Line="49" Column="2" />
+      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="82" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
