@@ -7,7 +7,7 @@ private var xSpacing : float 	= 0.75;
 private var ySpacing : float 	= 0.75;
 
 private var rows : int 			= 2;
-private var cols : int 			= 2;
+private var cols : int 			= 5;
 
 private var endX : float;
 

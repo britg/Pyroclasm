@@ -59,7 +59,7 @@
      <Compile Include="Assets\Scripts\Environment\Hot\GargoyleWithGem.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\GargoyleWithGemGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\HeatBarCollected.js" />
-     <Compile Include="Assets\Scripts\Environment\Hot\IceBoltExploder.js" />
+     <Compile Include="Assets\Scripts\Environment\Hot\IceCollision.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\Line.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\Tapestry.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\TapestryGenerator.js" />
