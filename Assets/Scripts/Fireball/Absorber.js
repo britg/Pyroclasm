@@ -33,14 +33,11 @@ function OnTriggerEnter (collider : Collider) {
 	}
 	
 	if(tempChanger.isHeatGem) {
-	
 		thisFireball.audio.Play();
-		obj.renderer.material.SetTextureOffset ("_MainTex", Vector2(1.0, 0));
-		
-	} else if(tempChanger.disableOnCollision) {
+	}
 	
+	if(tempChanger.disableOnCollision) {
 		obj.SetActiveRecursively(false);
-		
 	}
 	
 	var heatBarCollected : HeatBarCollected = obj.GetComponent("HeatBarCollected");

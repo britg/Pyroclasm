@@ -7,13 +7,13 @@ private var xSpacing : float 	= 0.75;
 private var ySpacing : float 	= 0.75;
 
 private var rows : int 			= 2;
-private var cols : int 			= 4;
+private var cols : int 			= 2;
 
 private var endX : float;
 
 function Awake() {
 
-	rows += Mathf.Round(Random.value * 5);
+	rows += Mathf.Round(Random.value * 3);
 	cols += Mathf.Round(Random.value * 5);
 
 	for(var i = 0; i < cols; i++) {

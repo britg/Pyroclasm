@@ -30,7 +30,7 @@ function OnEndGame() {
 
 function Lift() {
 	var velY : float = thisRigidbody.velocity.y;
-	var minY = -3.0;
+	var minY = -1.5;
 	if(velY < minY) {
 		thisRigidbody.velocity.y = minY;
 	}
@@ -61,11 +61,17 @@ function FixedUpdate () {
 	if (!started) {
 		InitialFloat();
 	} else {
-		thisRigidbody.AddForce(Vector3.down *5.0);
+		thisRigidbody.AddForce(Vector3.down *8.0);
 	}
 	
 	if ( touchDown ) {
 		Lift();
+	} else {
+		var velY : float = thisRigidbody.velocity.y;
+		var maxY = 5.0;
+		if(velY > maxY) {
+			thisRigidbody.velocity.y = maxY;
+		}	
 	}
 }
 

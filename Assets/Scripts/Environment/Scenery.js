@@ -30,21 +30,21 @@ function Awake() {
 }
 
 function Start () {
-	//bg1Pool = GameObjectPool( bg1, poolSize, true );
-	//bg1Pool.PrePopulate(poolSize);
-	//bg2Pool = GameObjectPool( bg2, poolSize, true );
-	//bg2Pool.PrePopulate(poolSize);
-	//bg3Pool = GameObjectPool( bg3, poolSize, true );
-	//bg3Pool.PrePopulate(poolSize);
-	//bg4Pool = GameObjectPool( bg4, poolSize, true );
-	//bg4Pool.PrePopulate(poolSize);
-	//plainBgPool = GameObjectPool( plainbg, poolSize, true );
-	//plainBgPool.PrePopulate(poolSize);
+	bg1Pool = GameObjectPool( bg1, poolSize, true );
+	bg1Pool.PrePopulate(poolSize);
+	bg2Pool = GameObjectPool( bg2, poolSize, true );
+	bg2Pool.PrePopulate(poolSize);
+	bg3Pool = GameObjectPool( bg3, poolSize, true );
+	bg3Pool.PrePopulate(poolSize);
+	bg4Pool = GameObjectPool( bg4, poolSize, true );
+	bg4Pool.PrePopulate(poolSize);
+	plainBgPool = GameObjectPool( plainbg, poolSize, true );
+	plainBgPool.PrePopulate(poolSize);
 	
 	treePool = GameObjectPool( trees, 3, true );
 	treePool.PrePopulate(3);
 	
-	//Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool, bg4Pool];
+	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool, bg4Pool];
 	bgs = [startbg1];
 	
 	activeTrees = [startTrees];
@@ -83,9 +83,9 @@ function RemoveDestroyedScenery () {
 }
 
 function CreateBackground() {
-	//var pool : GameObjectPool  = ChooseBackgroundPool();
-	//var screen : GameObject = pool.Spawn( Vector3(20, 0, 0), Quaternion.identity );
-	var screen : GameObject = GameObject.Instantiate(plainbg, Vector3(20, 0, 0), Quaternion.identity);
+	var pool : GameObjectPool  = ChooseBackgroundPool();
+	var screen : GameObject = pool.Spawn( Vector3(20, 0, 0), Quaternion.identity );
+	//var screen : GameObject = GameObject.Instantiate(plainbg, Vector3(20, 0, 0), Quaternion.identity);
 	bgs.Push(screen);
 	
 	yield WaitForSeconds(0.1);

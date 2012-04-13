@@ -7,8 +7,4 @@ var isHeatGem : boolean = false;
 
 function OnEnable() {
 	used = false;
-	
-	if(isHeatGem) {
-		renderer.material.SetTextureOffset ("_MainTex", Vector2(0, 0));
-	}
 }

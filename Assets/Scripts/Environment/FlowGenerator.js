@@ -58,6 +58,7 @@ function Awake () {
 	zigzagPool.PrePopulate(poolSize);
 	
 	Pools = [linePool, blockPool, upPool, downPool, zigzagPool];
+	//Pools = [blockPool];
 }
 
 function Start () {
@@ -110,14 +111,12 @@ function DistanceBasedGeneration () {
 
 function RequestObject (x : float) {
 
-	return;
-
 	var hit : RaycastHit;
 	
 	objectRequested = true;
 	
 	if(Physics.Raycast(Vector3(x, 1, -10), Vector3(0, 0, 1), hit, 20.0)) {
-		Debug.Log("Hit occurred on " + hit.collider.gameObject);
+		//Debug.Log("Hit occurred on " + hit.collider.gameObject);
 		return;
 	}
 	
@@ -195,6 +194,6 @@ function OnHeatPatternEnd (notification : Notification) {
 	lastX = notification.data;
 	lastMark = distance.distance;
 	
-	var objPos : float = lastX + xStart + patternPadding/2;
+	var objPos : float = lastX + xStart + patternPadding/2 - 3;
 	RequestObject(objPos);
 }
