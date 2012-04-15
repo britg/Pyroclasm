@@ -194,6 +194,6 @@ function OnHeatPatternEnd (notification : Notification) {
 	lastX = notification.data;
 	lastMark = distance.distance;
 	
-	var objPos : float = lastX + xStart + patternPadding/2 - 3;
+	var objPos : float = lastX + xStart + patternPadding/2 - 2;
 	RequestObject(objPos);
 }
