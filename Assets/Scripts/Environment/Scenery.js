@@ -25,8 +25,8 @@ private var activeTrees : Array;
 private var treeStart : Vector3 = Vector3(12.2, 2, 5);
 
 function Awake() {
-	Application.targetFrameRate = 30.0;
-	//Application.targetFrameRate = 60.0;
+	//Application.targetFrameRate = 30.0;
+	Application.targetFrameRate = 60.0;
 }
 
 function Start () {
