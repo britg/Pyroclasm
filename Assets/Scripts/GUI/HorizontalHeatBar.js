@@ -96,6 +96,8 @@ function OnPowerDown (notification : Notification) {
 	powerDownTime = Time.time;
 	powerDownText.gameObject.active = true;
 	powerDownText.text = "" + delta + "°";
+	
+	animation.Play();
 }
 
 function CheckPowerDownTimeout () {
