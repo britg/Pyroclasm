@@ -20,7 +20,7 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_ACHIEVEMENTS);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LEADERBOARD);
 	
-	if(GameCenterBinding.isGameCenterAvailable()) {
+	if(false && GameCenterBinding.isGameCenterAvailable()) {
 		GameCenterBinding.authenticateLocalPlayer();
 		GameCenterBinding.showCompletionBannerForAchievements();
 	} else {
