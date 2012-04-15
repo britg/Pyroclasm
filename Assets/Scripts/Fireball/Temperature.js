@@ -110,7 +110,7 @@ function TempChange(delta : int, isPublic : boolean) {
 
 function GameOver() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_END);
-	thisEmitter.emit = false;
+	
 	shouldUpdate = false;
 	
 	var distance = GetDistance();

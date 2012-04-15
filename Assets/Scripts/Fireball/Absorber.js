@@ -1,12 +1,14 @@
 
 private var thisFireball : GameObject;
 private var fireballTemperature : Temperature;
+private var explosionPowerUpEmitter : ParticleEmitter;
 
 var numActiveFlares : int = 0;
 
 function Start () {
 	thisFireball = GameObject.Find("Fireball");
 	fireballTemperature = thisFireball.GetComponent("Temperature");
+	explosionPowerUpEmitter = thisFireball.transform.Find("ExplosionPowerUp").GetComponent.<ParticleEmitter>();
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.FLARE_COUNT_CHANGED);
 }
@@ -31,14 +33,16 @@ function OnTriggerEnter (collider : Collider) {
 		}
 	} else {
 		fireballTemperature.TempChange(tempChanger.tempDiff, true);
+		
+		if(tempChanger.isHeatGem) {
+			thisFireball.audio.Play();
+		} else {
+			ShowExplosionPowerUp();
+		}
 	}
 	
 	if(obj.audio) {
 		obj.audio.Play();
-	}
-	
-	if(tempChanger.isHeatGem) {
-		thisFireball.audio.Play();
 	}
 	
 	if(tempChanger.disableOnCollision) {
@@ -51,6 +55,12 @@ function OnTriggerEnter (collider : Collider) {
 		heatBarCollected.Trigger();
 	}
 
+}
+
+function ShowExplosionPowerUp () {
+	explosionPowerUpEmitter.emit = true;
+	yield WaitForSeconds(0.5);
+	explosionPowerUpEmitter.emit = false;
 }
 
 function OnFlareCountChange(notification : Notification) {
