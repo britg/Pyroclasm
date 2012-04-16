@@ -88,6 +88,7 @@ function CoolOff() {
 }
 
 function TempChange(delta : int, isPublic : boolean) {
+	//Debug.Log("delta is " + delta);
 	heat += delta;
 	
 	heat = Mathf.Clamp(heat, 0, maxHeat);
@@ -110,7 +111,7 @@ function TempChange(delta : int, isPublic : boolean) {
 
 function GameOver() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_END);
-	
+	thisEmitter.emit = false;	
 	shouldUpdate = false;
 	
 	var distance = GetDistance();

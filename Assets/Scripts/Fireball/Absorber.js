@@ -23,14 +23,16 @@ function OnTriggerEnter (collider : Collider) {
 		
 	tempChanger.used = true;
 		
-	// Powerdown with a flare active
 	if(tempChanger.tempDiff < 0) {
+		//Debug.Log("Here " + numActiveFlares);
+		// Powerdown with a flare active
 		if(numActiveFlares > 0) {
 			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_USED, numActiveFlares);
 		} else {
 			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ICE_COLLISION);
 			fireballTemperature.TempChange(tempChanger.tempDiff, true);
 		}
+		
 	} else {
 		fireballTemperature.TempChange(tempChanger.tempDiff, true);
 		

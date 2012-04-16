@@ -14,7 +14,7 @@ function Start() {
 	thisTransform = transform;
 	intensity = gameObject.Find("Trail");
 	
-	Deactivate();
+	Deactivate(false);
 	
 	fireball = GameObject.Find("Fireball");
 	
@@ -65,15 +65,17 @@ function Activate () {
 	Camera.main.audio.PlayOneShot(flareSounds[which-1]);
 }
 
-function Deactivate () {
+function Deactivate (announce : boolean) {
 	intensity.SetActiveRecursively(false);
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_COUNT_CHANGED, which-1);
+	if(announce) {
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FLARE_COUNT_CHANGED, which-1);
+	}
 }
 
 function OnFlareUsed (notification : Notification) {
 	var whichFlare : int = notification.data;
 	
 	if(whichFlare == which) {
-		Deactivate();
+		Deactivate(true);
 	}
 }
