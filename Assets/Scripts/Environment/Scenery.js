@@ -9,6 +9,8 @@ var bg3 : GameObject;
 private var bg3Pool : GameObjectPool;
 var bg4 : GameObject;
 private var bg4Pool : GameObjectPool;
+var bg5 : GameObject;
+private var bg5Pool : GameObjectPool;
 
 var plainbg : GameObject;
 private var plainBgPool : GameObjectPool;
@@ -38,13 +40,15 @@ function Start () {
 	bg3Pool.PrePopulate(poolSize);
 	bg4Pool = GameObjectPool( bg4, poolSize, true );
 	bg4Pool.PrePopulate(poolSize);
+	bg5Pool = GameObjectPool( bg5, poolSize, true );
+	bg5Pool.PrePopulate(poolSize);
 	plainBgPool = GameObjectPool( plainbg, poolSize, true );
 	plainBgPool.PrePopulate(poolSize);
 	
 	treePool = GameObjectPool( trees, 3, true );
 	treePool.PrePopulate(3);
 	
-	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool, bg4Pool];
+	Pools = [plainBgPool, bg1Pool, bg2Pool, bg3Pool, bg4Pool, bg5Pool];
 	bgs = [startbg1];
 	
 	activeTrees = [startTrees];
