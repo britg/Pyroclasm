@@ -69,10 +69,10 @@
      <Compile Include="Assets\Scripts\Environment\Hot\ZigZag.js" />
      <Compile Include="Assets\Scripts\Environment\InteractableGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Motor.js" />
+     <Compile Include="Assets\Scripts\Environment\PositionReset.js" />
      <Compile Include="Assets\Scripts\Environment\Scenery.js" />
      <Compile Include="Assets\Scripts\Environment\Scroller.js" />
      <Compile Include="Assets\Scripts\Environment\TempChanger.js" />
-     <Compile Include="Assets\Scripts\Environment\Trees.js" />
      <Compile Include="Assets\Scripts\Fireball\Absorber.js" />
      <Compile Include="Assets\Scripts\Fireball\Ball.js" />
      <Compile Include="Assets\Scripts\Fireball\Collector.js" />
