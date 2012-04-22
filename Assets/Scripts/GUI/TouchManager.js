@@ -8,7 +8,16 @@ var pauseButton : GUITexture;
 private var started : boolean = false;
 private var touchDown : boolean = false;
 
+function Awake () {
+}
+
+function EnableStartGUI() {
+	var startGUI : GameObject = GameObject.Find('GUI');
+	startGUI.SetActiveRecursively(true);
+}
+
 function Start () {
+	EnableStartGUI();
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	pauseButton.enabled = false;
 }
