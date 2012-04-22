@@ -33,7 +33,7 @@ function OnTriggerEnter (collider : Collider) {
 			fireballTemperature.TempChange(tempChanger.tempDiff, true);
 		}
 		
-	} else {
+	} else if (tempChanger.tempDiff > 0) {
 		fireballTemperature.TempChange(tempChanger.tempDiff, true);
 		
 		if(tempChanger.isHeatGem) {
