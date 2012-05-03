@@ -12,6 +12,8 @@ private var bg4Pool : GameObjectPool;
 var bg5 : GameObject;
 private var bg5Pool : GameObjectPool;
 
+var ghost : GameObject;
+
 var plainbg : GameObject;
 private var plainBgPool : GameObjectPool;
 
@@ -95,6 +97,20 @@ function CreateBackground() {
 	yield WaitForSeconds(0.1);
 	ConnectBackgrounds();
 	FillScreen(screen);
+	
+	// Add a ghost randomly
+	var roll : float = Random.value * 10;
+	if(roll <= 1) {
+		AddGhost();
+	}
+}
+
+function AddGhost() {
+	ghost.SetActiveRecursively(true);
+	ghost.transform.position.x = 15;
+	var ghostMotor : Motor = ghost.GetComponent("Motor");
+	ghostMotor.factor = 0.5;
+	ghost.transform.position.y = Random.value * 4;
 }
 
 function ConnectBackgrounds () {

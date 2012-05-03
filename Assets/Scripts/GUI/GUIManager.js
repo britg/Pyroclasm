@@ -4,6 +4,7 @@ var achievementsButton : GUITexture;
 var leaderBoardButton : GUITexture;
 var gameCenterLoading : GUITexture;
 var pauseButton : GUITexture;
+var scrollButton : GUITexture;
 
 private var started : boolean = false;
 private var touchDown : boolean = false;

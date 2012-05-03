@@ -2,6 +2,8 @@ var loaderButton : GUITexture;
 var achievementButton : GUITexture;
 var leaderBoardButton : GUITexture;
 
+var gameCenterEnabled : boolean = true;
+
 private var loaded : boolean = false;
 
 // -9.25
@@ -20,7 +22,7 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_ACHIEVEMENTS);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LEADERBOARD);
 	
-	if(false && GameCenterBinding.isGameCenterAvailable()) {
+	if(gameCenterEnabled && GameCenterBinding.isGameCenterAvailable()) {
 		GameCenterBinding.authenticateLocalPlayer();
 		GameCenterBinding.showCompletionBannerForAchievements();
 	} else {
