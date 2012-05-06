@@ -6,19 +6,8 @@ var maxVelocity : float = 25.0;
 
 var started : boolean = false;
 
-var titleScreen : GUITexture;
-var highScore : GUIText;
-var heatBar : GameObject;
-
 function Start() {
 	Time.timeScale = 1.0;
-	
-	var distance = PlayerPrefs.GetInt("distance");
-	var longestStreak = PlayerPrefs.GetInt("streak");
-	highScore.enabled = true;
-	highScore.text = "Longest Run: " + Mathf.Round(distance) + "m\nLongest Streak: +" + longestStreak + "°";
-	
-	heatBar.SetActiveRecursively(false);
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_FIRST);
 }
@@ -30,10 +19,6 @@ function OnTouchFirst () {
 function Begin() {
 	started = true;
 	velocity = startVelocity;
-	titleScreen.enabled = false;
-	highScore.enabled = false;
-	heatBar.SetActiveRecursively(true);
-	
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_START);
 }
 

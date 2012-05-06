@@ -1,5 +1,8 @@
 #pragma strict
 
+var titleScreen : GUITexture;
+var highScore : GUIText;
+var heatBar : GameObject;
 var achievementsButton : GUITexture;
 var leaderBoardButton : GUITexture;
 var gameCenterLoading : GUITexture;
@@ -15,17 +18,26 @@ function Awake () {
 function EnableStartGUI() {
 	var startGUI : GameObject = GameObject.Find('GUI');
 	startGUI.SetActiveRecursively(true);
+	heatBar.SetActiveRecursively(false);
 }
 
 function Start () {
 	EnableStartGUI();
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	pauseButton.enabled = false;
+	
+	var distance = PlayerPrefs.GetInt("distance");
+	var longestStreak = PlayerPrefs.GetInt("streak");
+	highScore.enabled = true;
+	highScore.text = "Longest Run: " + Mathf.Round(distance) + "m\nLongest Streak: +" + longestStreak + "°";
 }
 
 function OnGameStart() {
 	started = true;
 	pauseButton.enabled = true;
+	heatBar.SetActiveRecursively(true);
+	titleScreen.enabled = false;
+	highScore.enabled = false;
 }
 
 function Update() {
