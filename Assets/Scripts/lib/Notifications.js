@@ -42,3 +42,7 @@ static var GENERATE_ICESHARDS : String	= "OnGenerateIceShards";
 static var GAME_CENTER_ACTIVATED : String = "OnGameCenterActivated";
 
 static var ICE_COLLISION : String = "OnIceCollision";
+
+static var SCROLL_BUTTON_TOUCHED : String = "OnScrollButtonTouch";
+static var SCROLL_GUI_ACTIVATED : String = "OnScrollGUIActivated";
+static var SCROLL_GUI_DEACTIVATED : String = "OnScrollGUIDeactivated";

@@ -8,9 +8,11 @@ var leaderBoardButton : GUITexture;
 var gameCenterLoading : GUITexture;
 var pauseButton : GUITexture;
 var scrollButton : GUITexture;
+var scrollGUI : GameObject;
 
 private var started : boolean = false;
 private var touchDown : boolean = false;
+private var scrollGUIActive : boolean = false;
 
 function Awake () {
 }
@@ -24,6 +26,10 @@ function EnableStartGUI() {
 function Start () {
 	EnableStartGUI();
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_ACTIVATED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_DEACTIVATED);
+	
 	pauseButton.enabled = false;
 	
 	var distance = PlayerPrefs.GetInt("distance");
@@ -38,6 +44,7 @@ function OnGameStart() {
 	heatBar.SetActiveRecursively(true);
 	titleScreen.enabled = false;
 	highScore.enabled = false;
+	scrollGUI.SetActiveRecursively(false);
 }
 
 function Update() {
@@ -51,6 +58,14 @@ function Update() {
 	    		
 	    	if(TestLeaderBoardButton())
 	    		return;
+	    		
+	    	if(TestScrollGUIButton())
+	    		return;
+	    		
+	    	if(scrollGUIActive)
+	    		return;
+	    		
+	    	Debug.Log("Made it");
 	    		
 	    	InitialTouch();
 	    	TouchDown();
@@ -104,6 +119,36 @@ function TestLeaderBoardButton() {
 	return false;
 }
 
+function TestScrollGUIButton() {
+	if(!scrollButton.enabled)
+		return;
+		
+	for (var touch : Touch in Input.touches) {
+		if(scrollButton.HitTest(touch.position)) {
+			if (touch.phase == TouchPhase.Began) {
+				NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_BUTTON_TOUCHED);
+			}
+			return true;
+		}
+	}
+
+	if(Input.GetMouseButtonDown(0)) {
+		if(scrollButton.HitTest(Input.mousePosition)) {
+			Debug.Log("Scroll button clicked");
+			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_BUTTON_TOUCHED);
+			return true;
+    	}
+    }
+    
+    if(Input.GetMouseButton(0)) {
+		if(scrollButton.HitTest(Input.mousePosition)) {
+			return true;
+    	}
+    }
+	
+	return false;
+}
+
 function TestPauseButton() {
 
 	if(!pauseButton.enabled)
@@ -121,6 +166,12 @@ function TestPauseButton() {
 	if(Input.GetMouseButtonDown(0)) {
 		if(pauseButton.HitTest(Input.mousePosition)) {
 			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
+			return true;
+    	}
+    }
+    
+    if(Input.GetMouseButton(0)) {
+		if(pauseButton.HitTest(Input.mousePosition)) {
 			return true;
     	}
     }
@@ -148,4 +199,12 @@ function inputsForTouch() {
 								|| Input.GetKey("space") 
 								|| Input.GetKey("up") );
     return inputTest;
+}
+
+function OnScrollGUIActivated () {
+	scrollGUIActive = true;
+}
+
+function OnScrollGUIDeactivated () {
+	scrollGUIActive = false;
 }
