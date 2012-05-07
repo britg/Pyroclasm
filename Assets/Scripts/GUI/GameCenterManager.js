@@ -22,6 +22,9 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_ACHIEVEMENTS);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LEADERBOARD);
 	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_ACTIVATED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_DEACTIVATED);
+	
 	if(gameCenterEnabled && GameCenterBinding.isGameCenterAvailable()) {
 		GameCenterBinding.authenticateLocalPlayer();
 		GameCenterBinding.showCompletionBannerForAchievements();
@@ -83,4 +86,17 @@ function DisableGUI() {
 	achievementButton.enabled = false;
 	leaderBoardButton.enabled = false;
 	loaderButton.enabled = false;
+}
+
+function OnScrollGUIActivated() {
+	achievementButton.enabled = false;
+	leaderBoardButton.enabled = false;
+	loaderButton.enabled = false;
+}
+
+function OnScrollGUIDeactivated() {
+	if(gameCenterEnabled && GameCenterBinding.isGameCenterAvailable()) {
+		achievementButton.enabled = true;
+		leaderBoardButton.enabled = true;
+	}
 }

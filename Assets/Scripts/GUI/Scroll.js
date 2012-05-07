@@ -1,6 +1,7 @@
 #pragma strict
 
 var baseEnabled : Texture;
+var baseUsed : Texture;
 
 var greenEnabled : Texture;
 var purpleEnabled : Texture;
@@ -10,10 +11,13 @@ var greenDisabled : Texture;
 var purpleDisabled : Texture;
 var redDisabled : Texture;
 
-var greenUsed : Texture;
-var purpleUsed : Texture;
-var redUsed : Texture;
+var greenUsed : Texture = baseUsed;
+var purpleUsed : Texture = baseUsed;
+var redUsed : Texture = baseUsed;
 
+function Awake () {
+
+}
 
 function Start () {
 

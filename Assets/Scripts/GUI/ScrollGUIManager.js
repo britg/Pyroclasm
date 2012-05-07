@@ -1,5 +1,8 @@
 #pragma strict
 
+var scrollButton : GUITexture;
+var scroll : GUITexture;
+
 private var GUIActive : boolean = false;
 
 function Start () {
@@ -24,6 +27,7 @@ function OnScrollButtonTouch () {
 function ActivateGUI() {
 	GUIActive = true;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_GUI_ACTIVATED);
+	scrollButton.audio.Play();
 }
 
 function DeactivateGUI() {

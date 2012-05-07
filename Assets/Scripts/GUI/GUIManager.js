@@ -65,8 +65,6 @@ function Update() {
 	    	if(scrollGUIActive)
 	    		return;
 	    		
-	    	Debug.Log("Made it");
-	    		
 	    	InitialTouch();
 	    	TouchDown();
 	    	
@@ -203,8 +201,12 @@ function inputsForTouch() {
 
 function OnScrollGUIActivated () {
 	scrollGUIActive = true;
+	titleScreen.enabled = false;
+	highScore.enabled = false;
 }
 
 function OnScrollGUIDeactivated () {
 	scrollGUIActive = false;
+	titleScreen.enabled = true;
+	highScore.enabled = true;
 }
