@@ -99,6 +99,7 @@
      <Compile Include="Assets\Scripts\lib\GameObjectPool.js" />
      <Compile Include="Assets\Scripts\lib\NotificationCenter.js" />
      <Compile Include="Assets\Scripts\lib\Notifications.js" />
+     <Compile Include="Assets\Scripts\lib\Scrolls.js" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
   </ItemGroup>
   <ItemGroup>
