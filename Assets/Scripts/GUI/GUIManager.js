@@ -9,6 +9,8 @@ var gameCenterLoading : GUITexture;
 var pauseButton : GUITexture;
 var scrollButton : GUITexture;
 var scrollGUI : GameObject;
+var distanceText : GUIText;
+var scrollText : GUIText;
 
 private var started : boolean = false;
 private var touchDown : boolean = false;
@@ -31,6 +33,7 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_DEACTIVATED);
 	
 	pauseButton.enabled = false;
+	scrollText.enabled = false;
 	
 	var distance = PlayerPrefs.GetInt("distance");
 	var longestStreak = PlayerPrefs.GetInt("streak");
@@ -45,6 +48,7 @@ function OnGameStart() {
 	titleScreen.enabled = false;
 	highScore.enabled = false;
 	scrollGUI.SetActiveRecursively(false);
+	distanceText.enabled = true;
 }
 
 function Update() {
@@ -203,10 +207,12 @@ function OnScrollGUIActivated () {
 	scrollGUIActive = true;
 	titleScreen.enabled = false;
 	highScore.enabled = false;
+	distanceText.enabled = false;
 }
 
 function OnScrollGUIDeactivated () {
 	scrollGUIActive = false;
 	titleScreen.enabled = true;
 	highScore.enabled = true;
+	distanceText.enabled = true;
 }

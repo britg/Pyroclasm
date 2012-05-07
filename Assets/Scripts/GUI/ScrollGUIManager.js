@@ -2,6 +2,7 @@
 
 var scrollButton : GUITexture;
 var scrollPrefab : GUITexture;
+var scrollText : GUIText;
 
 private var GUIActive : boolean = false;
 private var scrollsCreated : boolean = false;
@@ -32,6 +33,7 @@ function ActivateGUI() {
 	GUIActive = true;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_GUI_ACTIVATED);
 	scrollButton.audio.Play();
+	scrollText.enabled = true;
 	
 	for(var color : int = 0; color < Scrolls.SCROLLS.length; color++) {
 		var levels : Array = Scrolls.SCROLLS[color];
@@ -60,6 +62,8 @@ function ActivateScrollAt(color : int, level : int) {
 function DeactivateGUI() {
 	GUIActive = false;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_GUI_DEACTIVATED);
+	scrollButton.audio.Play();
+	scrollText.enabled = false;
 	
 	for(var color : int = 0; color < Scrolls.SCROLLS.length; color++) {
 		var levels : Array = Scrolls.SCROLLS[color];
