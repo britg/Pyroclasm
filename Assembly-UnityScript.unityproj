@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\Fireball\Distance.js" />
      <Compile Include="Assets\Scripts\Fireball\Flare.js" />
      <Compile Include="Assets\Scripts\Fireball\Lift.js" />
+     <Compile Include="Assets\Scripts\Fireball\ScrollCollector.js" />
      <Compile Include="Assets\Scripts\Fireball\SteamEffect.js" />
      <Compile Include="Assets\Scripts\Fireball\Streak.js" />
      <Compile Include="Assets\Scripts\Fireball\Temperature.js" />

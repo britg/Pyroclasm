@@ -148,13 +148,9 @@ function AttemptUse() {
 		return;
 	}
 	
-	var name : String = Scrolls.PlayerScrolls().scrollNameAt(color, level);
-	var data : Hashtable = new Hashtable();
-	data.Add("name", name);
-	data.Add("color", color);
-	data.Add("level", level);
-	data.Add("ability", Scrolls.PlayerScrolls().scrollAbilityAt(color, level));
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACTIVATED, data);
+	var scroll : Hashtable = Scrolls.PlayerScrolls().DefineScroll(color, level);
+	
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACTIVATED, scroll);
 	
 	guiTexture.texture = baseUsed;
 }

@@ -49,3 +49,5 @@ static var SCROLL_GUI_DEACTIVATED : String = "OnScrollGUIDeactivated";
 static var SCROLL_NOT_FOUND : String = "OnScrollNotFound";
 static var SCROLL_ALREADY_USED : String = "OnScrollAlreadyUsed";
 static var SCROLL_ACTIVATED : String = "OnScrollActivated";
+
+static var SCROLL_ACQUIRED : String = "OnScrollAcquired";

@@ -99,13 +99,16 @@ function CreateBackground() {
 	FillScreen(screen);
 	
 	// Add a ghost randomly
-	var roll : float = Random.value * 2;
-	if(roll <= 1) {
+	var roll : float = Random.value * 20;
+	if(true || roll <= 1) {
 		AddGhost();
 	}
 }
 
 function AddGhost() {
+	if(ghost.transform.position.x > -9.73 && ghost.transform.position.x < 6.68) {
+		return;
+	}
 	ghost.SetActiveRecursively(true);
 	ghost.transform.position.x = 15;
 	var ghostMotor : Motor = ghost.GetComponent("Motor");
@@ -134,7 +137,7 @@ function FillScreen(screen : GameObject) {
 function ChooseBackgroundPool() {
 	var roll : float = Random.value * 10;
 	
-	if( roll <= 4 ) {
+	if( roll <= 6 ) {
 		return Pools[0];
 	}
 	

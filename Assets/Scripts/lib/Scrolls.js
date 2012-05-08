@@ -12,6 +12,8 @@ static var CORONA_MULTIPLIER : float = 0.5;
 static var RED : int = 2;
 
 static var COLORS : Array = [GREEN, PURPLE, RED];
+static var NUM_COLORS : int = 3;
+static var NUM_LEVELS : int = 6;
 
 static var STATUS_ENABLED : int = 1;
 static var STATUS_DISABLED : int = 2;
@@ -103,3 +105,27 @@ function keyForScroll(color : int, level : int) {
 }
 
 var scrollForNextRun : Hashtable;
+var scrollsThisRun : Array;
+
+function DefineScroll(color : int, level : int) {
+	var name : String = scrollNameAt(color, level);
+	var data : Hashtable = new Hashtable();
+	data.Add("name", name);
+	data.Add("color", color);
+	data.Add("level", level);
+	data.Add("ability", Scrolls.PlayerScrolls().scrollAbilityAt(color, level));
+	
+	return data;
+}
+
+function AcquireScroll() {
+
+	var randomColor : int = Mathf.Floor(Random.value * NUM_COLORS);
+	var randomLevel : int = Mathf.Floor(Random.value * NUM_LEVELS);
+	
+	var key : String = keyForScroll(randomColor, randomLevel);
+	PlayerPrefs.SetInt(key, STATUS_ENABLED);
+	
+	var scroll : Hashtable = DefineScroll(randomColor, randomLevel);
+	return scroll;
+}
