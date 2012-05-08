@@ -99,7 +99,7 @@ function CreateBackground() {
 	FillScreen(screen);
 	
 	// Add a ghost randomly
-	var roll : float = Random.value * 10;
+	var roll : float = Random.value * 20;
 	if(roll <= 1) {
 		AddGhost();
 	}

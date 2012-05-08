@@ -2,6 +2,8 @@
 var Level : GameObject;
 var fireball : GameObject;
 
+var bonusBlock : GameObject;
+
 var line : GameObject;
 private var linePool : GameObjectPool;
 var block : GameObject;
@@ -66,6 +68,7 @@ function Start () {
 	scrolling = Level.GetComponent("Scroller");
 	ResetTimer();
 	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.HEAT_PATTERN_END);
 }
 
@@ -76,6 +79,20 @@ function ResetTimer () {
 	}
 	var delta : float = (startGenerationInterval - minGenerationInterval) * distPercent;
 	timeleft = startGenerationInterval - delta;
+}
+
+function OnGameStart() {
+
+	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
+	
+	if(scroll && scroll["color"] == Scrolls.RED) {
+		var level : int = scroll["level"];
+		var lust : GameObject = Instantiate(bonusBlock, Vector3(0, 3.0, -1), Quaternion.identity);	
+		var blockBehaviour : BonusBlock = lust.GetComponent("BonusBlock");
+		blockBehaviour.cols += level*2;
+		blockBehaviour.DrawGems();
+	}
+
 }
 
 function Update () {

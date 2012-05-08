@@ -12,6 +12,8 @@ var scrollGUI : GameObject;
 var distanceText : GUIText;
 var scrollText : GUIText;
 
+var restartButton : GUITexture;
+
 private var started : boolean = false;
 private var touchDown : boolean = false;
 private var scrollGUIActive : boolean = false;
@@ -28,6 +30,7 @@ function EnableStartGUI() {
 function Start () {
 	EnableStartGUI();
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_PAUSE);
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_ACTIVATED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_DEACTIVATED);
@@ -35,6 +38,7 @@ function Start () {
 	pauseButton.enabled = false;
 	scrollText.enabled = false;
 	distanceText.enabled = false;
+	restartButton.enabled = false;
 	
 	var distance = PlayerPrefs.GetInt("distance");
 	var longestStreak = PlayerPrefs.GetInt("streak");
@@ -76,6 +80,9 @@ function Update() {
 	    } else {
 	    
 	    	if(TestPauseButton())
+	    		return;
+	    		
+	    	if(TestRestartButton())
 	    		return;
 	    		
 	    	if(!touchDown) {
@@ -180,6 +187,43 @@ function TestPauseButton() {
     }
     
     return false;
+}
+
+
+function TestRestartButton() {
+
+	if(!restartButton.enabled)
+		return false;
+
+	for (var touch : Touch in Input.touches) {
+    	if(restartButton.HitTest(touch.position)) {
+    		if (touch.phase == TouchPhase.Began) {
+    			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
+    			Application.LoadLevel(0);
+			}
+        	return true;
+        }
+    }
+
+	if(Input.GetMouseButtonDown(0)) {
+		if(restartButton.HitTest(Input.mousePosition)) {
+			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
+    		Application.LoadLevel(0);
+			return true;
+    	}
+    }
+    
+    if(Input.GetMouseButton(0)) {
+		if(restartButton.HitTest(Input.mousePosition)) {
+			return true;
+    	}
+    }
+    
+    return false;
+}
+
+function OnTouchPause() {
+	restartButton.enabled = true;
 }
 
 function InitialTouch() {
