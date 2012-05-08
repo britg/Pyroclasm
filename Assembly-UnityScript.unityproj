@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Environment\Cold\IceshardGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Cold\Icicle.js" />
      <Compile Include="Assets\Scripts\Environment\FlowGenerator.js" />
+     <Compile Include="Assets\Scripts\Environment\Ghost.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\Block.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BonusBlock.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BookcaseGenerator.js" />

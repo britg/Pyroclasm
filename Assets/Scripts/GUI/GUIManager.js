@@ -51,7 +51,7 @@ function Start () {
 }
 
 function ReleaseStartHold() {
-	yield WaitForSeconds(1);
+	yield WaitForSeconds(0.5);
 	startHold = false;
 }
 

@@ -59,7 +59,7 @@ static function PlayerScrolls () {
 
 function ScrollStatus(color : int, level : int) {
 	var status : int = PlayerPrefs.GetInt(keyForScroll(color, level));
-	status = Mathf.Floor(Random.value * 3); 
+	//status = Mathf.Floor(Random.value * 3); 
 	if(status < 1) {
 		status = STATUS_DISABLED;
 	} else {
