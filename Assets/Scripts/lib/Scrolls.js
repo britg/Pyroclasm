@@ -92,7 +92,7 @@ function scrollAbilityAt(color : int, level : int) {
 }
 
 function getPosition(color: int, level : int) {
-	var yPos : float = 1.0 - (color * 0.3) - 0.27;
+	var yPos : float = 1.0 - (color * 0.3) - 0.29;
 	var xPos : float = 1.0/8.0 * (level + 1) + 0.08;
 	var position : Vector3 = Vector3(xPos, yPos, -1);
 	return position;
