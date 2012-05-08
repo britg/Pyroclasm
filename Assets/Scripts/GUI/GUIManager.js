@@ -198,8 +198,7 @@ function TestRestartButton() {
 	for (var touch : Touch in Input.touches) {
     	if(restartButton.HitTest(touch.position)) {
     		if (touch.phase == TouchPhase.Began) {
-    			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
-    			Application.LoadLevel(0);
+    			Restart();
 			}
         	return true;
         }
@@ -207,8 +206,7 @@ function TestRestartButton() {
 
 	if(Input.GetMouseButtonDown(0)) {
 		if(restartButton.HitTest(Input.mousePosition)) {
-			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
-    		Application.LoadLevel(0);
+			Restart();
 			return true;
     	}
     }
@@ -220,6 +218,12 @@ function TestRestartButton() {
     }
     
     return false;
+}
+
+function Restart() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
+	yield WaitForSeconds(0.5);
+	Application.LoadLevel(0);
 }
 
 function OnTouchPause() {

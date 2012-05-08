@@ -8,7 +8,7 @@ private var loaded : boolean = false;
 
 // -9.25
 private var shouldAnimate : boolean = false;
-private var buttonStart : float = -9.26;
+private var buttonStart : float = -9.35;
 private var buttonSpread : float = 0.15;
 private var achievementTargetX : float = buttonStart + buttonSpread;
 private var leaderBoardTargetX : float = buttonStart - buttonSpread;
@@ -25,12 +25,16 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_ACTIVATED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_GUI_DEACTIVATED);
 	
+	leaderBoardButton.enabled = false;
+	achievementButton.enabled = false;
+	
 	if(gameCenterEnabled && GameCenterBinding.isGameCenterAvailable()) {
 		GameCenterBinding.authenticateLocalPlayer();
 		GameCenterBinding.showCompletionBannerForAchievements();
 	} else {
 		DisableGUI();
 	}
+	
 }
 
 function Update() {
@@ -67,6 +71,9 @@ function CheckLoaded() {
 }
 
 function AnimateButtons() {
+
+	leaderBoardButton.enabled = true;
+	achievementButton.enabled = true;
 
 	var achievementCurrentX : float = achievementButton.transform.localPosition.x;
 	//Debug.Log("Achievement current x is " + achievementCurrentX);
