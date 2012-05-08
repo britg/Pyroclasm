@@ -95,4 +95,14 @@ function OnScrollAlreadyUsed() {
 }
 
 function OnScrollActivated(n : Notification) {
+	var scroll : Hashtable = n.data;
+	var guiPos : Vector3 = Scrolls.PlayerScrolls().getPosition(scroll["color"], scroll["level"]);
+	var worldPos : Vector3 = Camera.mainCamera.ViewportToWorldPoint(guiPos);
+	worldPos.z = -2;
+	scrollBurn.transform.localPosition = worldPos;
+	var emitter : ParticleEmitter = scrollBurn.GetComponent.<ParticleEmitter>();
+	emitter.emit = true;
+	scrollBurn.audio.Play();
+	yield WaitForSeconds(0.5);
+	emitter.emit = false;
 }

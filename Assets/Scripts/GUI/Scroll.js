@@ -58,10 +58,7 @@ function Activate(_color : int, _level : int, _status : int) {
 }
 
 function SetPosition() {
-	var yPos : float = 1.0 - (color * 0.3) - 0.27;
-	var xPos : float = 1.0/8.0 * (level + 1) + 0.08;
-	destination = Vector3(xPos, yPos, -1);
-	Debug.Log("Destination is " + destination);
+	destination = Scrolls.PlayerScrolls().getPosition(color, level);
 	shouldMove = true;
 }
 
@@ -143,5 +140,11 @@ function AttemptUse() {
 	}
 	
 	var name : String = Scrolls.PlayerScrolls().scrollNameAt(color, level);
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACTIVATED, name);
+	var data : Hashtable = new Hashtable();
+	data.Add("name", name);
+	data.Add("color", color);
+	data.Add("level", level);
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACTIVATED, data);
+	
+	guiTexture.texture = baseUsed;
 }
