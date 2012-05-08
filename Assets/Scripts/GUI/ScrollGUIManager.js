@@ -75,7 +75,7 @@ function DeactivateGUI() {
 	scrollButton.audio.Play();
 	
 	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
-	if(scroll["name"]) {
+	if(scroll && scroll["name"]) {
 		scrollText.enabled = true;
 		scrollText.text = scroll["name"];
 		scrollBurnedText.enabled = true;

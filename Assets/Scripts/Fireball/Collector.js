@@ -22,12 +22,34 @@ var activateSound : AudioClip;
 function Start() {
 	thisTransform = transform;
 	SendMessage("Update");
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_LEVEL_CHANGED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POWERDOWN);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GARGOYLE_ACTIVATED);
 	
 	fireball = GameObject.Find("Fireball");
 	streak = fireball.GetComponent("Streak");
+}
+
+function OnGameStart() {
+
+	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
+	
+	if(scroll && scroll["color"] == Scrolls.PURPLE) {
+		var level : float = scroll["level"];
+		activeTime += 1 + level;
+		
+		var factor : float = (1.0 + level*Scrolls.CORONA_MULTIPLIER);
+		Debug.Log("level " + level);
+		Debug.Log("factor " + factor);
+		Debug.Log("mult " + Scrolls.CORONA_MULTIPLIER);
+		var effect : Vector3 = Vector3(factor, factor, factor);
+		startScale = Vector3.Scale(startScale, effect);
+		
+		Activate();
+	}
+
 }
 
 function Update () {
@@ -70,11 +92,15 @@ function OnPowerDown (notification : Notification) {
 	Deactivate();
 }
 
-function Activate () {
+function Activate (scale : Vector3) {
 	isActive = true;
-	targetScale = startScale;
+	targetScale = scale;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCEMENT, "Corona Activated!");
 	audio.PlayOneShot(activateSound);
+}
+
+function Activate () {
+	Activate(startScale);
 }
 
 function Deactivate() {

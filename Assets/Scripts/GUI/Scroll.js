@@ -78,7 +78,6 @@ function MoveTowardsDestination() {
 
 function SetTexture() {
 
-	Debug.Log("Scroll status is " + status);
 	if(status == Scrolls.STATUS_USED) {
 		guiTexture.texture = baseUsed;
 		return;

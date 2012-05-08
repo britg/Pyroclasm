@@ -28,6 +28,8 @@ private var moving : boolean = false;
 
 function Start () {
 
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
+
 	heat = initialHeat;
 	
 	thisTransform = transform;
@@ -49,6 +51,17 @@ function ResetTimer () {
 
 function AnnounceMaxTemperature () {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCE_MAX_TEMPERATURE, maxHeat);
+}
+
+function OnGameStart() {
+
+	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
+	
+	if(scroll && scroll["color"] == Scrolls.GREEN) {
+		var level : int = scroll["level"];
+		heat += level * Scrolls.TEMP_MULTIPLIER;
+	}
+
 }
 
 function Update () {

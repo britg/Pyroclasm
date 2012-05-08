@@ -6,7 +6,9 @@ enum ScrollColor { GREEN = 0,
 				   RED = 2 }
 
 static var GREEN : int = 0;
+static var TEMP_MULTIPLIER : int = 150;
 static var PURPLE : int = 1;
+static var CORONA_MULTIPLIER : float = 0.5;
 static var RED : int = 2;
 
 static var COLORS : Array = [GREEN, PURPLE, RED];
@@ -28,12 +30,12 @@ static var SCROLLS : Array = [
 	 ["Dwarven Techniques of Spell-Forging", "Inferno! Start with a much higher Temperature."]
 	 ], // GREEN
 	 
-	[["The Second Era and the Appearance of the Magi", "Demon Blessing! Start with a small Corona"],
-	 ["History of The Spire", "Demon Blessing! Start with a small Corona"],
-	 ["Stories of the Magi Veldt","Demon Blessing! Start with a moderate Corona"],
-	 ["Dragon Lineage", "Demon Blessing! Start with a moderate Corona."],
-	 ["Mysterys of the Sorcerer's Garden","Demon Blessing! Start with a huge Corona."],
-	 ["Power Words of the Magi", "Demon Blessing! Start with a huge Corona."]
+	[["The Second Era and the Appearance of the Magi", "Demon Blessing! Slightly larger and longer Coronas."],
+	 ["History of The Spire", "Demon Blessing! Slightly larger and longer Coronas."],
+	 ["Stories of the Magi Veldt","Demon Blessing! Modestly larger and longer Coronas."],
+	 ["Dragon Lineage", "Demon Blessing! Modestly larger and longer Coronas."],
+	 ["Mysterys of the Sorcerer's Garden","Demon Blessing! Greatly larger and longer Coronas."],
+	 ["Power Words of the Magi", "Demon Blessing! Greatly larger and longer Coronas."]
 	 ], // PURPLE
 	 
 	[["Hand-drawn map of Ettin Gorge", "Gem Lust! Start with a few extra gems."], 
