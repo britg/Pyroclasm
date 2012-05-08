@@ -71,6 +71,9 @@ function SetPosition() {
 
 function MoveTowardsDestination() {
 	transform.position = Vector3.SmoothDamp(transform.position, destination, destinationVelocity, destinationAnimation);
+	if( transform.position == destination ) {
+		shouldMove = false;
+	}
 }
 
 function SetTexture() {
@@ -151,6 +154,7 @@ function AttemptUse() {
 	data.Add("name", name);
 	data.Add("color", color);
 	data.Add("level", level);
+	data.Add("ability", Scrolls.PlayerScrolls().scrollAbilityAt(color, level));
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACTIVATED, data);
 	
 	guiTexture.texture = baseUsed;

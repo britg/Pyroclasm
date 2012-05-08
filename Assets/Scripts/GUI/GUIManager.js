@@ -34,6 +34,7 @@ function Start () {
 	
 	pauseButton.enabled = false;
 	scrollText.enabled = false;
+	distanceText.enabled = false;
 	
 	var distance = PlayerPrefs.GetInt("distance");
 	var longestStreak = PlayerPrefs.GetInt("streak");
@@ -214,5 +215,4 @@ function OnScrollGUIDeactivated () {
 	scrollGUIActive = false;
 	titleScreen.enabled = true;
 	highScore.enabled = true;
-	distanceText.enabled = true;
 }

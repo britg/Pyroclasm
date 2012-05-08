@@ -3,12 +3,15 @@
 var scrollButton : GUITexture;
 var scrollPrefab : GUITexture;
 var scrollText : GUIText;
+var scrollBurnedText : GUIText;
+var scrollAbilityText : GUIText;
 var scrollBurn : GameObject;
 var scrollButtonBurn : GameObject;
 
 private var GUIActive : boolean = false;
 private var scrollsCreated : boolean = false;
 private var scrolls : Hashtable;
+private var scrollChosen : boolean = false;
 
 private var activationPause : float = 0.5;
 
@@ -30,7 +33,7 @@ function OnScrollButtonTouch () {
 	
 	if(GUIActive) {
 		DeactivateGUI();
-	} else {
+	} else if (!scrollChosen) {
 		ActivateGUI();
 	}
 
@@ -70,7 +73,17 @@ function ActivateScrollAt(color : int, level : int) {
 function DeactivateGUI() {
 	GUIActive = false;
 	scrollButton.audio.Play();
-	scrollText.enabled = false;
+	
+	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
+	if(scroll["name"]) {
+		scrollText.enabled = true;
+		scrollText.text = scroll["name"];
+		scrollBurnedText.enabled = true;
+		scrollAbilityText.enabled = true;
+		scrollAbilityText.text = "Effect: " + scroll["ability"];
+	} else {
+		scrollText.enabled = false;
+	}
 	
 	for(var color : int = 0; color < Scrolls.SCROLLS.length; color++) {
 		var levels : Array = Scrolls.SCROLLS[color];
@@ -100,6 +113,8 @@ function OnScrollAlreadyUsed() {
 
 function OnScrollActivated(n : Notification) {
 	var scroll : Hashtable = n.data;
+	scrollChosen = true;
+	Scrolls.PlayerScrolls().scrollForNextRun = scroll;
 	BurnScroll(scroll);
 	yield WaitForSeconds(activationPause);
 	DisplayActiveScroll(scroll);
