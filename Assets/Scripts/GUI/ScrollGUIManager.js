@@ -4,10 +4,13 @@ var scrollButton : GUITexture;
 var scrollPrefab : GUITexture;
 var scrollText : GUIText;
 var scrollBurn : GameObject;
+var scrollButtonBurn : GameObject;
 
 private var GUIActive : boolean = false;
 private var scrollsCreated : boolean = false;
 private var scrolls : Hashtable;
+
+private var activationPause : float = 0.5;
 
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_BUTTON_TOUCHED);
@@ -66,7 +69,6 @@ function ActivateScrollAt(color : int, level : int) {
 
 function DeactivateGUI() {
 	GUIActive = false;
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_GUI_DEACTIVATED);
 	scrollButton.audio.Play();
 	scrollText.enabled = false;
 	
@@ -77,6 +79,8 @@ function DeactivateGUI() {
 			DeactivateScrollAt(color, level);
 		}
 	}
+	
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_GUI_DEACTIVATED);
 }
 
 function DeactivateScrollAt(color : int, level : int) {
@@ -96,6 +100,19 @@ function OnScrollAlreadyUsed() {
 
 function OnScrollActivated(n : Notification) {
 	var scroll : Hashtable = n.data;
+	BurnScroll(scroll);
+	yield WaitForSeconds(activationPause);
+	DisplayActiveScroll(scroll);
+	DeactivateGUI();
+}
+
+function DisplayActiveScroll(scroll : Hashtable) {
+	scrollButton.SendMessage("ShowButtonAs", scroll);
+	var emitter : ParticleEmitter = scrollButtonBurn.GetComponent.<ParticleEmitter>();
+	emitter.emit = true;
+}
+
+function BurnScroll(scroll : Hashtable) {
 	var guiPos : Vector3 = Scrolls.PlayerScrolls().getPosition(scroll["color"], scroll["level"]);
 	var worldPos : Vector3 = Camera.mainCamera.ViewportToWorldPoint(guiPos);
 	worldPos.z = -2;
@@ -103,6 +120,6 @@ function OnScrollActivated(n : Notification) {
 	var emitter : ParticleEmitter = scrollBurn.GetComponent.<ParticleEmitter>();
 	emitter.emit = true;
 	scrollBurn.audio.Play();
-	yield WaitForSeconds(0.5);
+	yield WaitForSeconds(activationPause);
 	emitter.emit = false;
 }

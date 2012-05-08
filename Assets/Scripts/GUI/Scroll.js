@@ -57,6 +57,13 @@ function Activate(_color : int, _level : int, _status : int) {
 	interactable = true;
 }
 
+function ShowButtonAs(scroll : Hashtable) {
+	color = scroll["color"];
+	level = scroll["level"];
+	status = Scrolls.STATUS_ENABLED;
+	SetTexture();
+}
+
 function SetPosition() {
 	destination = Scrolls.PlayerScrolls().getPosition(color, level);
 	shouldMove = true;
