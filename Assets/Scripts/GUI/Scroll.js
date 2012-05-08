@@ -15,6 +15,7 @@ var greenUsed : Texture = baseUsed;
 var purpleUsed : Texture = baseUsed;
 var redUsed : Texture = baseUsed;
 
+private var interactable : boolean = false;
 private var origin : Vector3;
 private var shouldMove : boolean = false;
 private var color : int;
@@ -22,6 +23,8 @@ private var level : int;
 private var status : int;
 private var destination : Vector3;
 private var destinationVelocity : Vector3;
+
+private var destinationAnimation : float = 0.1;
 
 function Awake () {
 
@@ -37,6 +40,10 @@ function Update () {
 	if(shouldMove) {
 		MoveTowardsDestination();
 	}
+	
+	if(inputsForTouch()) {
+		TestTouched();
+	}
 
 }
 
@@ -46,6 +53,8 @@ function Activate(_color : int, _level : int, _status : int) {
 	status = _status;
 	SetPosition();
 	SetTexture();
+	yield WaitForSeconds(destinationAnimation);
+	interactable = true;
 }
 
 function SetPosition() {
@@ -57,7 +66,7 @@ function SetPosition() {
 }
 
 function MoveTowardsDestination() {
-	transform.position = Vector3.SmoothDamp(transform.position, destination, destinationVelocity, 0.1);
+	transform.position = Vector3.SmoothDamp(transform.position, destination, destinationVelocity, destinationAnimation);
 }
 
 function SetTexture() {
@@ -84,8 +93,55 @@ function SetTexture() {
 function Deactivate() {
 	destination = origin;
 	shouldMove = true;
+	interactable = false;
 }
 
 function OnGameStart() {
 	Destroy(guiTexture);
+}
+
+function inputsForTouch() {
+	var inputTest : boolean = ( Input.touchCount > 0 
+								|| Input.GetMouseButton(0) );
+    return inputTest;
+}
+
+function TestTouched() {
+
+	if(!interactable) {
+		return;
+	}
+
+	for (var touch : Touch in Input.touches) {
+    	if(guiTexture.HitTest(touch.position)) {
+    		if (touch.phase == TouchPhase.Began) {
+				AttemptUse();
+			}
+        	return true;
+        }
+    }
+
+	if(Input.GetMouseButtonDown(0)) {
+		if(guiTexture.HitTest(Input.mousePosition)) {
+			AttemptUse();
+			return true;
+    	}
+    }
+    
+    return false;
+}
+
+function AttemptUse() {
+	if(status == Scrolls.STATUS_DISABLED) {
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_NOT_FOUND);
+		return;
+	}
+	
+	if(status == Scrolls.STATUS_USED) {
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ALREADY_USED);
+		return;
+	}
+	
+	var name : String = Scrolls.PlayerScrolls().scrollNameAt(color, level);
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACTIVATED, name);
 }

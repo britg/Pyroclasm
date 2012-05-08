@@ -3,6 +3,7 @@
 var scrollButton : GUITexture;
 var scrollPrefab : GUITexture;
 var scrollText : GUIText;
+var scrollBurn : GameObject;
 
 private var GUIActive : boolean = false;
 private var scrollsCreated : boolean = false;
@@ -11,6 +12,9 @@ private var scrolls : Hashtable;
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_BUTTON_TOUCHED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_FIRST);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_NOT_FOUND);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_ALREADY_USED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_ACTIVATED);
 	scrolls = new Hashtable();
 }
 
@@ -34,6 +38,7 @@ function ActivateGUI() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_GUI_ACTIVATED);
 	scrollButton.audio.Play();
 	scrollText.enabled = true;
+	scrollText.text = Scrolls.MESSAGE_DEFAULT;
 	
 	for(var color : int = 0; color < Scrolls.SCROLLS.length; color++) {
 		var levels : Array = Scrolls.SCROLLS[color];
@@ -81,3 +86,13 @@ function DeactivateScrollAt(color : int, level : int) {
 	scrollBehaviour.Deactivate();
 }
 
+function OnScrollNotFound() {
+	scrollText.text = Scrolls.MESSAGE_NOT_FOUND;
+}
+
+function OnScrollAlreadyUsed() {
+	scrollText.text = Scrolls.MESSAGE_ALREADY_USED;
+}
+
+function OnScrollActivated(n : Notification) {
+}

@@ -46,3 +46,6 @@ static var ICE_COLLISION : String = "OnIceCollision";
 static var SCROLL_BUTTON_TOUCHED : String = "OnScrollButtonTouch";
 static var SCROLL_GUI_ACTIVATED : String = "OnScrollGUIActivated";
 static var SCROLL_GUI_DEACTIVATED : String = "OnScrollGUIDeactivated";
+static var SCROLL_NOT_FOUND : String = "OnScrollNotFound";
+static var SCROLL_ALREADY_USED : String = "OnScrollAlreadyUsed";
+static var SCROLL_ACTIVATED : String = "OnScrollActivated";

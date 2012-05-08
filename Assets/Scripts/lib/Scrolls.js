@@ -1,5 +1,10 @@
 #pragma strict
 
+// Correct implementation
+enum ScrollColor { GREEN = 0,
+				   PURPLE = 1,
+				   RED = 2 }
+
 static var GREEN : int = 0;
 static var PURPLE : int = 1;
 static var RED : int = 2;
@@ -9,6 +14,10 @@ static var COLORS : Array = [GREEN, PURPLE, RED];
 static var STATUS_ENABLED : int = 1;
 static var STATUS_DISABLED : int = 2;
 static var STATUS_USED : int = 3;
+
+static var MESSAGE_DEFAULT : String = "The Lost Mage Scrolls";
+static var MESSAGE_NOT_FOUND : String = "This scroll hasn't been found... yet!";
+static var MESSAGE_ALREADY_USED : String = "It's been burned to ashes...";
 
 static var SCROLLS : Array = [ 	
 	["Eldarus before The Surge", 
@@ -48,22 +57,29 @@ static function PlayerScrolls () {
 
 function ScrollStatus(color : int, level : int) {
 	var status : int = PlayerPrefs.GetInt(keyForScroll(color, level));
+	status = Mathf.Floor(Random.value * 3); 
 	if(status < 1) {
 		status = STATUS_DISABLED;
-	}
-	switch(status) {
-		case 2:
-			status = STATUS_DISABLED;
-		break;
-		case 3:
-			status = STATUS_USED;
-		break;
-		case 1:
-			status = STATUS_ENABLED;
-		break;
+	} else {
+		switch(status) {
+			case 2:
+				status = STATUS_DISABLED;
+			break;
+			case 3:
+				status = STATUS_USED;
+			break;
+			case 1:
+				status = STATUS_ENABLED;
+			break;
+		}
 	}
 	
 	return status;
+}
+
+function scrollNameAt(color : int, level : int) {
+	var scrollsInColor : Array = SCROLLS[color];
+	return scrollsInColor[level];
 }
 
 function keyForScroll(color : int, level : int) {

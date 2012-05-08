@@ -11,4 +11,4 @@ TrueTypeFontImporter:
   use2xBehaviour: 0
   fontNames:
   - 
-  customCharacters: "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtVvUuWwXxYyZz:!\xB0 0123456789"
+  customCharacters: "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtVvUuWwXxYyZz:!\xB0 0123456789'."
