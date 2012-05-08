@@ -5,6 +5,7 @@ var leaderBoardButton : GUITexture;
 var gameCenterEnabled : boolean = true;
 
 private var loaded : boolean = false;
+private var scrollGUIActive : boolean = false;
 
 // -9.25
 private var shouldAnimate : boolean = false;
@@ -62,18 +63,18 @@ function OnTouchLeaderboard () {
 }
 
 function CheckLoaded() {
-	loaded = GameCenterBinding.isPlayerAuthenticated();
+	var check : boolean = GameCenterBinding.isPlayerAuthenticated();
 	
-	if (loaded) {
+	if (check && !scrollGUIActive) {
+		loaded = true;
+		leaderBoardButton.enabled = true;
+		achievementButton.enabled = true;
 		loaderButton.enabled = false;
 		shouldAnimate = true;
 	}
 }
 
 function AnimateButtons() {
-
-	leaderBoardButton.enabled = true;
-	achievementButton.enabled = true;
 
 	var achievementCurrentX : float = achievementButton.transform.localPosition.x;
 	//Debug.Log("Achievement current x is " + achievementCurrentX);
@@ -96,12 +97,14 @@ function DisableGUI() {
 }
 
 function OnScrollGUIActivated() {
+	scrollGUIActive = true;
 	achievementButton.enabled = false;
 	leaderBoardButton.enabled = false;
 	loaderButton.enabled = false;
 }
 
 function OnScrollGUIDeactivated() {
+	scrollGUIActive = false;
 	if(gameCenterEnabled && GameCenterBinding.isGameCenterAvailable()) {
 		achievementButton.enabled = true;
 		leaderBoardButton.enabled = true;

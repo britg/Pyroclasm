@@ -1,19 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Hot/BonusBlock.js">
-    <Files>
-      <File FileName="Assets/Scripts/GUI/GUIManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GUI/ScrollGUIManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/lib/Scrolls.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GUI/Scroll.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/lib/Notifications.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Collector.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="93" Column="31" />
-      <File FileName="Assets/Scripts/Environment/Hot/BonusBlock.js" Line="16" Column="1" />
-      <File FileName="Assets/Scripts/Environment/Hot/Block.js" Line="26" Column="3" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

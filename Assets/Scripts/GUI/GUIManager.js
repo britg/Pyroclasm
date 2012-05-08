@@ -14,6 +14,8 @@ var scrollText : GUIText;
 
 var restartButton : GUITexture;
 
+private var startHold : boolean = true;
+
 private var started : boolean = false;
 private var touchDown : boolean = false;
 private var scrollGUIActive : boolean = false;
@@ -44,6 +46,13 @@ function Start () {
 	var longestStreak = PlayerPrefs.GetInt("streak");
 	highScore.enabled = true;
 	highScore.text = "Longest Run: " + Mathf.Round(distance) + "m\nLongest Streak: +" + longestStreak + "°";
+	
+	ReleaseStartHold();
+}
+
+function ReleaseStartHold() {
+	yield WaitForSeconds(1);
+	startHold = false;
 }
 
 function OnGameStart() {
@@ -72,6 +81,9 @@ function Update() {
 	    		return;
 	    		
 	    	if(scrollGUIActive)
+	    		return;
+	    		
+	    	if(startHold)
 	    		return;
 	    		
 	    	InitialTouch();
@@ -222,7 +234,6 @@ function TestRestartButton() {
 
 function Restart() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_PAUSE);
-	yield WaitForSeconds(0.5);
 	Application.LoadLevel(0);
 }
 
