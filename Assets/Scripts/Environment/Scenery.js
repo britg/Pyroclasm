@@ -100,20 +100,14 @@ function CreateBackground() {
 	
 	// Add a ghost randomly
 	var roll : float = Random.value * 20;
-	if(true || roll <= 1) {
+	if(roll <= 1) {
 		AddGhost();
 	}
 }
 
 function AddGhost() {
-	if(ghost.transform.position.x > -9.73 && ghost.transform.position.x < 6.68) {
-		return;
-	}
-	ghost.SetActiveRecursively(true);
-	ghost.transform.position.x = 15;
-	var ghostMotor : Motor = ghost.GetComponent("Motor");
-	ghostMotor.factor = 0.5;
-	ghost.transform.position.y = Random.value * 4;
+	var ghostBehaviour : Ghost = ghost.GetComponent("Ghost");
+	ghostBehaviour.Insert();
 }
 
 function ConnectBackgrounds () {

@@ -52,15 +52,26 @@ function OnTriggerEnter(collider : Collider) {
 	var obj : GameObject = collider.gameObject;
 	var test : Temperature = obj.GetComponent("Temperature");
 	
-	Debug.Log("Collision Detected");
-	
 	if(test) {
-		Debug.Log("Fireball!");
-		
 		var acquisitionBurn : GameObject = gameObject.Find("ScrollAcquisitionBurn");
 		var emitter : ParticleEmitter = acquisitionBurn.GetComponent.<ParticleEmitter>();
 		emitter.emit = true;
 		
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACQUIRED);
 	}
+}
+
+function Insert() {
+	if(transform.position.x > -9.73 && transform.position.x < 6.68) {
+		return;
+	}
+	gameObject.SetActiveRecursively(true);
+	transform.position.x = 15;
+	var ghostMotor : Motor = gameObject.GetComponent("Motor");
+	ghostMotor.factor = 0.5;
+	transform.position.y = Random.value * 4;
+	
+	var acquisitionBurn : GameObject = gameObject.Find("ScrollAcquisitionBurn");
+	var emitter : ParticleEmitter = acquisitionBurn.GetComponent.<ParticleEmitter>();
+	emitter.emit = false;
 }

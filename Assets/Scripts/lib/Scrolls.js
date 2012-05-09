@@ -105,7 +105,13 @@ function keyForScroll(color : int, level : int) {
 }
 
 var scrollForNextRun : Hashtable;
-var scrollsThisRun : Array;
+var scrollsThisRun : Array = new Array();
+
+function ActivateScroll(scroll : Hashtable) {
+	scrollForNextRun = scroll;
+	var key : String = keyForScroll(scroll["color"], scroll["level"]);
+	PlayerPrefs.SetInt(key, STATUS_USED);
+}
 
 function DefineScroll(color : int, level : int) {
 	var name : String = scrollNameAt(color, level);
@@ -127,5 +133,6 @@ function AcquireScroll() {
 	PlayerPrefs.SetInt(key, STATUS_ENABLED);
 	
 	var scroll : Hashtable = DefineScroll(randomColor, randomLevel);
+	scrollsThisRun.Push(scroll);
 	return scroll;
 }

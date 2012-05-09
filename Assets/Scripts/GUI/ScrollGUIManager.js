@@ -114,7 +114,7 @@ function OnScrollAlreadyUsed() {
 function OnScrollActivated(n : Notification) {
 	var scroll : Hashtable = n.data;
 	scrollChosen = true;
-	Scrolls.PlayerScrolls().scrollForNextRun = scroll;
+	Scrolls.PlayerScrolls().ActivateScroll(scroll);
 	BurnScroll(scroll);
 	yield WaitForSeconds(activationPause);
 	DisplayActiveScroll(scroll);

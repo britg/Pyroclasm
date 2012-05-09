@@ -160,6 +160,7 @@ function GameOver() {
 	ReloadAfterDelay();
 }
 
+
 function ReloadAfterDelay() {
 	yield WaitForSeconds(3);
 	Application.LoadLevel(0);
