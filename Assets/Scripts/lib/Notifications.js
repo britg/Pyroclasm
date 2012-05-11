@@ -51,4 +51,7 @@ static var SCROLL_ALREADY_USED : String = "OnScrollAlreadyUsed";
 static var SCROLL_ACTIVATED : String = "OnScrollActivated";
 
 static var SCROLL_ACQUIRED : String = "OnScrollAcquired";
+
 static var SCROLL_AWARDED : String = "OnScrollAwarded";
+static var SCROLL_AWARD_ANIMATION_START : String = "OnScrollAwardAnimationStart";
+static var SCROLL_AWARD_ANIMATION_ENDED : String = "OnScrollAwardAnimationEnded";

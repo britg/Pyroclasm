@@ -16,6 +16,8 @@ private var scrollChosen : boolean = false;
 
 private var activationPause : float = 0.5;
 
+private var scrollAwarded : Hashtable;
+
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_BUTTON_TOUCHED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_FIRST);
@@ -23,6 +25,7 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_ALREADY_USED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_ACTIVATED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_AWARDED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_AWARD_ANIMATION_ENDED);
 	scrolls = new Hashtable();
 }
 
@@ -120,8 +123,14 @@ function OnScrollActivated(n : Notification) {
 }
 
 function OnScrollAwarded(n : Notification) {
-	var scroll : Hashtable = n.data;
-	DisplayScrollForSeconds(scroll, 5);
+	scrollAwarded = n.data;
+	scrollButton.guiTexture.active = true;
+	scrollButton.enabled = true;
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_AWARD_ANIMATION_START);
+}
+
+function OnScrollAwardAnimationEnded(n : Notification) {
+	DisplayScrollForSeconds(scrollAwarded, 5);
 }
 
 function DisplayActiveScroll(scroll : Hashtable) {
@@ -164,6 +173,6 @@ function DisplayScrollAward(scroll : Hashtable) {
 	scrollText.enabled = true;
 	scrollText.text = scroll["name"];
 	scrollBurnedText.enabled = true;
-	scrollBurnedText.text = "Scroll Found:";
+	scrollBurnedText.text = "Scroll Recovered!";
 	scrollAbilityText.enabled = false;
 }

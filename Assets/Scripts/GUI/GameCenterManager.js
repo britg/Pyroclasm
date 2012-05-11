@@ -6,6 +6,7 @@ var gameCenterEnabled : boolean = true;
 
 private var loaded : boolean = false;
 private var scrollGUIActive : boolean = false;
+private var gameStarted : boolean = false;
 
 // -9.25
 private var shouldAnimate : boolean = false;
@@ -67,10 +68,13 @@ function CheckLoaded() {
 	
 	if (check && !scrollGUIActive) {
 		loaded = true;
-		leaderBoardButton.enabled = true;
-		achievementButton.enabled = true;
-		loaderButton.enabled = false;
-		shouldAnimate = true;
+		
+		if(!gameStarted) {
+			leaderBoardButton.enabled = true;
+			achievementButton.enabled = true;
+			loaderButton.enabled = false;
+			shouldAnimate = true;
+		}
 	}
 }
 
@@ -87,6 +91,7 @@ function AnimateButtons() {
 
 function OnGameStart() {
 	DisableGUI();
+	gameStarted = true;
 }
 
 function DisableGUI() {

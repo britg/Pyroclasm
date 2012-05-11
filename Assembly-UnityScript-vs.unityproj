@@ -95,6 +95,7 @@
      <Compile Include="Assets\Scripts\GUI\ObjectLabel.js" />
      <Compile Include="Assets\Scripts\GUI\Pause.js" />
      <Compile Include="Assets\Scripts\GUI\Scroll.js" />
+     <Compile Include="Assets\Scripts\GUI\ScrollButton.js" />
      <Compile Include="Assets\Scripts\GUI\ScrollGUIManager.js" />
      <Compile Include="Assets\Scripts\GUI\VerticalHeatBar.js" />
      <Compile Include="Assets\Scripts\lib\AnimateTexture.js" />

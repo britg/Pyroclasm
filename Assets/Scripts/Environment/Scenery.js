@@ -130,9 +130,9 @@ function FillScreen(screen : GameObject) {
 }
 
 function ChooseBackgroundPool() {
-	var roll : float = Random.value * 10;
+	var roll : float = Random.value * 100;
 	
-	if( roll <= 6 ) {
+	if( roll <= 75 ) {
 		return Pools[0];
 	}
 	
