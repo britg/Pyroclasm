@@ -13,6 +13,7 @@ var bg5 : GameObject;
 private var bg5Pool : GameObjectPool;
 
 var ghost : GameObject;
+var ghostPercent : int = 5;
 
 var plainbg : GameObject;
 private var plainBgPool : GameObjectPool;
@@ -99,8 +100,8 @@ function CreateBackground() {
 	FillScreen(screen);
 	
 	// Add a ghost randomly
-	var roll : float = Random.value * 20;
-	if(roll <= 1) {
+	var roll : float = Random.value * 100;
+	if(roll <= ghostPercent) {
 		AddGhost();
 	}
 }

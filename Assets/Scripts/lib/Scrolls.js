@@ -36,8 +36,8 @@ static var SCROLLS : Array = [
 	 ["History of The Spire", "Demon Blessing! Slightly larger and longer Coronas."],
 	 ["Stories of the Magi Veldt","Demon Blessing! Modestly larger and longer Coronas."],
 	 ["Dragon Lineage", "Demon Blessing! Modestly larger and longer Coronas."],
-	 ["Mysterys of the Sorcerer's Garden","Demon Blessing! Greatly larger and longer Coronas."],
-	 ["Power Words of the Magi", "Demon Blessing! Greatly larger and longer Coronas."]
+	 ["Mysterys of the Sorcerer's Garden","Demon Blessing! Huge and long lasting Coronas."],
+	 ["Power Words of the Magi", "Demon Blessing! Huge and long lasting Coronas."]
 	 ], // PURPLE
 	 
 	[["Hand-drawn map of Ettin Gorge", "Gem Lust! Start with a few extra gems."], 

@@ -11,8 +11,6 @@ var scrollButton : GUITexture;
 var scrollGUI : GameObject;
 var distanceText : GUIText;
 var scrollText : GUIText;
-var scrollsAcquiredLabel : GUIText;
-var scrollAcquired : GUIText;
 
 var restartButton : GUITexture;
 
@@ -46,7 +44,6 @@ function Start () {
 	scrollText.enabled = false;
 	distanceText.enabled = false;
 	restartButton.enabled = false;
-	scrollsAcquiredLabel.enabled = false;
 	
 	var distance = PlayerPrefs.GetInt("distance");
 	var longestStreak = PlayerPrefs.GetInt("streak");
@@ -284,28 +281,4 @@ function OnScrollGUIDeactivated () {
 
 function OnGameEnd () {
 
-	var scrollsAcquired : Array = Scrolls.PlayerScrolls().scrollsThisRun;
-	
-	if(scrollsAcquired.length > 0 ) {
-		scrollsAcquiredLabel.enabled = true;
-	}
-	
-	for( var scroll : Hashtable in scrollsAcquired ) {
-		ShowScrollAcquired(scroll);
-	}
-
-}
-
-function ShowScrollAcquired(scroll : Hashtable) {
-
-	var scrollAcquiredLabel : GUIText;
-	var pos : Vector3 = scrollAcquired.transform.position;
-
-	if(scrollGUILastY >= 0.0) {
-		pos = Vector3(scrollAcquired.transform.position.x, scrollGUILastY + 1.0, scrollAcquired.transform.position.z);
-	}
-	
-	scrollAcquiredLabel = Instantiate(scrollAcquired, pos, Quaternion.identity);
-	scrollAcquiredLabel.text = scroll["name"];
-	scrollGUILastY = scrollAcquiredLabel.transform.position.y;
 }

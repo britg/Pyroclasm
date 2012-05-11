@@ -1,5 +1,6 @@
 #pragma strict
 
+var scrollGUI : GameObject;
 var scrollButton : GUITexture;
 var scrollPrefab : GUITexture;
 var scrollText : GUIText;
@@ -21,6 +22,7 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_NOT_FOUND);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_ALREADY_USED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_ACTIVATED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.SCROLL_AWARDED);
 	scrolls = new Hashtable();
 }
 
@@ -76,11 +78,7 @@ function DeactivateGUI() {
 	
 	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
 	if(scroll && scroll["name"]) {
-		scrollText.enabled = true;
-		scrollText.text = scroll["name"];
-		scrollBurnedText.enabled = true;
-		scrollAbilityText.enabled = true;
-		scrollAbilityText.text = "Effect: " + scroll["ability"];
+		DisplayScrollSelected(scroll);
 	} else {
 		scrollText.enabled = false;
 	}
@@ -121,6 +119,11 @@ function OnScrollActivated(n : Notification) {
 	DeactivateGUI();
 }
 
+function OnScrollAwarded(n : Notification) {
+	var scroll : Hashtable = n.data;
+	DisplayScrollForSeconds(scroll, 5);
+}
+
 function DisplayActiveScroll(scroll : Hashtable) {
 	scrollButton.SendMessage("ShowButtonAs", scroll);
 	var emitter : ParticleEmitter = scrollButtonBurn.GetComponent.<ParticleEmitter>();
@@ -137,4 +140,30 @@ function BurnScroll(scroll : Hashtable) {
 	scrollBurn.audio.Play();
 	yield WaitForSeconds(activationPause);
 	emitter.emit = false;
+}
+
+function DisplayScrollForSeconds(scroll : Hashtable, sec : int) {
+	DisplayScrollAward(scroll);
+	yield WaitForSeconds(sec);
+	scrollGUI.SetActiveRecursively(false);
+}
+
+function DisplayScrollSelected(scroll : Hashtable) {
+	scrollGUI.SetActiveRecursively(true);
+	scrollText.enabled = true;
+	scrollText.text = scroll["name"];
+	scrollBurnedText.enabled = true;
+	scrollBurnedText.text = "Scroll Burned:";
+	scrollAbilityText.enabled = true;
+	scrollAbilityText.text = "Effect: " + scroll["ability"];
+}
+
+function DisplayScrollAward(scroll : Hashtable) {
+	scrollGUI.SetActiveRecursively(true);
+	scrollButton.SendMessage("ShowButtonAs", scroll);
+	scrollText.enabled = true;
+	scrollText.text = scroll["name"];
+	scrollBurnedText.enabled = true;
+	scrollBurnedText.text = "Scroll Found:";
+	scrollAbilityText.enabled = false;
 }
