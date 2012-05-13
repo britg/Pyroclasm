@@ -32,11 +32,11 @@ static var SCROLLS : Array = [
 	 ["Dwarven Techniques of Spell-Forging", "Inferno! Start with a much higher Temperature."]
 	 ], // GREEN
 	 
-	[["The Second Era and the Appearance of the Magi", "Demon Blessing! Slightly larger and longer Coronas."],
+	[["The Appearance of the Magi", "Demon Blessing! Slightly larger and longer Coronas."],
 	 ["History of The Spire", "Demon Blessing! Slightly larger and longer Coronas."],
 	 ["Stories of the Magi Veldt","Demon Blessing! Modestly larger and longer Coronas."],
 	 ["Dragon Lineage", "Demon Blessing! Modestly larger and longer Coronas."],
-	 ["Mysterys of the Sorcerer's Garden","Demon Blessing! Huge and long lasting Coronas."],
+	 ["Mysteries of the Sorcerer's Garden","Demon Blessing! Huge and long lasting Coronas."],
 	 ["Power Words of the Magi", "Demon Blessing! Huge and long lasting Coronas."]
 	 ], // PURPLE
 	 
@@ -44,7 +44,7 @@ static var SCROLLS : Array = [
 	 ["Known Symptoms of Mana Burn",  "Gem Lust! Start with a few extra gems."],
 	 ["Pyroclastic Scriptures", "Gem Lust! Start with some extra gems."],
 	 ["Thaumaturgist’s Travels", "Gem Lust! Start with some extra gems."],
-	 ["Thodrynn’s Encounter with the Demon Eruk", "Gem Lust! Start with many extra gems."],
+	 ["Thodrynn’s Encounter with Eruk", "Gem Lust! Start with many extra gems."],
 	 ["List of Lost Books of the First Era", "Gem Lust! Start with many extra gems."]
 	 ] 	// RED
 ];
