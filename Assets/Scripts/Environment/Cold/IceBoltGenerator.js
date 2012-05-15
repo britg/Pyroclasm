@@ -68,6 +68,6 @@ function Generate () {
 	yield WaitForSeconds(warningTime);
 	var warning : GameObject = bolt.Find("Warning");
 	warning.SetActiveRecursively(false);
-	motor.fixedSpeed = 20;
+	motor.fixedSpeed = 15 + scrolling.velocity;
 
 }

@@ -11,6 +11,15 @@ static var PURPLE : int = 1;
 static var CORONA_MULTIPLIER : float = 0.5;
 static var RED : int = 2;
 
+static var GREEN_TEMP : int = 0;
+static var PURPLE_TEMP : int = 1000;
+static var RED_TEMP : int = 2000;
+
+static var TIER1_DISTANCE : float = 0.0;
+static var TIER2_DISTANCE : float = 1000.0;
+static var TIER3_DISTANCE : float = 2000.0;
+
+
 static var COLORS : Array = [GREEN, PURPLE, RED];
 static var NUM_COLORS : int = 3;
 static var NUM_LEVELS : int = 6;
@@ -101,7 +110,7 @@ function getPosition(color: int, level : int) {
 }
 
 function keyForScroll(color : int, level : int) {
-	return "scroll_" + color.ToString() + "_" + level.ToString();
+	return "v2_scroll_" + color.ToString() + "_" + level.ToString();
 }
 
 var scrollForNextRun : Hashtable;
@@ -124,15 +133,39 @@ function DefineScroll(color : int, level : int) {
 	return data;
 }
 
-function AcquireScroll() {
+function AcquireScroll(distance : float, heat : int) {
 
-	var randomColor : int = Mathf.Floor(Random.value * NUM_COLORS);
-	var randomLevel : int = Mathf.Floor(Random.value * NUM_LEVELS);
+	var color : int = ColorFromHeat(heat);
+	var level : int = TierFromDistance(distance);
 	
-	var key : String = keyForScroll(randomColor, randomLevel);
+	var key : String = keyForScroll(color, level);
 	PlayerPrefs.SetInt(key, STATUS_ENABLED);
 	
-	var scroll : Hashtable = DefineScroll(randomColor, randomLevel);
+	var scroll : Hashtable = DefineScroll(color, level);
 	scrollsThisRun.Push(scroll);
 	return scroll;
+}
+
+function ColorFromHeat(heat : int) {
+
+	if(heat < PURPLE_TEMP) {
+		return GREEN;
+	} else if (heat < RED_TEMP) {
+		return PURPLE;
+	}
+	
+	return RED;
+}
+
+function TierFromDistance(distance : float) {
+
+	var subtier : int = Mathf.Floor(Random.value * 1.99);
+
+	if(distance < TIER2_DISTANCE) {
+		return subtier;
+	} else if (distance < TIER3_DISTANCE) {
+		return subtier + 2;
+	}
+	
+	return subtier * 4;
 }
