@@ -4,16 +4,23 @@ var startVelocity : float = 10.0;
 var acceleration : float = 0.07;
 var maxVelocity : float = 25.0;
 
+private var maxTemp : float = 2500.0;
+
 var started : boolean = false;
 
 function Start() {
 	Time.timeScale = 1.0;
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_FIRST);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TEMPERATURE_CHANGED);
 }
 
 function OnTouchFirst () {
 	Begin();
+}
+
+function OnMaxTemperatureAnnouncement(n : Notification) {
+	maxTemp = n.data;
 }
 
 function Begin() {
@@ -25,8 +32,16 @@ function Begin() {
 function Update() {
 
 	if(started) {
-		Accelerate();
+		//Accelerate();
 	}
+}
+
+function OnTemperatureChange (n : Notification) {
+	if(!started) {
+		return;
+	}
+	var temp : int = n.data;
+	velocity = (temp / maxTemp) * maxVelocity + 3.5;
 }
 
 function Accelerate() {

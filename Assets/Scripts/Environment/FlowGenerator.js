@@ -181,7 +181,7 @@ function RequestBonus (x : float) {
 }
 
 function RequestObstacle (x : float) {
-	Debug.Log("Obstacle Requested!");
+	//Debug.Log("Obstacle Requested!");
 	
 	var obstacle : String = obstacles[Mathf.Floor(Random.value * obstacles.length)];
 	var note: String;

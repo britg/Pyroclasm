@@ -1,4 +1,5 @@
 var factor : float = 1.0;
+var fixedSpeed : float = 0.0;
 var removeOffScreen : boolean = true;
 
 private var scrolling : Scroller;
@@ -14,13 +15,8 @@ function Start () {
 }
 
 function Update () {
-	if(scrolling == null) {
-		return;
-	}
 	
-	var delta = scrolling.velocity * Time.deltaTime * factor;
-	thisTransform.position.x = Mathf.Lerp(thisTransform.position.x, thisTransform.position.x - delta, 1);
-	//thisTransform.position.x -= delta;
+	Move();
 	
 	if(removeOffScreen && (transform.position.x < minX)) {
 	
@@ -31,6 +27,28 @@ function Update () {
 			Destroy(gameObject);
 		}
 	}
+}
+
+function FixedUpdate() {
+	//Move();
+}
+
+function Move() {
+
+	if(scrolling == null) {
+		return;
+	}
+	
+	var delta : float;
+	
+	if(fixedSpeed > 0 && scrolling.velocity > 0) {
+		delta = Time.deltaTime * fixedSpeed;
+	} else {
+	 	delta = scrolling.velocity * Time.deltaTime * factor;
+	}
+	
+	thisTransform.position.x -= delta;
+
 }
 
 function SetPool(_pool : GameObjectPool) {

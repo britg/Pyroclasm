@@ -64,10 +64,10 @@ function Generate () {
 	
 	var bolt : GameObject = iceBoltPool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
 	var motor : Motor = bolt.gameObject.GetComponent("Motor");
-	motor.factor = 0.0;
+	motor.fixedSpeed = 0.0;
 	yield WaitForSeconds(warningTime);
 	var warning : GameObject = bolt.Find("Warning");
 	warning.SetActiveRecursively(false);
-	motor.factor = speedFactor;
+	motor.fixedSpeed = 20;
 
 }
