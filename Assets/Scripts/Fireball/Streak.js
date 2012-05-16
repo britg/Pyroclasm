@@ -6,7 +6,7 @@ private var streakTime : float;
 var streakTimeout : float = 1.0;
 var longestStreak : int;
 
-var streakTrigger : int = 250;
+var streakTrigger : int = 350;
 private var streakLevel : int = 0;
 
 var ongoing : boolean;

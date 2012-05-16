@@ -43,7 +43,7 @@ private var objectRequested : boolean = false;
 
 var bonusChance : float 			= 40.0;
 private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
-private var bonusTiers : Array 		= [60.0, 	70.0, 		80.0, 		100.0];
+private var bonusTiers : Array 		= [60.0, 	80.0, 		85.0, 		100.0];
 private var obstacles : Array 		= ["iceshards", "gargoyle"];
 
 function Awake () {

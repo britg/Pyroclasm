@@ -176,4 +176,7 @@ function SimulateMotion() {
 function UpdateIntensity() {
 	thisAnimator.force.x = - 5*scrolling.velocity;
 	thisSmokeAnimator.force.x = - 5*scrolling.velocity;
+	var newEmission : int = Mathf.Clamp(5.0*scrolling.velocity, 10.0, 50.0);
+	thisEmitter.maxEmission = newEmission;
+	thisEmitter.minEmission = newEmission;
 }
