@@ -29,6 +29,8 @@ private var scrolling : Scroller;
 
 private var Pools : Array;
 
+private var wraithActive : boolean = false;
+
 function Start () {
 	distance = fireball.GetComponent("Distance");
 	scrolling = Level.GetComponent("Scroller");
@@ -49,6 +51,9 @@ function Start () {
 	tapestryPool.PrePopulate(poolSize);
 	
 	Pools = [gargoylePool, gargoyleWithGemPool, bookshelfPool, torchPool, iciclePool, tapestryPool];
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_WRAITH);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 }
 
 function ResetTimer () {
@@ -57,6 +62,10 @@ function ResetTimer () {
 
 function Update () {
 	if(scrolling.velocity == 0) {
+		return;
+	}
+	
+	if(wraithActive) {
 		return;
 	}
 	
@@ -71,4 +80,12 @@ function Update () {
 function Generate () {
 	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
 	pool.Spawn(Vector3(xStart, 0, -1), Quaternion.identity);
+}
+
+function OnTriggerWraith() {
+	wraithActive = true;
+}
+
+function OnWraithEnd() {
+	wraithActive = false;
 }

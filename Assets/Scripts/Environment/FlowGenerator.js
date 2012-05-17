@@ -46,6 +46,9 @@ private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
 private var bonusTiers : Array 		= [60.0, 	80.0, 		85.0, 		100.0];
 private var obstacles : Array 		= ["iceshards", "gargoyle"];
 
+var wraithChance : float = 5.0;
+private var wraithActive : boolean = false;
+
 function Awake () {
 
 	linePool = GameObjectPool( line, poolSize, true );
@@ -70,6 +73,7 @@ function Start () {
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.HEAT_PATTERN_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 }
 
 function ResetTimer () {
@@ -116,13 +120,28 @@ function TimerBasedGeneration () {
 }
 
 function DistanceBasedGeneration () {
+
 	var distDelta : float = distance.distance - lastMark;
 	
 	if(distDelta > (lastX + patternPadding)) {
+	
+		if(wraithActive) {
+			return;
+		} else {
+			RollForWraith();
+		}
+		
 		Generate();
 		objectRequested = false;
 		lastMark = distance.distance;
 		patternPadding = Random.value * (patternPaddingMax - patternPaddingMin) + patternPaddingMin;
+	}
+}
+
+function RollForWraith() {
+	var roll : float = Random.value * 100;
+	if(roll <= wraithChance) {
+		ActivateWraith();
 	}
 }
 
@@ -137,9 +156,9 @@ function RequestObject (x : float) {
 		return;
 	}
 	
+	var temp : Temperature = fireball.GetComponent("Temperature");
 	var bonusRoll : float = Mathf.Floor(Random.value * 100.0);
-	
-	if(bonusRoll <= bonusChance) {
+	if(bonusRoll <= (100.0 - temp.GetHeatPercentage())) {
 		RequestBonus(x);
 	} else {
 		RequestObstacle(x);
@@ -148,7 +167,7 @@ function RequestObject (x : float) {
 }
 
 function RequestBonus (x : float) {
-	Debug.Log("Bonus Requested!");
+	//Debug.Log("Bonus Requested!");
 	var roll : float = Mathf.Floor(Random.value * 100.0);
 	var which : int;
 	var tier : float;
@@ -219,4 +238,14 @@ function OnHeatPatternEnd (notification : Notification) {
 	
 	var objPos : float = lastX + xStart + patternPadding/2 - 2;
 	RequestObject(objPos);
+}
+
+function ActivateWraith() {
+	Debug.Log("Activating Wraith");
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_WRAITH);
+	wraithActive = true;
+}
+
+function OnWraithEnd() {
+	wraithActive = false;
 }

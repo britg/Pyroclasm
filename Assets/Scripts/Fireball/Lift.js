@@ -5,7 +5,7 @@ private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 
 private var maxHeight : float = 8.307953;
-private var minHeight : float = 0.1;
+private var minHeight : float = 0.3;
 
 private var initialY : float;
 

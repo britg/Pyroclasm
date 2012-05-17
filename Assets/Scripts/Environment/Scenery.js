@@ -29,6 +29,8 @@ private var bgs : Array;
 private var activeTrees : Array;
 private var treeStart : Vector3 = Vector3(12.2, 2, 5);
 
+private var wraithActive : boolean = false;
+
 function Awake() {
 	//Application.targetFrameRate = 30.0;
 	#if UNITY_IPHONE
@@ -59,6 +61,9 @@ function Start () {
 	activeTrees = [startTrees];
 	CreateBackground();
 	ConnectBackgrounds();
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_WRAITH);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 }
 
 function Update () {
@@ -67,6 +72,7 @@ function Update () {
 
 	if(bgs.length < 3) {
 		CreateBackground();
+		RollForGhost();
 	}
 	
 	if(activeTrees.length < 3) {
@@ -101,7 +107,14 @@ function CreateBackground() {
 	ConnectBackgrounds();
 	FillScreen(screen);
 	
+}
+
+function RollForGhost() {
 	// Add a ghost randomly
+	if(wraithActive) {
+		return;
+	}
+	
 	var roll : float = Random.value * 100;
 	if(roll <= ghostPercent) {
 		AddGhost();
@@ -156,4 +169,13 @@ function ConnectTrees () {
 	var right : GameObject = activeTrees[activeTrees.length-1];
 	
 	right.transform.position.x = left.transform.position.x + left.transform.localScale.x;
+}
+
+
+function OnTriggerWraith() {
+	wraithActive = true;
+}
+
+function OnWraithEnd() {
+	wraithActive = false;
 }

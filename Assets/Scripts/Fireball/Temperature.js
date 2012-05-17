@@ -4,12 +4,12 @@ var updateInterval = 0.2;
 var coolRate : float = 1;
 var initialHeat : int = 500;
 var maxHeat : int = 2500;
+var heat : int;
 
 var gameOverText : GUIText;
 
 private var timeleft : float;
 
-var heat : int;
 
 private var gameOver : boolean;
 private var shouldUpdate : boolean = true;
@@ -189,4 +189,9 @@ function UpdateIntensity() {
 function Emission() {
 	var factor : float = scrolling.velocity / 1.2;
 	return Mathf.Clamp(factor*factor, 10.0, 75.0);
+}
+
+function GetHeatPercentage() {
+	var currHeatPercentage : float = (0.0 + heat) / (0.0 + maxHeat) * 100.0;
+	return currHeatPercentage;
 }

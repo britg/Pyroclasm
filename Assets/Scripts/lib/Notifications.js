@@ -55,3 +55,6 @@ static var SCROLL_ACQUIRED : String = "OnScrollAcquired";
 static var SCROLL_AWARDED : String = "OnScrollAwarded";
 static var SCROLL_AWARD_ANIMATION_START : String = "OnScrollAwardAnimationStart";
 static var SCROLL_AWARD_ANIMATION_ENDED : String = "OnScrollAwardAnimationEnded";
+
+static var TRIGGER_WRAITH : String = "OnTriggerWraith";
+static var WRAITH_END : String = "OnWraithEnd";

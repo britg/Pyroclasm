@@ -89,6 +89,7 @@ class GameObjectPool {
 	
 	// Pre-populates the pool with the provided number of game objects.
 	function PrePopulate(count : int){
+		//return;
 		var array : GameObject[] = new GameObject[count];
 		for(var i = 0; i < count; i++){
 			array[i] = Spawn(Vector3.zero, Quaternion.identity);
