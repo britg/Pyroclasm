@@ -203,8 +203,14 @@ function RequestObstacle (x : float) {
 
 function Generate () {
 	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
-	var yStart = Random.value * (yMax - yMin) + yMin;
+	var yStart = PatternY();
 	pool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
+}
+
+function PatternY() {
+	//return (Random.value * (yMax - yMin) + yMin);
+	var possible : Array = [1.0,2.0,6.5,7];
+	return possible[Mathf.Floor(Random.value * possible.length)];
 }
 
 function OnHeatPatternEnd (notification : Notification) {

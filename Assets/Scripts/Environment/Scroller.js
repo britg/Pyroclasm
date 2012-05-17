@@ -41,7 +41,7 @@ function OnTemperatureChange (n : Notification) {
 		return;
 	}
 	var temp : int = n.data;
-	velocity = (temp / maxTemp) * maxVelocity + 3.5;
+	velocity = (temp / maxTemp) * maxVelocity + 4.5;
 }
 
 function Accelerate() {

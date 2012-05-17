@@ -119,6 +119,8 @@ function TempChange(delta : int, isPublic : boolean) {
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TEMPERATURE_CHANGED, heat);
 	}
 	
+	UpdateIntensity();
+	
 }
 
 
@@ -174,9 +176,17 @@ function SimulateMotion() {
 }
 
 function UpdateIntensity() {
-	thisAnimator.force.x = - 5*scrolling.velocity;
-	thisSmokeAnimator.force.x = - 5*scrolling.velocity;
-	var newEmission : int = Mathf.Clamp(5.0*scrolling.velocity, 10.0, 50.0);
-	thisEmitter.maxEmission = newEmission;
-	thisEmitter.minEmission = newEmission;
+	thisAnimator.force.x = - 3*scrolling.velocity;
+	thisSmokeAnimator.force.x = - 3*scrolling.velocity;
+	
+	if(moving) {
+		var newEmission : float = Emission();
+		thisEmitter.maxEmission = newEmission;
+		thisEmitter.minEmission = newEmission;
+	}
+}
+
+function Emission() {
+	var factor : float = scrolling.velocity / 1.2;
+	return Mathf.Clamp(factor*factor, 10.0, 75.0);
 }
