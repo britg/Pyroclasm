@@ -1,18 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/HeatBarEyes.js">
-    <Files>
-      <File FileName="Assets/Scripts/Mobs/WraithBolt.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mobs/Ghost.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mobs/Wraith.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/InteractableGenerator.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/Cold/IceBoltGenerator.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/Scenery.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Lift.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="127" Column="1" />
-      <File FileName="Assets/Scripts/GUI/HeatBarEyes.js" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

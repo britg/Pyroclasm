@@ -4,14 +4,13 @@ var Ymax : float = 5.0;
 var Ymin : float = 1.0;
 var vel : float = 0.1;
 
+enum Direction { Up, Down };
 private var dir : Direction;
 private var thisTransform : Transform;
 
 function Start () {
 	thisTransform = transform;
 	dir = Direction.Up;
-	
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_GHOST);
 }
 
 function Update () {
@@ -48,10 +47,6 @@ function OnBecameVisible () {
 	gameObject.audio.Play();
 }
 
-function OnBecameInvisible() {
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GHOST_END);
-}
-
 function OnTriggerEnter(collider : Collider) {
 	
 	var obj : GameObject = collider.gameObject;
@@ -64,10 +59,6 @@ function OnTriggerEnter(collider : Collider) {
 		
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACQUIRED);
 	}
-}
-
-function OnTriggerGhost() {
-	Insert();
 }
 
 function Insert() {

@@ -29,7 +29,7 @@ private var scrolling : Scroller;
 
 private var Pools : Array;
 
-private var wraithActive : boolean = false;
+private var eventActive : boolean = false;
 
 function Start () {
 	distance = fireball.GetComponent("Distance");
@@ -52,8 +52,8 @@ function Start () {
 	
 	Pools = [gargoylePool, gargoyleWithGemPool, bookshelfPool, torchPool, iciclePool, tapestryPool];
 	
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_WRAITH);
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
 }
 
 function ResetTimer () {
@@ -65,7 +65,7 @@ function Update () {
 		return;
 	}
 	
-	if(wraithActive) {
+	if(eventActive) {
 		return;
 	}
 	
@@ -82,10 +82,10 @@ function Generate () {
 	pool.Spawn(Vector3(xStart, 0, -1), Quaternion.identity);
 }
 
-function OnTriggerWraith() {
-	wraithActive = true;
+function OnEventStarted() {
+	eventActive = true;
 }
 
-function OnWraithEnd() {
-	wraithActive = false;
+function OnEventEnded() {
+	eventActive = false;
 }

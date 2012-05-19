@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Environment\Cold\IceBoltGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Cold\IceshardGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Cold\Icicle.js" />
+     <Compile Include="Assets\Scripts\Environment\EventGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\FlowGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\Block.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BonusBlock.js" />
@@ -97,6 +98,7 @@
      <Compile Include="Assets\Scripts\GUI\ScrollButton.js" />
      <Compile Include="Assets\Scripts\GUI\ScrollGUIManager.js" />
      <Compile Include="Assets\Scripts\GUI\VerticalHeatBar.js" />
+     <Compile Include="Assets\Scripts\Mobs\GemDemon.js" />
      <Compile Include="Assets\Scripts\Mobs\Ghost.js" />
      <Compile Include="Assets\Scripts\Mobs\Wraith.js" />
      <Compile Include="Assets\Scripts\Mobs\WraithBolt.js" />

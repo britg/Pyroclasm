@@ -46,8 +46,8 @@ private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
 private var bonusTiers : Array 		= [60.0, 	80.0, 		85.0, 		100.0];
 private var obstacles : Array 		= ["iceshards", "gargoyle"];
 
-var wraithChance : float = 5.0;
-private var wraithActive : boolean = false;
+var eventChance : float = 5.0;
+private var eventActive : boolean = false;
 
 function Awake () {
 
@@ -73,7 +73,8 @@ function Start () {
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.HEAT_PATTERN_END);
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
 }
 
 function ResetTimer () {
@@ -125,10 +126,10 @@ function DistanceBasedGeneration () {
 	
 	if(distDelta > (lastX + patternPadding)) {
 	
-		if(wraithActive) {
+		if(eventActive) {
 			return;
 		} else {
-			RollForWraith();
+			RollForEvent();
 		}
 		
 		Generate();
@@ -138,10 +139,10 @@ function DistanceBasedGeneration () {
 	}
 }
 
-function RollForWraith() {
+function RollForEvent() {
 	var roll : float = Random.value * 100;
-	if(roll <= wraithChance) {
-		ActivateWraith();
+	if(roll <= eventChance) {
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_REQUESTED);
 	}
 }
 
@@ -240,12 +241,10 @@ function OnHeatPatternEnd (notification : Notification) {
 	RequestObject(objPos);
 }
 
-function ActivateWraith() {
-	Debug.Log("Activating Wraith");
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_WRAITH);
-	wraithActive = true;
+function OnEventStarted() {
+	eventActive = true;
 }
 
-function OnWraithEnd() {
-	wraithActive = false;
+function OnEventEnded() {
+	eventActive = false;
 }

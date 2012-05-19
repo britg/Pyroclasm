@@ -26,7 +26,7 @@ private var nextObject : Transform;
 
 var warningTime : float = 1.5;
 
-private var wraithActive : boolean = false;
+private var eventActive : boolean = false;
 
 function Start () {
 	distance = fireball.GetComponent("Distance");
@@ -36,8 +36,8 @@ function Start () {
 	iceBoltPool = GameObjectPool( iceBolt, poolSize, true );
 	iceBoltPool.PrePopulate(poolSize);
 	
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_WRAITH);
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
 }
 
 function ResetTimer () {
@@ -87,7 +87,7 @@ function ShouldGenerate(y : float) {
 		return true;
 	}
 	
-	if(wraithActive) {
+	if(eventActive) {
 		return false;
 	}
 	
@@ -101,10 +101,10 @@ function ShouldGenerate(y : float) {
 	return ( roll < actualChance );
 }
 
-function OnTriggerWraith() {
-	wraithActive = true;
+function OnEventStarted() {
+	eventActive = true;
 }
 
-function OnWraithEnd() {
-	wraithActive = false;
+function OnEventEnded() {
+	eventActive = false;
 }

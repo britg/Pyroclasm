@@ -12,7 +12,6 @@ private var bg4Pool : GameObjectPool;
 var bg5 : GameObject;
 private var bg5Pool : GameObjectPool;
 
-var ghost : GameObject;
 var ghostPercent : int = 5;
 
 var plainbg : GameObject;
@@ -29,7 +28,7 @@ private var bgs : Array;
 private var activeTrees : Array;
 private var treeStart : Vector3 = Vector3(12.2, 2, 5);
 
-private var wraithActive : boolean = false;
+private var eventActive : boolean = false;
 
 function Awake() {
 	//Application.targetFrameRate = 30.0;
@@ -62,8 +61,8 @@ function Start () {
 	CreateBackground();
 	ConnectBackgrounds();
 	
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_WRAITH);
-	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
 }
 
 function Update () {
@@ -72,7 +71,6 @@ function Update () {
 
 	if(bgs.length < 3) {
 		CreateBackground();
-		RollForGhost();
 	}
 	
 	if(activeTrees.length < 3) {
@@ -107,23 +105,6 @@ function CreateBackground() {
 	ConnectBackgrounds();
 	FillScreen(screen);
 	
-}
-
-function RollForGhost() {
-	// Add a ghost randomly
-	if(wraithActive) {
-		return;
-	}
-	
-	var roll : float = Random.value * 100;
-	if(roll <= ghostPercent) {
-		AddGhost();
-	}
-}
-
-function AddGhost() {
-	var ghostBehaviour : Ghost = ghost.GetComponent("Ghost");
-	ghostBehaviour.Insert();
 }
 
 function ConnectBackgrounds () {
@@ -172,10 +153,10 @@ function ConnectTrees () {
 }
 
 
-function OnTriggerWraith() {
-	wraithActive = true;
+function OnEventStarted() {
+	eventActive = true;
 }
 
-function OnWraithEnd() {
-	wraithActive = false;
+function OnEventEnded() {
+	eventActive = false;
 }
