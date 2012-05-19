@@ -14,6 +14,11 @@ function SetHeight () {
 	transform.position.y = Random.value * (maxY - minY) + minY;
 }
 
-function OnTriggerEnter () {
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GARGOYLE_ACTIVATED);
+function OnTriggerEnter ( collider : Collider ) {
+	var obj : GameObject = collider.gameObject;
+	var test : Temperature = obj.GetComponent("Temperature");
+	
+	if(test) {
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GARGOYLE_ACTIVATED);
+	}
 }
