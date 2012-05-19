@@ -6,7 +6,7 @@ enum ScrollColor { GREEN = 0,
 				   RED = 2 }
 
 static var GREEN : int = 0;
-static var TEMP_MULTIPLIER : int = 150;
+static var TEMP_MULTIPLIER : int = 75;
 static var PURPLE : int = 1;
 static var CORONA_MULTIPLIER : float = 0.16666;
 static var RED : int = 2;
