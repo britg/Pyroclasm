@@ -13,9 +13,11 @@ import System.Collections.Generic;
 // We need a static method for objects to be able to obtain the default notification center.
 // This default center is what all objects will use for most notifications.  We can of course create our own separate instances of NotificationCenter, but this is the static one used by all.
 private static var defaultCenter : NotificationCenter;
+static var isShuttingDown : boolean;
+
 static function DefaultCenter () {
     // If the defaultCenter doesn't already exist, we need to create it
-    if (!defaultCenter) {
+    if (!defaultCenter && !isShuttingDown) {
         // Because the NotificationCenter is a component, we have to create a GameObject to attach it to.
         var notificationObject: GameObject = new GameObject("Default Notification Center");
         // Add the NotificationCenter component, and set it as the defaultCenter
@@ -23,6 +25,12 @@ static function DefaultCenter () {
     }
    
     return defaultCenter;
+}
+
+
+function OnApplicationQuit()
+{
+    isShuttingDown = true;
 }
 
 // Our hashtable containing all the notifications.  Each notification in the hash table is an ArrayList that contains all the observers for that notification.

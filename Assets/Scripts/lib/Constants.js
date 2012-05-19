@@ -1,0 +1,1 @@
+enum Direction { Up, Down };

@@ -1,11 +1,12 @@
 #pragma strict
 
-function Start () {
+private var events : Array = ["ActivateGhost", "ActivateWraith", "ActivateGemDemon"];
 
+function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_REQUESTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GHOST_END);
-
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GEM_DEMON_END);
 }
 
 function Update () {
@@ -14,13 +15,10 @@ function Update () {
 
 function OnEventRequested() {
 	Debug.Log("Event Requested!");
-	var roll : float = Random.value * 100.0;
 	
-	if(roll < 50.0) {
-		ActivateWraith();
-	} else {
-		ActivateGhost();
-	}
+	var e : String = events[Mathf.Floor(Random.value*events.length)];
+	//SendMessage(e);
+	SendMessage("ActivateGhost");
 	
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_STARTED);
 }
@@ -42,5 +40,16 @@ function ActivateGhost() {
 }
 
 function OnGhostEnd() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_ENDED);
+}
+
+// Gem Demon
+
+function ActivateGemDemon() {
+	Debug.Log("Activate gem demon notification");
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_GEM_DEMON);
+}
+
+function OnGemDemonEnd() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_ENDED);
 }

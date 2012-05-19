@@ -1,6 +1,7 @@
 #pragma strict
 
 var scrollAcquiredSound : AudioClip;
+var knowledgeSound : AudioClip;
 
 private var thisDistance : Distance;
 private var thisTemperature : Temperature;
@@ -17,6 +18,7 @@ function Update () {
 
 function OnScrollAcquired() {
 	gameObject.audio.PlayOneShot(scrollAcquiredSound);
+	gameObject.audio.PlayOneShot(knowledgeSound);
 	var scroll : Hashtable = Scrolls.PlayerScrolls().AcquireScroll(thisDistance.distance, thisTemperature.heat);
 	
 	Debug.Log("Acquired Scroll " + scroll["name"]);

@@ -104,6 +104,7 @@
      <Compile Include="Assets\Scripts\Mobs\WraithBolt.js" />
      <Compile Include="Assets\Scripts\lib\AnimateTexture.js" />
      <Compile Include="Assets\Scripts\lib\AnimatedBackground.js" />
+     <Compile Include="Assets\Scripts\lib\Constants.js" />
      <Compile Include="Assets\Scripts\lib\GameObjectPool.js" />
      <Compile Include="Assets\Scripts\lib\NotificationCenter.js" />
      <Compile Include="Assets\Scripts\lib\Notifications.js" />

@@ -66,3 +66,6 @@ static var GHOST_END : String = "OnGhostEnd";
 
 static var TRIGGER_WRAITH : String = "OnTriggerWraith";
 static var WRAITH_END : String = "OnWraithEnd";
+
+static var TRIGGER_GEM_DEMON : String = "OnTriggerGemDemon";
+static var GEM_DEMON_END : String = "OnGemDemonEnd";

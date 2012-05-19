@@ -1,20 +1,58 @@
 #pragma strict
 
+var heatGem : GameObject;
+
 var Ymax : float = 5.0;
 var Ymin : float = 1.0;
 var vel : float = 0.1;
 
-enum Direction { Up, Down };
 private var dir : Direction;
 private var thisTransform : Transform;
+
+var shouldEmit : boolean = false;
+var emitDelay : float = 0.2;
+private var currEmitCounter : float = 0.0;
 
 function Start () {
 	thisTransform = transform;
 	dir = Direction.Up;
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_GEM_DEMON);
 }
 
 function Update () {
 	Move();
+	
+	var roll : float = Random.value * 100.0;
+	if(roll <= 2) {
+		ChangeDirection();
+	}
+	
+	if(shouldEmit) {
+		currEmitCounter += Time.deltaTime;
+		
+		if(currEmitCounter >= emitDelay) {
+			EmitGem();
+		}
+	}
+}
+
+function EmitGem() {
+	var pos : Vector3 = transform.localPosition;
+	pos.z = -1;
+	pos.x += 1;
+	pos.y += 1;
+	var gem : GameObject = Instantiate(heatGem, pos, Quaternion.identity);
+	gem.AddComponent("Motor");
+	gem.transform.position = pos;
+	currEmitCounter = 0.0;
+}
+
+function ChangeDirection() {
+	if(dir == Direction.Up) {
+		dir = Direction.Down;
+	} else {
+		dir = Direction.Up;
+	}
 }
 
 function Move() {
@@ -45,33 +83,23 @@ function UpdateDirection(currY : float) {
 
 function OnBecameVisible () {
 	gameObject.audio.Play();
+	shouldEmit = true;
 }
 
-function OnTriggerEnter(collider : Collider) {
-	
-	var obj : GameObject = collider.gameObject;
-	var test : Temperature = obj.GetComponent("Temperature");
-	
-	if(test) {
-		var acquisitionBurn : GameObject = gameObject.Find("ScrollAcquisitionBurn");
-		var emitter : ParticleEmitter = acquisitionBurn.GetComponent.<ParticleEmitter>();
-		emitter.emit = true;
-		
-		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_ACQUIRED);
-	}
+function OnBecameInvisible() {
+	shouldEmit = false;
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GEM_DEMON_END);
 }
 
 function Insert() {
-	if(transform.position.x > -9.73 && transform.position.x < 6.68) {
-		return;
-	}
 	gameObject.SetActiveRecursively(true);
-	transform.position.x = 15;
+	transform.position.x = -10;
 	var ghostMotor : Motor = gameObject.GetComponent("Motor");
-	ghostMotor.factor = 0.5;
+	ghostMotor.factor = -0.1;
 	transform.position.y = Random.value * 4;
-	
-	var acquisitionBurn : GameObject = gameObject.Find("ScrollAcquisitionBurn");
-	var emitter : ParticleEmitter = acquisitionBurn.GetComponent.<ParticleEmitter>();
-	emitter.emit = false;
+}
+
+function OnTriggerGemDemon() {
+	Debug.Log("Trigger gem demon");
+	Insert();
 }
