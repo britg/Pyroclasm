@@ -93,7 +93,7 @@ function OnGameStart() {
 		var level : int = scroll["level"];
 		var lust : GameObject = Instantiate(bonusBlock, Vector3(0, 3.0, -1), Quaternion.identity);	
 		var blockBehaviour : BonusBlock = lust.GetComponent("BonusBlock");
-		blockBehaviour.cols += level*2;
+		blockBehaviour.cols += level;
 		blockBehaviour.DrawGems();
 	}
 

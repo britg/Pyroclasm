@@ -29,8 +29,6 @@ private var moving : boolean = false;
 function Start () {
 
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
-
-	heat = initialHeat;
 	
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
@@ -54,6 +52,9 @@ function AnnounceMaxTemperature () {
 }
 
 function OnGameStart() {
+
+	TempChange((initialHeat-heat), false);
+	thisStreak.EndStreak();
 
 	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
 	
