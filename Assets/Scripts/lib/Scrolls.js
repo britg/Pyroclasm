@@ -8,7 +8,7 @@ enum ScrollColor { GREEN = 0,
 static var GREEN : int = 0;
 static var TEMP_MULTIPLIER : int = 150;
 static var PURPLE : int = 1;
-static var CORONA_MULTIPLIER : float = 0.5;
+static var CORONA_MULTIPLIER : float = 0.16666;
 static var RED : int = 2;
 
 static var GREEN_TEMP : int = 0;
@@ -69,6 +69,7 @@ static function PlayerScrolls () {
 }
 
 function ScrollStatus(color : int, level : int) {
+	return STATUS_ENABLED;
 	var status : int = PlayerPrefs.GetInt(keyForScroll(color, level));
 	//status = Mathf.Floor(Random.value * 3); 
 	if(status < 1) {
