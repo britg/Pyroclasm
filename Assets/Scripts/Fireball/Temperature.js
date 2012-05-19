@@ -59,7 +59,8 @@ function OnGameStart() {
 	
 	if(scroll && scroll["color"] == Scrolls.GREEN) {
 		var level : int = scroll["level"];
-		heat += level * Scrolls.TEMP_MULTIPLIER;
+		var delta : int = level * Scrolls.TEMP_MULTIPLIER;
+		TempChange(delta, false);
 	}
 
 }
