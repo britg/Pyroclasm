@@ -9,6 +9,8 @@ var scrollAbilityText : GUIText;
 var scrollBurn : GameObject;
 var scrollButtonBurn : GameObject;
 
+var scrollDeactivateSound : AudioClip;
+
 private var GUIActive : boolean = false;
 private var scrollsCreated : boolean = false;
 private var scrolls : Hashtable;
@@ -77,7 +79,7 @@ function ActivateScrollAt(color : int, level : int) {
 
 function DeactivateGUI() {
 	GUIActive = false;
-	scrollButton.audio.Play();
+	Camera.main.audio.PlayOneShot(scrollDeactivateSound);
 	
 	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
 	if(scroll && scroll["name"]) {
