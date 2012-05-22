@@ -138,6 +138,7 @@ function FillScreen(screen : GameObject) {
 }
 
 function ChooseBackgroundPool() {
+	//return bg5Pool;
 	if(activePool && currPoolCount <= poolRepeat) {
 		return activePool;
 	}
