@@ -18,7 +18,7 @@ function Start() {
 
 function Update () {
 	
-	if((Time.time - streakTime) > streakTimeout) {
+	if((Time.time - streakTime) > streakTimeout && ongoing) {
 		EndStreak();
 	}
 	

@@ -13,7 +13,7 @@ import System.Collections.Generic;
 // We need a static method for objects to be able to obtain the default notification center.
 // This default center is what all objects will use for most notifications.  We can of course create our own separate instances of NotificationCenter, but this is the static one used by all.
 private static var defaultCenter : NotificationCenter;
-static var isShuttingDown : boolean;
+static var isShuttingDown : boolean = false;
 
 static function DefaultCenter () {
     // If the defaultCenter doesn't already exist, we need to create it
@@ -69,7 +69,7 @@ function RemoveObserver (observer, name: String) {
 function PostNotification (aSender, aName: String) { PostNotification(aSender, aName, null); }
 function PostNotification (aSender, aName: String, aData) { PostNotification(new Notification(aSender, aName, aData)); }
 function PostNotification (aNotification: Notification) {
-
+	//Debug.Log("Notification Posted " + aNotification.name);
 	
     // First make sure that the name of the notification is valid.
     if (aNotification.name == null || aNotification.name == "") { Debug.Log("Null name sent to PostNotification."); return; }

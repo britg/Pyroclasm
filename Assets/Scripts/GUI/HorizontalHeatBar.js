@@ -21,6 +21,8 @@ private var targetFillTiling : float;
 private var fillScaleChangeVelocity : float;
 private var fillTilingChangeVelocity : float;
 
+private var alignment = 1;
+
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.ANNOUNCE_MAX_TEMPERATURE);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TEMPERATURE_CHANGED);
@@ -28,6 +30,9 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_UPDATED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.STREAK_ENDED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POWERDOWN);
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
 	
 	originalHeatBarY = heatBar.transform.localScale.y;
 	originalHeatBarTiling = heatBar.renderer.material.mainTextureScale.y;
@@ -72,8 +77,13 @@ function OnStreakStart (notification : Notification) {
 
 function OnStreakUpdate (notification : Notification) {
 	var streakValue : int = notification.data;
+	
+	var symbol : String = "+";
+	if(alignment == -1) {
+		symbol = "-";
+	}
 
-	streakText.text = "+" + streakValue + "°";
+	streakText.text = symbol + streakValue + "°";
 	
 	var newSize : float = Mathf.Clamp(originalStreakTextSize + ((0.0+streakValue)/500.0), originalStreakTextSize, maxStreakTextScale);
 	streakText.characterSize = newSize;
@@ -93,9 +103,14 @@ function OnStreakEnd (notification : Notification) {
 function OnPowerDown (notification : Notification) {
 	var delta : int = notification.data;
 	
+	var symbol : String = "";
+	if(alignment == -1) {
+		symbol = "+";
+	}
+	
 	powerDownTime = Time.time;
 	powerDownText.gameObject.active = true;
-	powerDownText.text = "" + delta + "°";
+	powerDownText.text = symbol + delta + "°";
 	
 	animation.Play();
 }
@@ -108,4 +123,13 @@ function CheckPowerDownTimeout () {
 
 function Shake() {
 
+}
+
+
+function OnPolerize() {
+	alignment = -1;
+}
+
+function OnUnpolerize() {
+	alignment = 1;
 }

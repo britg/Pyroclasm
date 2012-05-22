@@ -1,16 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/ScrollGUIManager.js">
-    <Files>
-      <File FileName="Assets/Scripts/Environment/EventGenerator.js" Line="21" Column="27" />
-      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/lib/Notifications.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mobs/GemDemon.js" Line="43" Column="13" />
-      <File FileName="Assets/Scripts/Mobs/Ghost.js" Line="65" Column="90" />
-      <File FileName="Assets/Scripts/Environment/Attracted.js" Line="24" Column="29" />
-      <File FileName="Assets/Scripts/GUI/ScrollGUIManager.js" Line="82" Column="14" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

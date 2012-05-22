@@ -60,7 +60,6 @@ static var EVENT_REQUESTED : String = "OnEventRequested";
 static var EVENT_STARTED : String = "OnEventStarted";
 static var EVENT_ENDED : String = "OnEventEnded";
 
-
 static var TRIGGER_GHOST : String = "OnTriggerGhost";
 static var GHOST_END : String = "OnGhostEnd";
 
@@ -69,3 +68,11 @@ static var WRAITH_END : String = "OnWraithEnd";
 
 static var TRIGGER_GEM_DEMON : String = "OnTriggerGemDemon";
 static var GEM_DEMON_END : String = "OnGemDemonEnd";
+
+static var TRIGGER_DRAGON : String = "OnTriggerDragon";
+static var DRAGON_END : String = "OnDragonEnd";
+
+static var TRIGGER_POLARITY_SWITCH : String = "OnTriggerPolaritySwitch";
+static var POLARITY_SWITCH_END : String = "OnPolaritySwitchEnd";
+static var POLERIZE : String = "OnPolerize";
+static var UNPOLERIZE : String = "OnUnpolerize";

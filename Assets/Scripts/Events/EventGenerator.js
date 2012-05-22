@@ -1,12 +1,14 @@
 #pragma strict
 
-private var events : Array = ["ActivateGhost", "ActivateWraith", "ActivateGemDemon"];
+private var events : Array = ["Ghost", "Wraith", "GemDemon", "PolaritySwitch"/*, "Dragon"*/];
 
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_REQUESTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GHOST_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GEM_DEMON_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.DRAGON_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLARITY_SWITCH_END);
 }
 
 function Update () {
@@ -14,16 +16,18 @@ function Update () {
 }
 
 function OnEventRequested() {
-	Debug.Log("Event Requested!");
 	
 	var e : String = events[Mathf.Floor(Random.value*events.length)];
-	//SendMessage(e);
-	SendMessage("ActivateGhost");
+	//e = "Dragon" // Override for development
+	//e = "PolaritySwitch";
+	var msg : String = "Activate" + e;
+	Debug.Log(msg);
+	SendMessage(msg);
 	
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_STARTED);
 }
 
-// WRAITH
+// Wraith
 
 function ActivateWraith() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_WRAITH);
@@ -33,7 +37,7 @@ function OnWraithEnd() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_ENDED);
 }
 
-// GHOST
+// Ghost
 
 function ActivateGhost() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_GHOST);
@@ -46,10 +50,29 @@ function OnGhostEnd() {
 // Gem Demon
 
 function ActivateGemDemon() {
-	Debug.Log("Activate gem demon notification");
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_GEM_DEMON);
 }
 
 function OnGemDemonEnd() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_ENDED);
+}
+
+// Dragon
+
+function ActivateDragon() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_DRAGON);
+}
+
+function OnDragonEnd() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_ENDED);
+}
+
+// Polarity Switch
+
+function ActivatePolaritySwitch() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TRIGGER_POLARITY_SWITCH);
+}
+
+function OnPolaritySwitchEnd() {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_ENDED);
 }

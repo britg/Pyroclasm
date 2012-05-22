@@ -49,6 +49,8 @@ private var obstacles : Array 		= ["iceshards", "gargoyle"];
 var eventChance : float = 5.0;
 private var eventActive : boolean = false;
 
+private var alignment = 1;
+
 function Awake () {
 
 	linePool = GameObjectPool( line, poolSize, true );
@@ -75,6 +77,9 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.HEAT_PATTERN_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
+
 }
 
 function ResetTimer () {
@@ -159,10 +164,19 @@ function RequestObject (x : float) {
 	
 	var temp : Temperature = fireball.GetComponent("Temperature");
 	var bonusRoll : float = Mathf.Floor(Random.value * 100.0);
+	
 	if(bonusRoll <= (100.0 - temp.GetHeatPercentage())) {
-		RequestBonus(x);
+		if(alignment == 1) {
+			RequestBonus(x);
+		} else {
+			RequestObstacle(x);
+		}
 	} else {
-		RequestObstacle(x);
+		if(alignment == 1) {
+			RequestObstacle(x);
+		} else {
+			RequestBonus(x);
+		}
 	}
 	
 }
@@ -229,7 +243,7 @@ function Generate () {
 
 function PatternY() {
 	//return (Random.value * (yMax - yMin) + yMin);
-	var possible : Array = [1.0,2.0,6.5,7];
+	var possible : Array = [1.0,2.0,6.5,6.8];
 	return possible[Mathf.Floor(Random.value * possible.length)];
 }
 
@@ -247,4 +261,13 @@ function OnEventStarted() {
 
 function OnEventEnded() {
 	eventActive = false;
+}
+
+
+function OnPolerize() {
+	alignment = -1;
+}
+
+function OnUnpolerize() {
+	alignment = 1;
 }

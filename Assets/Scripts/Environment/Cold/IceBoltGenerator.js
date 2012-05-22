@@ -28,6 +28,8 @@ var warningTime : float = 1.5;
 
 private var eventActive : boolean = false;
 
+private var alignment : int = 1;
+
 function Start () {
 	distance = fireball.GetComponent("Distance");
 	ResetTimer();
@@ -38,6 +40,8 @@ function Start () {
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
 }
 
 function ResetTimer () {
@@ -64,8 +68,14 @@ function Update () {
 }
 
 function Generate () {
-	//var yStart = Random.value * (yMax - yMin) + yMin;
-	var yStart : float = fireball.transform.position.y;
+
+	var yStart : float;
+	
+	if(alignment == -1) {
+		yStart = Random.value * (yMax - yMin) + yMin;
+	} else {
+		yStart = fireball.transform.position.y;
+	}
 	
 	if(!ShouldGenerate(yStart)) {
 		return;
@@ -87,6 +97,10 @@ function ShouldGenerate(y : float) {
 		return true;
 	}
 	
+	if(alignment == -1) {
+		return true;
+	}
+	
 	if(eventActive) {
 		return false;
 	}
@@ -94,7 +108,7 @@ function ShouldGenerate(y : float) {
 	var temp : Temperature = fireball.GetComponent("Temperature");
 	var heatPercentage : float = temp.GetHeatPercentage();
 	//Debug.Log("Heat percentage is " + heatPercentage);
-	var actualChance : float = (temp.GetHeatPercentage() + minChance);
+	var actualChance : float = Mathf.Clamp(temp.GetHeatPercentage(), minChance, 100);
 	//Debug.Log("actual chance is " + actualChance);
 	var roll : float = (Random.value * 100.0);
 	//Debug.Log("roll is " + roll);
@@ -107,4 +121,12 @@ function OnEventStarted() {
 
 function OnEventEnded() {
 	eventActive = false;
+}
+
+function OnPolerize() {
+	alignment = -1;
+}
+
+function OnUnpolerize() {
+	alignment = 1;
 }

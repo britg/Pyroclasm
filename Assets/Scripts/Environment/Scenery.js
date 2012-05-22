@@ -23,6 +23,10 @@ private var treePool : GameObjectPool;
 
 private var poolSize : int = 1;
 
+private var activePool : GameObjectPool;
+private var currPoolCount : int = 0;
+var poolRepeat : int = 10;
+
 private var Pools : Array;
 private var bgs : Array;
 private var activeTrees : Array;
@@ -100,6 +104,7 @@ function CreateBackground() {
 	var screen : GameObject = pool.Spawn( Vector3(20, 0, 0), Quaternion.identity );
 	//var screen : GameObject = GameObject.Instantiate(plainbg, Vector3(20, 0, 0), Quaternion.identity);
 	bgs.Push(screen);
+	currPoolCount++;
 	
 	yield WaitForSeconds(0.1);
 	ConnectBackgrounds();
@@ -126,13 +131,19 @@ function FillScreen(screen : GameObject) {
 }
 
 function ChooseBackgroundPool() {
+	if(activePool && currPoolCount <= poolRepeat) {
+		return activePool;
+	}
+	
 	var roll : float = Random.value * 100;
 	
 	if( roll <= 75 ) {
 		return Pools[0];
 	}
 	
-	return Pools[Mathf.Floor(Random.value*Pools.length)];
+	activePool = Pools[Mathf.Floor(Random.value*Pools.length)];
+	currPoolCount = 0;
+	return activePool;
 }
 
 

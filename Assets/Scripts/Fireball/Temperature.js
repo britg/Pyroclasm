@@ -19,22 +19,29 @@ private var scrolling : Scroller;
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
 private var thisEmitter : ParticleEmitter;
+private var polarizedEmitter : ParticleEmitter;
 private var thisAnimator : ParticleAnimator;
-private var thisSmokeAnimator : ParticleAnimator;
+private var polarizedAnimator : ParticleAnimator;
+
 private var thisDistance : Distance;
 private var thisStreak : Streak;
 
 private var moving : boolean = false;
 
+var alignment : int = 1;
+
 function Start () {
 
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
 	
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
 	thisEmitter = thisTransform.Find("Intensity").GetComponent.<ParticleEmitter>();
+	polarizedEmitter = thisTransform.Find("Polarized").GetComponent.<ParticleEmitter>();
 	thisAnimator = thisTransform.Find("Intensity").GetComponent.<ParticleAnimator>();
-	thisSmokeAnimator = thisTransform.Find("Smoke").GetComponent.<ParticleAnimator>();
+	polarizedAnimator = thisTransform.Find("Polarized").GetComponent.<ParticleAnimator>();
 	scrolling = Level.GetComponent("Scroller") as Scroller;
 	thisDistance = gameObject.GetComponent("Distance") as Distance;
 	thisStreak = gameObject.GetComponent("Streak") as Streak;
@@ -98,13 +105,18 @@ function CoolOff() {
 	}
 	
 	if(!thisStreak.ongoing) {
-		TempChange(coolAmount, false);
+		TempChange(coolAmount * alignment, false);
 	}
 }
 
 function TempChange(delta : int, isPublic : boolean) {
 	//Debug.Log("delta is " + delta);
-	heat += delta;
+	var prevHeat : int = heat;
+	var factor : int = 1;
+	if(alignment == -1 && delta > 0) {
+		factor = 2;
+	}
+	heat += (delta * alignment * factor);
 	
 	heat = Mathf.Clamp(heat, 0, maxHeat);
 	
@@ -117,7 +129,7 @@ function TempChange(delta : int, isPublic : boolean) {
 		gameOver = true;
 	}
 	
-	if(shouldUpdate) {
+	if(shouldUpdate && prevHeat != heat) {
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TEMPERATURE_CHANGED, heat);
 	}
 	
@@ -173,18 +185,20 @@ function ReloadAfterDelay() {
 function SimulateMotion() {
 	moving = true;
 	thisAnimator.force.y = 0;
-	thisSmokeAnimator.force.y = 0;
+	polarizedAnimator.force.y = 0;
 	UpdateIntensity();
 }
 
 function UpdateIntensity() {
 	thisAnimator.force.x = - 3*scrolling.velocity;
-	thisSmokeAnimator.force.x = - 3*scrolling.velocity;
+	polarizedAnimator.force.x = - 3*scrolling.velocity;
 	
 	if(moving) {
 		var newEmission : float = Emission();
 		thisEmitter.maxEmission = newEmission;
 		thisEmitter.minEmission = newEmission;
+		polarizedEmitter.maxEmission = newEmission;
+		polarizedEmitter.minEmission = newEmission;
 	}
 }
 
@@ -196,4 +210,18 @@ function Emission() {
 function GetHeatPercentage() {
 	var currHeatPercentage : float = (0.0 + heat) / (0.0 + maxHeat) * 100.0;
 	return currHeatPercentage;
+}
+
+function OnPolerize() {
+	Debug.Log("Polerizing!");
+	alignment = -1;
+	polarizedEmitter.emit = true;
+	thisEmitter.emit = false;
+}
+
+function OnUnpolerize() {
+	Debug.Log("Unpolerizing!");
+	alignment = 1;
+	polarizedEmitter.emit = false;
+	thisEmitter.emit = true;
 }
