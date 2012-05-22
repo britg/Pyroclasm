@@ -1,6 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/Cold/IceBoltGenerator.js">
+    <Files>
+      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="79" Column="82" />
+      <File FileName="Assets/Scripts/Events/EventGenerator.js" Line="3" Column="79" />
+      <File FileName="Assets/Scripts/Lib/NotificationCenter.js" Line="72" Column="4" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="16" Column="19" />
+      <File FileName="Assets/Scripts/Events/PolaritySwitchBolt.js" Line="28" Column="2" />
+      <File FileName="Assets/Scripts/Events/Ghost.js" Line="57" Column="2" />
+      <File FileName="Assets/Scripts/Environment/Cold/IceBoltGenerator.js" Line="111" Column="80" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="119" Column="36" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

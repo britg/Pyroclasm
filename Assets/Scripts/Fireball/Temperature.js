@@ -100,8 +100,10 @@ function GetDistance() {
 function CoolOff() {
 	var distance = GetDistance();
 	var coolAmount : int = -Mathf.Round(coolRate * Mathf.Sqrt(distance));
-	if(heat + coolAmount <= 10) {
-		coolAmount = -heat + 10;
+	
+	if(heat + coolAmount <= 10) { // Don't die by cooling off
+		return;
+		//coolAmount = -heat + 10;
 	}
 	
 	if(!thisStreak.ongoing) {

@@ -34,6 +34,11 @@ private var treeStart : Vector3 = Vector3(12.2, 2, 5);
 
 private var eventActive : boolean = false;
 
+var blueHue : GameObject;
+var blueHueAlpha : float = 39.0;
+private var shouldFadeBlueHue : boolean = false;
+private var currBlueHueFadeTime : float = 0.0;
+
 function Awake() {
 	//Application.targetFrameRate = 30.0;
 	#if UNITY_IPHONE
@@ -67,6 +72,8 @@ function Start () {
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
 }
 
 function Update () {
@@ -170,4 +177,19 @@ function OnEventStarted() {
 
 function OnEventEnded() {
 	eventActive = false;
+}
+
+function OnPolerize() {
+	//blueHue.SetActiveRecursively(true);
+}
+
+function OnUnpolerize() {
+	//blueHue.SetActiveRecursively(false);
+	
+}
+
+function FadeBlueHueOut() {
+	var color : Color = blueHue.renderer.material.color;
+	color.a -= 0.1f;
+	renderer.material.color = color;
 }
