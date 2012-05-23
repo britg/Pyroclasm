@@ -95,7 +95,7 @@ function Insert() {
 	gameObject.SetActiveRecursively(true);
 	transform.position.x = -10;
 	var ghostMotor : Motor = gameObject.GetComponent("Motor");
-	ghostMotor.factor = -0.1;
+	ghostMotor.factor = -0.3;
 	transform.position.y = Random.value * 4;
 }
 

@@ -29,6 +29,8 @@ var warningTime : float = 1.5;
 private var eventActive : boolean = false;
 
 private var alignment : int = 1;
+private var shouldFollow : boolean = false;
+private var activeBolt : GameObject;
 
 function Start () {
 	distance = fireball.GetComponent("Distance");
@@ -54,6 +56,7 @@ function ResetTimer () {
 }
 
 function Update () {
+	//return;
 	
 	if(scrolling.velocity == 0) {
 		return;
@@ -64,6 +67,10 @@ function Update () {
     if( timeleft <= 0.0 ) {
 		ResetTimer();
 		Generate();
+	}
+	
+	if(shouldFollow && alignment == 1) {
+		activeBolt.transform.position.y = fireball.transform.position.y;
 	}
 }
 
@@ -81,12 +88,14 @@ function Generate () {
 		return;
 	}
 	
-	var bolt : GameObject = iceBoltPool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
-	var motor : Motor = bolt.gameObject.GetComponent("Motor");
+	activeBolt = iceBoltPool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
+	var motor : Motor = activeBolt.gameObject.GetComponent("Motor");
 	
 	motor.fixedSpeed = 0.0;
+	shouldFollow = true;
 	yield WaitForSeconds(warningTime);
-	var warning : GameObject = bolt.Find("Warning");
+	shouldFollow = false;
+	var warning : GameObject = activeBolt.Find("Warning");
 	warning.SetActiveRecursively(false);
 	motor.fixedSpeed = 15 + scrolling.velocity;
 }

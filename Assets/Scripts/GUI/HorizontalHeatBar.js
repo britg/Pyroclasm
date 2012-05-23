@@ -103,14 +103,9 @@ function OnStreakEnd (notification : Notification) {
 function OnPowerDown (notification : Notification) {
 	var delta : int = notification.data;
 	
-	var symbol : String = "";
-	if(alignment == -1) {
-		symbol = "+";
-	}
-	
 	powerDownTime = Time.time;
 	powerDownText.gameObject.active = true;
-	powerDownText.text = symbol + delta + "°";
+	powerDownText.text = (delta*alignment) + "°";
 	
 	animation.Play();
 }

@@ -106,6 +106,7 @@ function OnGameStart() {
 }
 
 function Update () {
+	//return;
 	
 	if(scrolling.velocity == 0) {
 		return;
@@ -165,7 +166,8 @@ function RequestObject (x : float) {
 	var temp : Temperature = fireball.GetComponent("Temperature");
 	var bonusRoll : float = Mathf.Floor(Random.value * 100.0);
 	
-	if(bonusRoll <= (100.0 - temp.GetHeatPercentage())) {
+	//if(bonusRoll <= (100.0 - temp.GetHeatPercentage())) {
+	if(bonusRoll <= bonusChance) {
 		if(alignment == 1) {
 			RequestBonus(x);
 		} else {
