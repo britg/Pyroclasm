@@ -25,12 +25,11 @@ function Update () {
 
 function OnEventRequested() {
 	
-	//var e : String = events[Mathf.Floor(Random.value*events.length)];
+	var e = ChooseEvent();
 	//e = "Dragon" // Override for development
 	//e = "PolaritySwitch";
 	//e = "Ghost";
 	
-	var e = ChooseEvent();
 	var msg : String = "Activate" + e;
 	Debug.Log(msg);
 	SendMessage(msg);

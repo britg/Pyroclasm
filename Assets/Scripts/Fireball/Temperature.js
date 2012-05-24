@@ -101,9 +101,8 @@ function CoolOff() {
 	var distance = GetDistance();
 	var coolAmount : int = -Mathf.Round(coolRate * Mathf.Sqrt(distance));
 	
-	if(heat + coolAmount <= 10) { // Don't die by cooling off
+	if( (heat + (coolAmount * alignment)) <= 10) { // Don't die by cooling off
 		return;
-		//coolAmount = -heat + 10;
 	}
 	
 	if(!thisStreak.ongoing) {
@@ -115,14 +114,16 @@ function TempChange(delta : int, isPublic : boolean) {
 
 	var prevHeat : int = heat;
 	var factor : int = 1;
-	if(alignment == -1 && delta > 0) {
+	
+	if(alignment == -1 && delta > 0 && isPublic) {
 		factor = 5;
 	}
-	heat += (delta * alignment * factor);
+	delta = (delta * alignment * factor);
+	heat += delta;
 	
 	heat = Mathf.Clamp(heat, 0, maxHeat);
 	
-	if(isPublic) {
+	if(isPublic ) {
 		thisStreak.UpdateStreak(delta);
 	}
 	

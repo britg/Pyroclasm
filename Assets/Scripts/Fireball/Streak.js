@@ -11,6 +11,8 @@ private var streakLevel : int = 0;
 
 var ongoing : boolean;
 
+var alignment : int = 1;
+
 function Start() {
 	ongoing = false;
 	longestStreak = 0;
@@ -47,7 +49,9 @@ function UpdateStreak (delta : int) {
 	
 	}
 	
-	UpdateStreakLevel();
+	if(alignment == 1) {
+		UpdateStreakLevel();
+	}
 }
 
 function StartStreak() {
@@ -75,4 +79,12 @@ function EndStreak() {
 	ongoing = false;
 	streakValue = 0;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.STREAK_ENDED);
+}
+
+function OnPolerize() {
+	alignment = -1;
+}
+
+function OnUnpolerize() {
+	alignment = 1;
 }
