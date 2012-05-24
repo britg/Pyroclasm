@@ -96,7 +96,7 @@ function Generate () {
 	shouldFollow = false;
 	var warning : GameObject = activeBolt.Find("Warning");
 	warning.SetActiveRecursively(false);
-	motor.fixedSpeed = 15 + scrolling.velocity;
+	motor.fixedSpeed = 8 + scrolling.velocity;
 }
 
 function ShouldGenerate(y : float) {

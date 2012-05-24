@@ -116,7 +116,7 @@ function TempChange(delta : int, isPublic : boolean) {
 	var prevHeat : int = heat;
 	var factor : int = 1;
 	if(alignment == -1 && delta > 0) {
-		factor = 2;
+		factor = 5;
 	}
 	heat += (delta * alignment * factor);
 	
