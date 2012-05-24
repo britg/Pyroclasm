@@ -1,17 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GUI/HorizontalHeatBar.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/lib/AnimateTexture.js">
     <Files>
-      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Events/EventGenerator.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/Scenery.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Environment/Cold/IceBoltGenerator.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Environment/Scroller.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/lib/NotificationCenter.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Events/GemDemon.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GUI/HorizontalHeatBar.js" Line="83" Column="17" />
-      <File FileName="Assets/Scripts/Environment/TempChanger.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Fireball/Streak.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/lib/AnimateTexture.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
