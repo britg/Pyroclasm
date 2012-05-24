@@ -112,7 +112,7 @@ function CoolOff() {
 }
 
 function TempChange(delta : int, isPublic : boolean) {
-	//Debug.Log("delta is " + delta);
+
 	var prevHeat : int = heat;
 	var factor : int = 1;
 	if(alignment == -1 && delta > 0) {

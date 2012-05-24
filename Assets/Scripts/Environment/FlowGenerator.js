@@ -35,11 +35,7 @@ private var scrolling : Scroller;
 private var lastX : float = 10.0;
 private var lastMark : float;
 
-var patternPaddingMin : float = 5.0;
-var patternPaddingMax : float = 15.0;
 private var patternPadding : float = 10.0;
-
-private var objectRequested : boolean = false;
 
 var bonusChance : float 			= 40.0;
 private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
@@ -122,27 +118,24 @@ function TimerBasedGeneration () {
     
     if( timeleft <= 0.0 ) {
 		ResetTimer();
-		Generate();
+		GenerateHeatGems();
 	}
 }
 
 function DistanceBasedGeneration () {
-
 	var distDelta : float = distance.distance - lastMark;
 	
-	if(distDelta > (lastX + patternPadding)) {
+	if(distDelta <= (lastX + patternPadding))
+		return;
 	
-		if(eventActive) {
-			return;
-		} else {
-			RollForEvent();
-		}
-		
-		Generate();
-		objectRequested = false;
-		lastMark = distance.distance;
-		patternPadding = Random.value * (patternPaddingMax - patternPaddingMin) + patternPaddingMin;
-	}
+	if(eventActive)
+		return;
+	
+	RollForEvent();
+	GenerateHeatGems();
+	RequestObject();
+	
+	lastMark = distance.distance;
 }
 
 function RollForEvent() {
@@ -152,11 +145,23 @@ function RollForEvent() {
 	}
 }
 
-function RequestObject (x : float) {
-
-	var hit : RaycastHit;
+function GenerateHeatGems () {
+	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
+	var yStart = PatternY();
+	var pattern : GameObject = pool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
 	
-	objectRequested = true;
+}
+
+function PatternY() {
+	//return (Random.value * (yMax - yMin) + yMin);
+	var possible : Array = [1.0,2.0,6.5,6.8];
+	return possible[Mathf.Floor(Random.value * possible.length)];
+}
+
+function RequestObject () {
+
+	var x : float = lastX + xStart + patternPadding/2 - 2;
+	var hit : RaycastHit;
 	
 	if(Physics.Raycast(Vector3(x, 1, -10), Vector3(0, 0, 1), hit, 20.0)) {
 		//Debug.Log("Hit occurred on " + hit.collider.gameObject);
@@ -237,24 +242,9 @@ function RequestObstacle (x : float) {
 
 }
 
-function Generate () {
-	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
-	var yStart = PatternY();
-	pool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
-}
-
-function PatternY() {
-	//return (Random.value * (yMax - yMin) + yMin);
-	var possible : Array = [1.0,2.0,6.5,6.8];
-	return possible[Mathf.Floor(Random.value * possible.length)];
-}
-
 function OnHeatPatternEnd (notification : Notification) {
 	lastX = notification.data;
 	lastMark = distance.distance;
-	
-	var objPos : float = lastX + xStart + patternPadding/2 - 2;
-	RequestObject(objPos);
 }
 
 function OnEventStarted() {

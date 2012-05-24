@@ -75,7 +75,6 @@ function Update () {
 }
 
 function Generate () {
-
 	var yStart : float;
 	
 	if(alignment == -1) {

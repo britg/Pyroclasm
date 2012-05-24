@@ -126,7 +126,7 @@ function OnScrollActivated(n : Notification) {
 
 function OnScrollAwarded(n : Notification) {
 	scrollAwarded = n.data;
-	scrollButton.guiTexture.enabled = true;
+	scrollButton.guiTexture.active = true;
 	scrollButton.enabled = true;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.SCROLL_AWARD_ANIMATION_START);
 }

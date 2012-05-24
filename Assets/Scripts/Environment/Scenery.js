@@ -21,7 +21,7 @@ var startTrees : GameObject;
 var trees : GameObject;
 private var treePool : GameObjectPool;
 
-private var poolSize : int = 1;
+private var poolSize : int = 3;
 
 private var activePool : GameObjectPool;
 private var currPoolCount : int = 0;

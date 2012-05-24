@@ -50,6 +50,11 @@ function OnMaxTemperatureAnnouncement (notification : Notification) {
 function Update () {
     CheckPowerDownTimeout();
     
+    //SmoothUpdateBarFill();
+    
+}
+
+function SmoothUpdateBarFill() {
 	var currFillScale : float = heatBar.transform.localScale.y;
 	var newFillScale : float = Mathf.SmoothDamp(currFillScale, targetFillScale, fillScaleChangeVelocity, fillChangeTime);
 	
@@ -61,6 +66,11 @@ function Update () {
 	heatBar.renderer.material.mainTextureScale = Vector2(1, newFillTiling);
 }
 
+function UpdateBarFill() {
+	heatBar.transform.localScale.y = targetFillScale;
+	heatBar.renderer.material.mainTextureScale = Vector2(1, targetFillTiling);
+}
+
 function OnTemperatureChange (notification : Notification) {
 	var temperature : int = notification.data;
 	
@@ -69,6 +79,8 @@ function OnTemperatureChange (notification : Notification) {
 	var pct : float = Mathf.Clamp(((0.0 + temperature) / (0.0 + maxTemperature)), 0, 1);
 	targetFillScale = originalHeatBarY * pct;
 	targetFillTiling = originalHeatBarTiling * pct;
+	
+	UpdateBarFill();
 }
 
 function OnStreakStart (notification : Notification) {
