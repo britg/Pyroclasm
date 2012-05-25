@@ -1,6 +1,7 @@
 #pragma strict
 
 var heatGem : GameObject;
+var iceGem : GameObject;
 
 var Ymax : float = 5.0;
 var Ymin : float = 1.0;
@@ -12,6 +13,8 @@ private var thisTransform : Transform;
 var shouldEmit : boolean = false;
 var emitDelay : float = 0.2;
 private var currEmitCounter : float = 0.0;
+
+var iceChance : float = 1.0;
 
 function Start () {
 	thisTransform = transform;
@@ -37,11 +40,31 @@ function Update () {
 }
 
 function EmitGem() {
+	var roll : float = Random.value * 100.0;
+	if(roll <= iceChance) {
+		EmitIceGem();
+	} else {
+		EmitHeatGem();
+	}
+}
+
+function EmitHeatGem() {
 	var pos : Vector3 = transform.localPosition;
 	pos.z = -1;
 	pos.x += 1;
 	pos.y += 1;
 	var gem : GameObject = Instantiate(heatGem, pos, Quaternion.identity);
+	gem.AddComponent("Motor");
+	gem.transform.position = pos;
+	currEmitCounter = 0.0;
+}
+
+function EmitIceGem() {
+	var pos : Vector3 = transform.localPosition;
+	pos.z = -1;
+	pos.x += 1;
+	pos.y += 1;
+	var gem : GameObject = Instantiate(iceGem, pos, Quaternion.identity);
 	gem.AddComponent("Motor");
 	gem.transform.position = pos;
 	currEmitCounter = 0.0;
@@ -95,7 +118,7 @@ function Insert() {
 	gameObject.SetActiveRecursively(true);
 	transform.position.x = -10;
 	var ghostMotor : Motor = gameObject.GetComponent("Motor");
-	ghostMotor.factor = -0.3;
+	ghostMotor.factor = -0.2;
 	transform.position.y = Random.value * 4;
 }
 

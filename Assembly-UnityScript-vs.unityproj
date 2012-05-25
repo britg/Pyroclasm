@@ -74,6 +74,8 @@
      <Compile Include="Assets\Scripts\Environment\Scenery.js" />
      <Compile Include="Assets\Scripts\Environment\Scroller.js" />
      <Compile Include="Assets\Scripts\Environment\TempChanger.js" />
+     <Compile Include="Assets\Scripts\Events\BreathCollider.js" />
+     <Compile Include="Assets\Scripts\Events\Dragon.js" />
      <Compile Include="Assets\Scripts\Events\EventGenerator.js" />
      <Compile Include="Assets\Scripts\Events\GemDemon.js" />
      <Compile Include="Assets\Scripts\Events\Ghost.js" />

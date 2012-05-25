@@ -2,7 +2,7 @@
 
 private var fireBall : GameObject;
 private var temp : Temperature;
-private var events : Array = ["Ghost", "Wraith", "GemDemon", "PolaritySwitch"/*, "Dragon"*/];
+private var events : Array = ["Ghost", "Wraith", "GemDemon", "PolaritySwitch", "Dragon"];
 private var helpfulEvents : Array = ["Ghost", "GemDemon"];
 private var badEvents : Array = ["Ghost", "Wraith", "PolaritySwitch"];
 
@@ -29,6 +29,8 @@ function OnEventRequested() {
 	//e = "Dragon" // Override for development
 	//e = "PolaritySwitch";
 	//e = "Ghost";
+	//e = "GemDemon";
+	e = "Dragon";
 	
 	var msg : String = "Activate" + e;
 	Debug.Log(msg);
