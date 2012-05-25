@@ -3,7 +3,7 @@
 private var fireBall : GameObject;
 private var temp : Temperature;
 private var events : Array = ["Ghost", "Wraith", "GemDemon", "PolaritySwitch", "Dragon"];
-private var helpfulEvents : Array = ["Ghost", "GemDemon"];
+private var helpfulEvents : Array = ["Ghost", "GemDemon", "Dragon"];
 private var badEvents : Array = ["Ghost", "Wraith", "PolaritySwitch"];
 
 var helpfulEventChance : float = 40.0;
@@ -30,7 +30,7 @@ function OnEventRequested() {
 	//e = "PolaritySwitch";
 	//e = "Ghost";
 	//e = "GemDemon";
-	e = "Dragon";
+	//e = "Dragon";
 	
 	var msg : String = "Activate" + e;
 	Debug.Log(msg);

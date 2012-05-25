@@ -1,7 +1,7 @@
 #pragma strict
 
-var Ymax : float = 5.0;
-var Ymin : float = 0.0;
+var Ymax : float = 6.5;
+var Ymin : float = 3.0;
 var vel : float = 1;
 
 private var dir : Direction;

@@ -9,6 +9,10 @@ function Awake() {
 
 function OnParticleCollision (other : GameObject)
 {
-		//Debug.Log("HIT");
-		temp.TempChange(1, true);
+	var isFireball : Temperature = other.GetComponent("Temperature");
+	var isCollector : Collector = other.GetComponent("Collector");
+	
+	if(isFireball || isCollector) {
+		temp.TempChange(5, true);
+	}
 }
