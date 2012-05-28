@@ -56,7 +56,10 @@ function OnTriggerEnter (collider : Collider) {
 	if(heatBarCollected != null) {
 		heatBarCollected.Trigger();
 	}
-
+	
+	if(!tempChanger.isHeatGem) {
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.INTERACTABLE_COLLISION, obj.name);
+	}
 }
 
 function ShowExplosionPowerUp () {

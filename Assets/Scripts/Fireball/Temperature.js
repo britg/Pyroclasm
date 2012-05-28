@@ -30,6 +30,9 @@ private var moving : boolean = false;
 
 var alignment : int = 1;
 
+var firstPowerdown : boolean = false;
+var firstPowerup : boolean = false;
+
 function Start () {
 
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
@@ -125,6 +128,14 @@ function TempChange(delta : int, isPublic : boolean) {
 	
 	if(isPublic ) {
 		thisStreak.UpdateStreak(delta);
+		
+		if(delta < 0 && !firstPowerdown && alignment == 1) {
+			NotifyFirstPowerdown();
+		}
+		
+		if(delta > 0 && !firstPowerup && alignment == 1) {
+			NotifyFirstPowerup();
+		}
 	}
 	
 	if(heat <= 0) {
@@ -140,43 +151,39 @@ function TempChange(delta : int, isPublic : boolean) {
 	
 }
 
+function NotifyFirstPowerdown() {
+	var distance : int = GetDistance();
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FIRST_POWERDOWN, distance);
+	firstPowerdown = true;
+}
+
+function NotifyFirstPowerup() {
+	var distance : int = GetDistance();
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.FIRST_POWERUP, distance);
+	firstPowerup = true;
+}
+
 
 function GameOver() {
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_END);
 	thisEmitter.emit = false;	
 	shouldUpdate = false;
 	
-	var distance = GetDistance();
-	gameOverText.enabled = true;
-	gameOverText.text = "Game Over!\nThis Run: " + Mathf.Round(distance) + "m\nLongest Streak: +" + thisStreak.longestStreak + "°";
+	var distance : int = GetDistance();
+	var streak : int = thisStreak.longestStreak;
 	
-	var prevDistance : int = PlayerPrefs.GetInt("distance");
-	var prevStreak : int = PlayerPrefs.GetInt("streak");
+	var score : Hashtable = new Hashtable();
+	score.Add("distance", distance);
+	score.Add("streak", streak);
 	
-	if(distance > prevDistance) {
-		PlayerPrefs.SetInt("distance", distance);
-		if(GameCenterBinding.isGameCenterAvailable()) {
-			GameCenterBinding.reportScore(distance, "pyrodev.run");
-		}
-	}
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_END, score);
 	
-	if(thisStreak.longestStreak > prevStreak) {
-		PlayerPrefs.SetInt("streak", thisStreak.longestStreak);
-	}
-	
-	if(distance > 1000) {
-    	GameCenterBinding.reportAchievement("pyrodev.1000m", 100.0);
-	}
-	
-	if(distance > 2000) {
-    	GameCenterBinding.reportAchievement("pyrodev.2000m", 100.0);
-	}
-	
-	if(distance > 3000) {
-    	GameCenterBinding.reportAchievement("pyrodev.3000m", 100.0);
-	}
-	
+	DisplayScore(distance, streak);
 	ReloadAfterDelay();
+}
+
+function DisplayScore(distance : int, streak : int) {
+	gameOverText.enabled = true;
+	gameOverText.text = "Game Over!\nThis Run: " + distance + "m\nLongest Streak: +" + streak + "°";
 }
 
 

@@ -121,6 +121,20 @@ function ActivateScroll(scroll : Hashtable) {
 	scrollForNextRun = scroll;
 	var key : String = keyForScroll(scroll["color"], scroll["level"]);
 	PlayerPrefs.SetInt(key, STATUS_USED);
+	
+}
+
+function CheckForAllScrolls() {
+	for( var i : int = 0; i < NUM_COLORS; i++ ) {
+		for( var j : int = 0; j < NUM_LEVELS; j++ ) {
+			var status : int = ScrollStatus(i,j);
+			if(status == STATUS_DISABLED) {
+				return false;
+			}
+		}
+	}
+	
+	Achievement.Report(Achievement.SCROLLS_ALL);
 }
 
 function DefineScroll(color : int, level : int) {
@@ -144,6 +158,12 @@ function AcquireScroll(distance : float, heat : int) {
 	
 	var scroll : Hashtable = DefineScroll(color, level);
 	scrollsThisRun.Push(scroll);
+	
+	
+	Achievement.Report(Achievement.SCROLLS_SINGLE);
+	
+	CheckForAllScrolls();
+	
 	return scroll;
 }
 

@@ -76,3 +76,8 @@ static var TRIGGER_POLARITY_SWITCH : String = "OnTriggerPolaritySwitch";
 static var POLARITY_SWITCH_END : String = "OnPolaritySwitchEnd";
 static var POLERIZE : String = "OnPolerize";
 static var UNPOLERIZE : String = "OnUnpolerize";
+
+static var FIRST_POWERDOWN : String = "OnFirstPowerdown";
+static var FIRST_POWERUP : String = "OnFirstPowerup";
+
+static var INTERACTABLE_COLLISION : String = "OnInteractableCollision";
