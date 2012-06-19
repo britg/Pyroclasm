@@ -1,40 +1,10 @@
 
-var Level : GameObject;
-var fireball : GameObject;
+private var distance : int = 0;
 
-var bonusBlock : GameObject;
-
-var line : GameObject;
-private var linePool : GameObjectPool;
-var block : GameObject;
-private var blockPool : GameObjectPool;
-var down : GameObject;
-private var downPool : GameObjectPool;
-var up : GameObject;
-private var upPool : GameObjectPool;
-var zigzag : GameObject;
-private var zigzagPool : GameObjectPool;
-
-var startGenerationInterval : float = 1.8;
-var minGenerationInterval : float = 0.3;
-var distanceToMinGenerationInterval : int = 1200;
-
-private var timeleft : float; // Left time for current interval
-
-private var poolSize : int = 5;
-private var yMin = 2;
-private var yMax = 6;
+private var patterns : Object[];
 private var xStart = 10;
-private var nextObject : Transform;
-
-private var Pools : Array = [];
-
-private var distance : Distance;
-private var scrolling : Scroller;
-
 private var lastX : float = 10.0;
 private var lastMark : float;
-
 private var patternPadding : float = 10.0;
 
 var bonusChance : float 			= 40.0;
@@ -48,114 +18,70 @@ private var eventActive : boolean = false;
 private var alignment = 1;
 
 function Awake () {
-
-	linePool = GameObjectPool( line, poolSize, true );
-	linePool.PrePopulate(poolSize);	
-	blockPool = GameObjectPool( block, poolSize, true );
-	blockPool.PrePopulate(poolSize);
-	upPool = GameObjectPool( up, poolSize, true );
-	upPool.PrePopulate(poolSize);
-	downPool = GameObjectPool( down, poolSize, true );
-	downPool.PrePopulate(poolSize);
-	zigzagPool = GameObjectPool( zigzag, poolSize, true );
-	zigzagPool.PrePopulate(poolSize);
-	
-	Pools = [linePool, blockPool, upPool, downPool, zigzagPool];
-	//Pools = [blockPool];
+	LoadPatterns();
 }
 
 function Start () {
-	distance = fireball.GetComponent("Distance") as Distance;
-	scrolling = Level.GetComponent("Scroller");
-	ResetTimer();
-	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.HEAT_PATTERN_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_STARTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
-
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.DISTANCE_UPDATE);
 }
 
-function ResetTimer () {
-	var distPercent : float = distance.distance / distanceToMinGenerationInterval;
-	if(distPercent > 1.0) {
-		distPercent = 1.0;
-	}
-	var delta : float = (startGenerationInterval - minGenerationInterval) * distPercent;
-	timeleft = startGenerationInterval - delta;
+function LoadPatterns() {
+	patterns = Resources.LoadAll("Patterns", GameObject);
 }
 
 function OnGameStart() {
+	RequestBonusBlock();
+}
 
+function RequestBonusBlock() {
 	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
 	
 	if(scroll && scroll["color"] == Scrolls.RED) {
 		var level : int = scroll["level"];
-		var lust : GameObject = Instantiate(bonusBlock, Vector3(0, 3.0, -1), Quaternion.identity);	
+		var lust : GameObject = Instantiate(Resources.Load("BonusBlock"), Vector3(0, 3.0, -1), Quaternion.identity);	
 		var blockBehaviour : BonusBlock = lust.GetComponent("BonusBlock");
 		blockBehaviour.cols += level;
 		blockBehaviour.DrawGems();
 	}
-
 }
 
 function Update () {
-	//return;
-	
-	if(scrolling.velocity == 0) {
-		return;
-	}
-	
-	//TimerBasedGeneration();
-	DistanceBasedGeneration();
+	UpdateFlow();
 }
 
-function TimerBasedGeneration () {
 
-	timeleft -= Time.deltaTime;
-    
-    if( timeleft <= 0.0 ) {
-		ResetTimer();
-		GenerateHeatGems();
-	}
-}
+function UpdateFlow() {
 
-function DistanceBasedGeneration () {
-	var distDelta : float = distance.distance - lastMark;
-	
+	var distDelta : float = distance - lastMark;
 	if(distDelta <= (lastX + patternPadding))
 		return;
 	
 	if(eventActive)
 		return;
 	
-	RollForEvent();
-	GenerateHeatGems();
-	RequestObject();
+	//RequestEvent();
+	RequestPattern();
+	//RequestObject();
 	
-	lastMark = distance.distance;
+	lastMark = distance;
 }
 
-function RollForEvent() {
+function RequestEvent() {
 	var roll : float = Random.value * 100;
 	if(roll <= eventChance) {
 		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.EVENT_REQUESTED);
 	}
 }
 
-function GenerateHeatGems () {
-	var pool : GameObjectPool = Pools[Mathf.Floor(Random.value*Pools.length)];
-	var yStart = PatternY();
-	var pattern : GameObject = pool.Spawn(Vector3(xStart, yStart, -1), Quaternion.identity);
-	
-}
-
-function PatternY() {
-	//return (Random.value * (yMax - yMin) + yMin);
-	var possible : Array = [1.0,2.0,6.5,6.8];
-	return possible[Mathf.Floor(Random.value * possible.length)];
+function RequestPattern () {
+	var pattern : GameObject = patterns[Random.Range(0, patterns.length)];
+	Instantiate(pattern);
 }
 
 function RequestObject () {
@@ -168,10 +94,7 @@ function RequestObject () {
 		return;
 	}
 	
-	var temp : Temperature = fireball.GetComponent("Temperature");
 	var bonusRoll : float = Mathf.Floor(Random.value * 100.0);
-	
-	//if(bonusRoll <= (100.0 - temp.GetHeatPercentage())) {
 	if(bonusRoll <= bonusChance) {
 		if(alignment == 1) {
 			RequestBonus(x);
@@ -247,7 +170,7 @@ function RequestObstacle (x : float) {
 
 function OnHeatPatternEnd (notification : Notification) {
 	lastX = notification.data;
-	lastMark = distance.distance;
+	lastMark = distance;
 }
 
 function OnEventStarted() {
@@ -265,4 +188,8 @@ function OnPolerize() {
 
 function OnUnpolerize() {
 	alignment = 1;
+}
+
+function OnDistanceUpdate(n : Notification) {
+	distance = n.data;
 }

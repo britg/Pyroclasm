@@ -57,14 +57,17 @@ function ResetTimer () {
 	timeleft = updateInterval;
 }
 
+function AnnounceTemperature() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TEMPERATURE_CHANGED, heat);
+}
+
 function AnnounceMaxTemperature () {
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.ANNOUNCE_MAX_TEMPERATURE, maxHeat);
 }
 
 function OnGameStart() {
 
-	TempChange((initialHeat-heat), false);
-	thisStreak.EndStreak();
+	AnnounceTemperature();
 
 	var scroll : Hashtable = Scrolls.PlayerScrolls().scrollForNextRun;
 	
@@ -144,7 +147,7 @@ function TempChange(delta : int, isPublic : boolean) {
 	}
 	
 	if(shouldUpdate && prevHeat != heat) {
-		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TEMPERATURE_CHANGED, heat);
+		AnnounceTemperature();
 	}
 	
 	UpdateIntensity();

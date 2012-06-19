@@ -24,7 +24,7 @@ function Update () {
 }
 
 function OnEventRequested() {
-	
+
 	var e = ChooseEvent();
 	//e = "Dragon" // Override for development
 	//e = "PolaritySwitch";

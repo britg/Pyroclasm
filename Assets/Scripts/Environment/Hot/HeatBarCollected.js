@@ -22,8 +22,7 @@ function Update () {
 
 function Trigger() {
 	//shouldTrigger = true;
-	
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.HEAT_COLLECTED);
+	//NotificationCenter.DefaultCenter().PostNotification(this, Notifications.HEAT_COLLECTED);
 }
 
 function TravelToHeatBar () {

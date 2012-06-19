@@ -14,14 +14,13 @@ function Update () {
 
 function OnDisable() {
 	if(!positionSet) {
-		originalPos = Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+		//originalPos = Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
 		positionSet = true;
 	}
-	
 }
 
 function OnEnable() {
-	transform.localPosition = originalPos;
+	//transform.localPosition = originalPos;
 }
 
 function OnTriggerStay(collider : Collider) {
@@ -33,7 +32,8 @@ function OnTriggerStay(collider : Collider) {
 	if(collector) {
 		transform.position = Vector3.Lerp(thisTransform.position, fireball.transform.position, 0.3);
 		var yDelta : float = Mathf.Abs(fireball.transform.position.y - transform.position.y);
-		if(yDelta < 0.1) {
+		if(yDelta < 0.2) {
+			//Debug.Log("Setting");
 			transform.position = fireball.transform.position;
 		}
 	}

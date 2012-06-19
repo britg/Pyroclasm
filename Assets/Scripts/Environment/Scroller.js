@@ -13,6 +13,7 @@ function Start() {
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_FIRST);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TEMPERATURE_CHANGED);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.ANNOUNCE_MAX_TEMPERATURE);
 }
 
 function OnTouchFirst () {
@@ -25,12 +26,10 @@ function OnMaxTemperatureAnnouncement(n : Notification) {
 
 function Begin() {
 	started = true;
-	velocity = startVelocity;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_START);
 }
 
 function Update() {
-
 	if(started) {
 		//Accelerate();
 	}
@@ -41,6 +40,10 @@ function OnTemperatureChange (n : Notification) {
 		return;
 	}
 	var temp : int = n.data;
+	SetVelocityByHeat(temp);
+}
+
+function SetVelocityByHeat(temp : int) {
 	velocity = (temp / maxTemp) * 1.2 * maxVelocity + 4.5;
 }
 

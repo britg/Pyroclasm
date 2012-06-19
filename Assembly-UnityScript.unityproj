@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Environment\Cold\Portrait.js" />
      <Compile Include="Assets\Scripts\Environment\Cold\PortraitGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\FlowGenerator.js" />
+     <Compile Include="Assets\Scripts\Environment\HeatGemPattern.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\Block.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BonusBlock.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BookcaseGenerator.js" />

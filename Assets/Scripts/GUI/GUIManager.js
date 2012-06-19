@@ -260,9 +260,7 @@ function TouchUp() {
 
 function inputsForTouch() {
 	var inputTest : boolean = ( Input.touchCount > 0 
-								|| Input.GetMouseButton(0) 
-								|| Input.GetKey("space") 
-								|| Input.GetKey("up") );
+								|| Input.GetMouseButton(0) );
     return inputTest;
 }
 

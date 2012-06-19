@@ -27,10 +27,15 @@ function Update () {
     
     if(timeleft <= 0.0) {
     	DisplayDistance();
+    	AnnounceDistance();
     }
     
 }
 
 function DisplayDistance() {
 	distanceText.text = "" + Mathf.Round(distance) + "m";
+}
+
+function AnnounceDistance() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.DISTANCE_UPDATE, Mathf.Round(distance));
 }

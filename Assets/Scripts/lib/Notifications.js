@@ -8,6 +8,8 @@ static var TOUCH_LIFT_END : String 		= "OnTouchEnd";
 static var GAME_START : String = "OnGameStart";
 static var GAME_END : String = "OnGameEnd";
 
+static var DISTANCE_UPDATE : String = "OnDistanceUpdate";
+
 static var ANNOUNCE_MAX_TEMPERATURE : String = "OnMaxTemperatureAnnouncement";
 
 static var TEMPERATURE_CHANGED : String 	= "OnTemperatureChange";

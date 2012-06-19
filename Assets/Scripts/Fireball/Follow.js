@@ -16,7 +16,7 @@ private var touchDown : boolean = false;
 
 function Start () {
 	thisTransform = transform;
-	//thisRigidbody = rigidbody;
+	thisRigidbody = rigidbody;
 	initialY = thisTransform.position.y;
 	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
@@ -41,6 +41,8 @@ function Update () {
 		
 	if(touchDown) {
 		Follow();
+	} else {
+		//thisTransform.position.y = thisTransform.position.y;
 	}
 }
 

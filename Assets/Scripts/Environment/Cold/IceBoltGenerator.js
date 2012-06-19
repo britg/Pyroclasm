@@ -56,7 +56,7 @@ function ResetTimer () {
 }
 
 function Update () {
-	//return;
+	return;
 	
 	if(scrolling.velocity == 0) {
 		return;
