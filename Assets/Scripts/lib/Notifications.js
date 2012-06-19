@@ -38,6 +38,7 @@ static var GENERATE_TAPESTRY : String	= "OnGenerateTapestry";
 
 static var GENERATE_GARGOYLE_OBSTACLE : String	= "OnGenerateGargoyleObstacle";
 static var GENERATE_ICESHARDS : String	= "OnGenerateIceShards";
+static var GENERATE_PORTRAIT  : String	= "OnGeneratePortrait";
 
 static var GAME_CENTER_ACTIVATED : String = "OnGameCenterActivated";
 

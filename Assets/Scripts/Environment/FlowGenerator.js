@@ -40,7 +40,7 @@ private var patternPadding : float = 10.0;
 var bonusChance : float 			= 40.0;
 private var bonuses : Array 		= ["torch", "bookcase", "gargoyle", "tapestry"];
 private var bonusTiers : Array 		= [60.0, 	80.0, 		85.0, 		100.0];
-private var obstacles : Array 		= ["iceshards", "gargoyle"];
+private var obstacles : Array 		= ["iceshards", "portrait", "gargoyle"];
 
 var eventChance : float = 5.0;
 private var eventActive : boolean = false;
@@ -231,6 +231,9 @@ function RequestObstacle (x : float) {
 		
 		case "gargoyle":
 			note = Notifications.GENERATE_GARGOYLE_OBSTACLE;
+		break;
+		case "portrait":
+			note = Notifications.GENERATE_PORTRAIT;
 		break;
 		case "iceshards":
 			note = Notifications.GENERATE_ICESHARDS;

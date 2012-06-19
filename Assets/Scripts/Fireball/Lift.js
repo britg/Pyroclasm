@@ -1,3 +1,4 @@
+var shouldLift : boolean = true;
 
 var force : float = 10.0;
 
@@ -54,6 +55,9 @@ function Update () {
 
 
 function FixedUpdate () {	
+
+	if(!shouldLift)
+		return;
 
 	if(ended)
 		return;

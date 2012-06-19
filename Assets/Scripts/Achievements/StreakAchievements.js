@@ -56,7 +56,7 @@ function OnInteractableCollision(n : Notification) {
 	var name : String = n.data;
 	name = name.Replace("(Clone)", "");
 	
-	Debug.Log("Colliding with " + name);
+	//Debug.Log("Colliding with " + name);
 	
 	switch(name) {
 		case "Icicle":
