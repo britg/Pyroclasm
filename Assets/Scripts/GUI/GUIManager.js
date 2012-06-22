@@ -18,6 +18,7 @@ private var startHold : boolean = true;
 
 private var started : boolean = false;
 private var touchDown : boolean = false;
+private var secondTouchDown : boolean = false;
 private var scrollGUIActive : boolean = false;
 private var scrollGUILastY : float = 0.0;
 
@@ -69,6 +70,11 @@ function OnGameStart() {
 }
 
 function Update() {
+	HandleFirstTouch();
+	HandleSecondTouch();
+}
+
+function HandleFirstTouch() {
 
 	if(inputsForTouch()) {
 		
@@ -113,9 +119,25 @@ function Update() {
 	
 	}
 
-    
-    
+}
+
+function HandleSecondTouch() {
+
+	if(!touchDown) {
+		secondTouchDown = false;
+		return;
+	}
 	
+	if(!secondTouchDown) {
+		if(Input.touchCount > 1) {
+			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.TOUCH_LIFT_START);
+			secondTouchDown = true;
+		}
+	} else {
+		if(Input.touchCount < 2) {
+			secondTouchDown = false;
+		}
+	}
 }
 
 function TestAchievementsButton() {

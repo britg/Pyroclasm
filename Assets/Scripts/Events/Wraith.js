@@ -16,7 +16,7 @@ private var enterX : float = 6.2;
 private var exitX : float = 11;
 
 private var shouldShoot : boolean = false;
-private var shootPause : float = 0.5;
+private var shootPause : float = 0.2;
 private var shootTime : float = 0.0;
 private var shootDuration : float = 10.0;
 private var currShootDuration : float = 0.0;

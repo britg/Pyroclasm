@@ -84,3 +84,6 @@ static var FIRST_POWERDOWN : String = "OnFirstPowerdown";
 static var FIRST_POWERUP : String = "OnFirstPowerup";
 
 static var INTERACTABLE_COLLISION : String = "OnInteractableCollision";
+
+static var BOOST_START : String = "OnBoostStart";
+static var BOOST_END : String = "OnBoostEnd";

@@ -1,6 +1,6 @@
 #pragma strict
 
-var shouldFollow : boolean = true;
+var shouldBoost : boolean = true;
 
 private var thisTransform : Transform;
 private var thisRigidbody : Rigidbody;
@@ -11,11 +11,11 @@ private var minY : float = 0.3;
 private var started : boolean = false;
 private var ended : boolean = false;
 private var touchDown : boolean = false;
-private var touchLastY : float;
-private var touchDeltaY : float;
 
-private var touchMinX : float = -7.0;
-private var touchMaxX : float = 0.0;
+private var touchMinX : float = 0.1;
+private var touchMaxX : float = 7.0;
+
+private var boosting : boolean = false;
 
 function Start () {
 	thisTransform = transform;
@@ -29,35 +29,16 @@ function Start () {
 
 function Update () {
 
-	if(!shouldFollow)
+	if(!shouldBoost)
 		return;
 		
 	if(ended)
 		return;
 		
 	if(!started) {
-		//thisRigidbody.isKinematic = true;
 		return;
 	}
-		
-	if(touchDown) {
-		//thisRigidbody.isKinematic = true;
-		GetDelta();
-		Follow();
-	} else {
-		//thisRigidbody.isKinematic = false;
-	}
 	
-	Clamp();
-}
-
-function Follow() {
-	var toY : float = thisTransform.position.y + touchDeltaY;
-	thisTransform.position.y = Mathf.Clamp(toY, minY, maxY);
-}
-
-function Clamp() {
-	thisTransform.position.y = Mathf.Clamp(thisTransform.position.y, minY, maxY);
 }
 
 function OnGameStart () {
@@ -69,12 +50,31 @@ function OnGameEnd () {
 }
 
 function OnTouchStart () {
-	touchLastY = GetValidTouchY();
 	touchDown = true;
+	
+	if(shouldBoost && !ended && started) {
+		StartBoost();
+	}
 }
 
 function OnTouchEnd () {
 	touchDown = false;
+}
+
+function StartBoost() {
+	var touch : Touch = TouchInBounds();
+	var touchInBounds : boolean = (touch.position.y != 0.0);
+	var mouseInBounds : boolean = MouseInBounds();
+	
+	if(touchInBounds || mouseInBounds) {
+		boosting = true;
+		NotificationCenter.DefaultCenter().PostNotification(this, Notifications.BOOST_START);
+	}
+}
+
+function EndBoost() {
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.BOOST_END);
+	boosting = false;
 }
 
 function TouchInBounds() {
@@ -99,31 +99,4 @@ function MouseInBounds() {
 		}
 	}
 	return false;
-}
-
-function GetDelta() {
-    var touchNowY : float = GetValidTouchY();
-	touchDeltaY = touchNowY - touchLastY;
-    touchLastY = touchNowY;
-}
-
-function GetValidTouchY() {
-	var touch : Touch = TouchInBounds();
-	var touchInBounds : boolean = (touch.position.y != 0.0);
-	var mouseInBounds : boolean = MouseInBounds();
-	var touchInBoundsY : float;
-	if(touchInBounds || mouseInBounds) {
-		touchInBoundsY = GetTouchNowY(touch);
-		return touchInBoundsY;
-	}
-	
-	return touchLastY;
-}
-
-function GetTouchNowY (touch : Touch) {
-	if(touch.position.y == 0.0) {
-		return Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-	} else {
-    	return Camera.main.ScreenToWorldPoint(touch.position).y;
-	}
 }

@@ -92,6 +92,7 @@
      <Compile Include="Assets\Scripts\Events\WraithBolt.js" />
      <Compile Include="Assets\Scripts\Fireball\Absorber.js" />
      <Compile Include="Assets\Scripts\Fireball\Ball.js" />
+     <Compile Include="Assets\Scripts\Fireball\Boost.js" />
      <Compile Include="Assets\Scripts\Fireball\Collector.js" />
      <Compile Include="Assets\Scripts\Fireball\Distance.js" />
      <Compile Include="Assets\Scripts\Fireball\Flare.js" />

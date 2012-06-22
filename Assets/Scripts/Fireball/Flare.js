@@ -52,7 +52,7 @@ function OnStreakLevelChange (notification : Notification) {
 	var whichFlare = (streakLevel - 1);
 	
 	if (which == whichFlare) {
-		Activate();
+		//Activate();
 	} 
 	
 }

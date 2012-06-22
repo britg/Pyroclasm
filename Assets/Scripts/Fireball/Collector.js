@@ -84,7 +84,7 @@ function OnStreakLevelChange (notification : Notification) {
 	var streakLevel : int = notification.data;
 	
 	if(streakLevel >= 1 && !isActive) {
-		Activate();
+		//Activate();
 	}
 }
 

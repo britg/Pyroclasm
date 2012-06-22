@@ -33,11 +33,17 @@ var alignment : int = 1;
 var firstPowerdown : boolean = false;
 var firstPowerup : boolean = false;
 
+private var boosting : boolean = false;
+private var boostSpent : boolean = false;
+var boostCost : int = -100;
+
 function Start () {
 
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.BOOST_START);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.BOOST_END);
 	
 	thisTransform = transform;
 	thisRigidbody = rigidbody;
@@ -113,6 +119,16 @@ function CoolOff() {
 	
 	if(!thisStreak.ongoing) {
 		TempChange(coolAmount * alignment, false);
+	}
+	
+	// Boost effect
+	if(boosting) {
+		if(boostSpent || heat <= Mathf.Abs(boostCost)) {
+			NotificationCenter.DefaultCenter().PostNotification(this, Notifications.BOOST_END);
+		} else {
+			TempChange(boostCost * alignment, false);
+			boostSpent = true;
+		}
 	}
 }
 
@@ -237,4 +253,13 @@ function OnUnpolerize() {
 	alignment = 1;
 	polarizedEmitter.emit = false;
 	thisEmitter.emit = true;
+}
+
+function OnBoostStart() {
+	boosting = true;
+	boostSpent = false;
+}
+
+function OnBoostEnd() {
+	boosting = false;
 }
