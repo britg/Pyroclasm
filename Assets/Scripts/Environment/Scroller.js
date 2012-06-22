@@ -5,8 +5,11 @@ var acceleration : float = 0.07;
 var maxVelocity : float = 25.0;
 
 private var maxTemp : float = 2500.0;
-var boosting : boolean = false;
+
+private var boosting : boolean = false;
 var boostMultiplier : float = 2.0;
+var boostDuration : float = 1.0;
+private var boostCurrentTime : float = 0.0;
 
 var started : boolean = false;
 
@@ -22,6 +25,14 @@ function Start() {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.BOOST_END);
 }
 
+function Update() {
+
+	if(boosting) {
+		TickBoost();
+	}
+
+}
+
 function OnTouchFirst () {
 	Begin();
 }
@@ -33,12 +44,6 @@ function OnMaxTemperatureAnnouncement(n : Notification) {
 function Begin() {
 	started = true;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.GAME_START);
-}
-
-function Update() {
-	if(started) {
-		//Accelerate();
-	}
 }
 
 function OnTemperatureChange (n : Notification) {
@@ -60,9 +65,21 @@ function Accelerate() {
 
 function OnBoostStart() {
 	boosting = true;
+	boostCurrentTime = 0.0;
 	SetVelocity();
 }
 
-function OnBoostEnd() {
+function TickBoost() {
+	boostCurrentTime += Time.deltaTime;
+	
+	if(boostCurrentTime >= boostDuration) {
+		EndBoost();
+	}
+}
+
+
+function EndBoost() {
 	boosting = false;
+	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.BOOST_END);
+	SetVelocity();
 }

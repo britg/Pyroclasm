@@ -8,11 +8,16 @@ private var thisRigidbody : Rigidbody;
 private var maxY : float = 8.307953;
 private var minY : float = 0.3;
 
+private var maxX : float = 0.0;
+private var minX : float = -4.26;
+
 private var started : boolean = false;
 private var ended : boolean = false;
 private var touchDown : boolean = false;
 private var touchLastY : float;
+private var lastTouchPosition : Vector3;
 private var touchDeltaY : float;
+private var deltaTouchPosition : Vector3;
 
 private var touchMinX : float = -7.0;
 private var touchMaxX : float = 0.0;
@@ -48,12 +53,14 @@ function Update () {
 		//thisRigidbody.isKinematic = false;
 	}
 	
-	Clamp();
+	//Clamp();
 }
 
 function Follow() {
-	var toY : float = thisTransform.position.y + touchDeltaY;
+	var toY : float = thisTransform.position.y + deltaTouchPosition.y;
+	var toX : float = thisTransform.position.x + deltaTouchPosition.x;
 	thisTransform.position.y = Mathf.Clamp(toY, minY, maxY);
+	thisTransform.position.x = Mathf.Clamp(toX, minX, maxX);
 }
 
 function Clamp() {
@@ -69,7 +76,7 @@ function OnGameEnd () {
 }
 
 function OnTouchStart () {
-	touchLastY = GetValidTouchY();
+	lastTouchPosition = GetValidTouchPosition();
 	touchDown = true;
 }
 
@@ -102,28 +109,28 @@ function MouseInBounds() {
 }
 
 function GetDelta() {
-    var touchNowY : float = GetValidTouchY();
-	touchDeltaY = touchNowY - touchLastY;
-    touchLastY = touchNowY;
+    var touchNowPosition : Vector3 = GetValidTouchPosition();
+	deltaTouchPosition = touchNowPosition - lastTouchPosition;
+    lastTouchPosition = touchNowPosition;
 }
 
-function GetValidTouchY() {
+function GetValidTouchPosition() {
 	var touch : Touch = TouchInBounds();
 	var touchInBounds : boolean = (touch.position.y != 0.0);
 	var mouseInBounds : boolean = MouseInBounds();
-	var touchInBoundsY : float;
+	var touchPosition : Vector3;
 	if(touchInBounds || mouseInBounds) {
-		touchInBoundsY = GetTouchNowY(touch);
-		return touchInBoundsY;
+		touchPosition = GetTouchPosition(touch);
+		return touchPosition;
 	}
 	
-	return touchLastY;
+	return lastTouchPosition;
 }
 
-function GetTouchNowY (touch : Touch) {
+function GetTouchPosition (touch : Touch) {
 	if(touch.position.y == 0.0) {
-		return Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+		return Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	} else {
-    	return Camera.main.ScreenToWorldPoint(touch.position).y;
+    	return Camera.main.ScreenToWorldPoint(touch.position);
 	}
 }

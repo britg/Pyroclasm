@@ -25,6 +25,7 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LIFT_START);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TOUCH_LIFT_END);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.BOOST_END);
 }
 
 function Update () {
@@ -52,7 +53,7 @@ function OnGameEnd () {
 function OnTouchStart () {
 	touchDown = true;
 	
-	if(shouldBoost && !ended && started) {
+	if(shouldBoost && !boosting && !ended && started) {
 		StartBoost();
 	}
 }
@@ -72,8 +73,7 @@ function StartBoost() {
 	}
 }
 
-function EndBoost() {
-	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.BOOST_END);
+function OnBoostEnd() {
 	boosting = false;
 }
 
