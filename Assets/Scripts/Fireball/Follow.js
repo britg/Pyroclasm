@@ -8,8 +8,8 @@ private var thisRigidbody : Rigidbody;
 private var maxY : float = 8.307953;
 private var minY : float = 0.3;
 
-private var maxX : float = 0.0;
-private var minX : float = -4.26;
+private var maxX : float = 6.24;
+private var minX : float = -6.24;
 
 private var started : boolean = false;
 private var ended : boolean = false;
@@ -20,7 +20,10 @@ private var touchDeltaY : float;
 private var deltaTouchPosition : Vector3;
 
 private var touchMinX : float = -7.0;
-private var touchMaxX : float = 0.0;
+private var touchMaxX : float = 7.0;
+
+private var xFactor : float = 2.0;
+private var yFactor : float = 2.0;
 
 function Start () {
 	thisTransform = transform;
@@ -57,8 +60,8 @@ function Update () {
 }
 
 function Follow() {
-	var toY : float = thisTransform.position.y + deltaTouchPosition.y;
-	var toX : float = thisTransform.position.x + deltaTouchPosition.x;
+	var toY : float = thisTransform.position.y + (deltaTouchPosition.y * yFactor);
+	var toX : float = thisTransform.position.x + (deltaTouchPosition.x * xFactor);
 	thisTransform.position.y = Mathf.Clamp(toY, minY, maxY);
 	thisTransform.position.x = Mathf.Clamp(toX, minX, maxX);
 }

@@ -35,6 +35,8 @@ var firstPowerup : boolean = false;
 
 var boostCost : int = -100;
 
+private var scrollingSimFactor : float = 6.0;
+
 function Start () {
 
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GAME_START);
@@ -206,8 +208,8 @@ function SimulateMotion() {
 }
 
 function UpdateIntensity() {
-	thisAnimator.force.x = - 6*scrolling.velocity;
-	polarizedAnimator.force.x = - 6*scrolling.velocity;
+	thisAnimator.force.x = - scrollingSimFactor * scrolling.velocity;
+	polarizedAnimator.force.x = - scrollingSimFactor * scrolling.velocity;
 	
 	if(moving) {
 		var newEmission : float = Emission();
