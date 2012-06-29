@@ -194,7 +194,7 @@ public static class tk2dSpriteGuiUtility
 		if (label.Length > 0)
 			EditorGUILayout.PrefixLabel(label);
 		
-		if (currentValue.dataGuid == TransientGUID)
+		if (currentValue == null || currentValue.dataGuid == TransientGUID)
 		{
 			int currentSelection = allSpriteCollections.Length;
 			int newSelection = EditorGUILayout.Popup(currentSelection, spriteCollectionNamesInclTransient);

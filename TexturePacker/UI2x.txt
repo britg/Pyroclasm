@@ -1,0 +1,20 @@
+{"frames": {
+
+"Title2x.png":
+{
+	"frame": {"x":2,"y":2,"w":956,"h":202},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":956,"h":202},
+	"sourceSize": {"w":960,"h":202}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "UI2x.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5a29808ceab3286557740bd827c53121$"
+}
+}

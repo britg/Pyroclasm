@@ -338,15 +338,24 @@ public class tk2dSpriteCollectionEditorPopup : EditorWindow, IEditorHost
 							UpdateSelection();
 							break;
 						case 1:
-							int addedFontIndex = spriteCollectionProxy.FindOrCreateEmptyFontSlot();
-							searchFilter = "";
-							PopulateEntries();
-							foreach (var entry in entries)
+							if (SpriteCollection.allowMultipleAtlases)
 							{
-								if (entry.type == SpriteCollectionEditorEntry.Type.Font && entry.index == addedFontIndex)
-									entry.selected = true;
+								EditorUtility.DisplayDialog("Create Font", 
+											"Adding fonts to sprite collections isn't allowed when multi atlas spanning is enabled. " +
+											"Please disable it and try again.", "Ok");
 							}
-							UpdateSelection();
+							else 
+							{
+								int addedFontIndex = spriteCollectionProxy.FindOrCreateEmptyFontSlot();
+								searchFilter = "";
+								PopulateEntries();
+								foreach (var entry in entries)
+								{
+									if (entry.type == SpriteCollectionEditorEntry.Type.Font && entry.index == addedFontIndex)
+										entry.selected = true;
+								}
+								UpdateSelection();
+							}
 							break;
 					}
 				}
@@ -542,14 +551,17 @@ public class tk2dSpriteCollectionEditorPopup : EditorWindow, IEditorHost
 	
 	bool IsValidDragPayload()
 	{
-		int numTextures = 0;
+		int idx = 0;
 		foreach (var v in DragAndDrop.objectReferences)
 		{
 			var type = v.GetType();
 			if (type == typeof(Texture2D))
-				numTextures++;
+				return true;
+			else if (type == typeof(Object) && System.IO.Directory.Exists(DragAndDrop.paths[idx]))
+				return true;
+			++idx;
 		}
-		return numTextures != 0;
+		return false;
 	}
 	
 	string GetEntryTypeString(SpriteCollectionEditorEntry.Type kind)
@@ -591,6 +603,29 @@ public class tk2dSpriteCollectionEditorPopup : EditorWindow, IEditorHost
 		UpdateSelection();
 	}
 	
+	// recursively find textures in path
+	List<Object> AddTexturesInPath(string path)
+	{
+		List<Object> localObjects = new List<Object>();
+		foreach (var q in System.IO.Directory.GetFiles(path))
+		{
+			string f = q.Replace('\\', '/');
+			System.IO.FileInfo fi = new System.IO.FileInfo(f);
+			if (fi.Extension.ToLower() == ".meta")
+				continue;
+			
+			Object obj = AssetDatabase.LoadAssetAtPath(f, typeof(Texture2D));
+			if (obj != null) localObjects.Add(obj);
+		}
+		foreach (var q in System.IO.Directory.GetDirectories(path)) 
+		{
+			string d = q.Replace('\\', '/');
+			localObjects.AddRange(AddTexturesInPath(d));
+		}
+		
+		return localObjects;
+	}
+	
 	int leftBarWidth = 200;
 	Object[] deferredDroppedObjects;
 	void DrawDropZone()
@@ -627,6 +662,8 @@ public class tk2dSpriteCollectionEditorPopup : EditorWindow, IEditorHost
 					var type = DragAndDrop.objectReferences[i].GetType();
 					if (type == typeof(Texture2D))
 						droppedObjectsList.Add(DragAndDrop.objectReferences[i]);
+					else if (type == typeof(Object) && System.IO.Directory.Exists(DragAndDrop.paths[i]))
+						droppedObjectsList.AddRange(AddTexturesInPath(DragAndDrop.paths[i]));
 				}
 				deferredDroppedObjects = droppedObjectsList.ToArray();
 				Repaint();

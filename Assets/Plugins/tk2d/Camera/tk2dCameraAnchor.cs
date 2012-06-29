@@ -75,7 +75,10 @@ public class tk2dCameraAnchor : MonoBehaviour
 			case Anchor.LowerRight: 	anchoredPosition = new Vector3(tk2dCamera.resolution.x, 0, position.z); break;
 			}
 			
-			_transform.localPosition = anchoredPosition + new Vector3(offset.x, offset.y, 0);
+			var newPosition = anchoredPosition + new Vector3(offset.x, offset.y, 0);
+			var oldPosition = _transform.localPosition;
+			if (oldPosition != newPosition)
+				_transform.localPosition = newPosition;
 		}
 	}
 	

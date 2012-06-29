@@ -120,7 +120,7 @@ namespace tk2dRuntime.TileMap
 		
 		/// Spawns all prefabs for a given chunk
 		/// Expects the chunk to have a valid GameObject
-		public static void SpawnPrefabsForChunk(tk2dTileMap tileMap, SpriteChunk chunk)
+		public static void SpawnPrefabsForChunk(tk2dTileMap tileMap, SpriteChunk chunk, int baseX, int baseY)
 		{
 			var chunkData = chunk.spriteIds;
 			var tilePrefabs = tileMap.data.tilePrefabs;
@@ -128,15 +128,19 @@ namespace tk2dRuntime.TileMap
 			int[] prefabCounts = new int[tilePrefabs.Length];
 			var parent = chunk.gameObject.transform;
 			
+			float xOffsetMult = 0.0f, yOffsetMult = 0.0f;
+			tileMap.data.GetTileOffset(out xOffsetMult, out yOffsetMult);
+
 			for (int y = 0; y < tileMap.partitionSizeY; ++y)
 			{
+				float xOffset = ((baseY + y) & 1) * xOffsetMult;
 				for (int x = 0; x < tileMap.partitionSizeX; ++x)
 				{
 					int tile = chunkData[y * tileMap.partitionSizeX + x];
 					if (tile < 0 || tile >= tilePrefabs.Length)
 						continue;
 					
-					Vector3 currentPos = new Vector3(tileSize.x * x, tileSize.y * y, 0);
+					Vector3 currentPos = new Vector3(tileSize.x * (x + xOffset), tileSize.y * y, 0);
 					
 					Object prefab = tilePrefabs[tile];
 					if (prefab != null)
@@ -170,18 +174,20 @@ namespace tk2dRuntime.TileMap
 			for (int layerId = 0; layerId < numLayers; ++layerId)
 			{
 				var layer = tileMap.Layers[layerId];
-				if (layer.IsEmpty)
+				if (layer.IsEmpty || tileMap.data.Layers[layerId].skipMeshGeneration)
 					continue;
 				
 				for (int cellY = 0; cellY < layer.numRows; ++cellY)
 				{
+					int baseY = cellY * layer.divY;
 					for (int cellX = 0; cellX < layer.numColumns; ++cellX)
 					{
+						int baseX = cellX * layer.divX;
 						var chunk = layer.GetChunk(cellX, cellY);
 						if (chunk.IsEmpty)
 							continue;
 						
-						SpawnPrefabsForChunk(tileMap, chunk);
+						SpawnPrefabsForChunk(tileMap, chunk, baseX, baseY);
 					}
 				}
 			}
@@ -226,6 +232,9 @@ namespace tk2dRuntime.TileMap
 				
 				if (layer.gameObject != null)
 				{
+					if (!editMode && layer.gameObject.active == false)
+						layer.gameObject.SetActiveRecursively(true);
+					
 					layer.gameObject.name = tileMap.data.Layers[layerId].name;
 					layer.gameObject.transform.localPosition = new Vector3(0, 0, accumulatedLayerZ);
 					layer.gameObject.transform.localRotation = Quaternion.identity;

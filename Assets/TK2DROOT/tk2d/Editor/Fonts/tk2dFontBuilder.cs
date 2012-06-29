@@ -220,7 +220,7 @@ namespace tk2dEditor.Font
 				
 				// special case, if the width and height are zero, the origin doesn't need to be offset
 				// handles problematic case highlighted here:
-				// http://unikronsoftware.com/2dtoolkit/forum/index.php/topic,89.msg220.html
+				// http://2dtoolkit.com/forum/index.php/topic,89.msg220.html
 				if (width == 0 && height == 0)
 				{
 					xoffset = 0;

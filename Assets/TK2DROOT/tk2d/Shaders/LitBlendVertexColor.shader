@@ -7,9 +7,10 @@ Shader "tk2d/LitBlendVertexColor"
 	
 	SubShader 
 	{
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 	    Pass 
 	    {
-			Tags {"LightMode" = "Vertex" "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
+			Tags {"LightMode" = "Vertex"}
 			LOD 100
 	    
 			ZWrite Off

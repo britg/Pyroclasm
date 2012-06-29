@@ -96,6 +96,7 @@ public class tk2dSpriteCollectionDefinition
 	
 	public string name = "";
 	
+	public bool disableTrimming = false;
     public bool additive = false;
     public Vector3 scale = new Vector3(1,1,1);
     
@@ -142,6 +143,7 @@ public class tk2dSpriteCollectionDefinition
 	{
 		name = src.name;
 		
+		disableTrimming = src.disableTrimming;
 		additive = src.additive;
 		scale = src.scale;
 		texture = src.texture;

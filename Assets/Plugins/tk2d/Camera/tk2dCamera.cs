@@ -51,6 +51,7 @@ public class tk2dCamera : MonoBehaviour
 	/// <summary>
 	/// The camera this script is attached to is treated as the main camera in the scene.
 	/// </summary>
+	[HideInInspector]
 	public Camera mainCamera;
 	
 	/// <summary>
@@ -97,7 +98,7 @@ public class tk2dCamera : MonoBehaviour
 		inst = this;
 	}
 	
-	void Update() 
+	void LateUpdate() 
 	{
 		UpdateCameraMatrix();
 	}

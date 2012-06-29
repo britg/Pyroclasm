@@ -16,8 +16,8 @@ public class tk2dUpdateWindow : EditorWindow
 	
 	ReleaseInfo[] releases = null;
 	
-	string updateInfoUrl = "http://www.unikronsoftware.com/2dtoolkit/updateinfo.xml";
-	string allUpdatesUrl = "http://unikronsoftware.com/2dtoolkit/forum/index.php?board=4.0";
+	string updateInfoUrl = "http://www.2dtoolkit.com/updateinfo.xml";
+	string allUpdatesUrl = "http://www.2dtoolkit.com/forum/index.php?board=4.0";
 	bool showBetaReleases = false;
 	bool showOlderVersions = false;
 	
@@ -116,8 +116,8 @@ public class tk2dUpdateWindow : EditorWindow
 						int releaseId = (release.id > 0)?(release.id + 16384):(-release.id);
 						
 						if (showOlderVersions == false && 
-							release.version < tk2dEditorUtility.version ||
-							(release.version == tk2dEditorUtility.version && releaseId < installedReleaseId))
+							(release.version < tk2dEditorUtility.version ||
+							(release.version == tk2dEditorUtility.version && releaseId < installedReleaseId)) )
 						{
 							// stop displaying releases
 							break;

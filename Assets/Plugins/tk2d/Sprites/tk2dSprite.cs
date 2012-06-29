@@ -96,6 +96,15 @@ public class tk2dSprite : tk2dBaseSprite
 		CreateCollider();
 	}
 	
+	/// <summary>
+	/// Adds a tk2dSprite as a component to the gameObject passed in, setting up necessary parameters and building geometry.
+	/// Convenience alias of tk2dBaseSprite.AddComponent<tk2dSprite>(...).
+	/// </summary>
+	public static tk2dSprite AddComponent(GameObject go, tk2dSpriteCollectionData spriteCollection, int spriteId)
+	{
+		return tk2dBaseSprite.AddComponent<tk2dSprite>(go, spriteCollection, spriteId);
+	}
+	
 	protected override void UpdateGeometry() { UpdateGeometryImpl(); }
 	protected override void UpdateColors() { UpdateColorsImpl(); }
 	protected override void UpdateVertices() { UpdateVerticesImpl(); }
@@ -153,7 +162,7 @@ public class tk2dSprite : tk2dBaseSprite
 #endif
 		
 		var sprite = collection.spriteDefinitions[spriteId];
-		if (meshVertices.Length != sprite.positions.Length)
+		if (meshVertices == null || meshVertices.Length != sprite.positions.Length)
 		{
 			meshVertices = new Vector3[sprite.positions.Length];
 			meshNormals = (sprite.normals != null && sprite.normals.Length > 0)?(new Vector3[sprite.normals.Length]):(new Vector3[0]);

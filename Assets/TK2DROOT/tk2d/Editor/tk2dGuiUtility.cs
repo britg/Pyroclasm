@@ -4,6 +4,18 @@ using System.Collections.Generic;
 
 public static class tk2dGuiUtility  
 {
+	public static bool HasActivePositionHandle { get { return activePositionHandleId != 0; } }
+	public static Vector2 ActiveHandlePosition { get { return activePositionHandlePosition; } }
+	
+	static int activePositionHandleId = 0;
+	static Vector2 activePositionHandlePosition = Vector2.zero;
+	
+	public static void SetPositionHandleValue(int id, Vector2 val)
+	{
+		if (id == activePositionHandleId)
+			activePositionHandlePosition = val;
+	}
+	
 	public static Vector2 PositionHandle(int id, Vector2 position, float size, Color inactiveColor, Color activeColor)
 	{
 		KeyCode discardKeyCode = KeyCode.None;
@@ -22,6 +34,7 @@ public static class tk2dGuiUtility
 			{
 				if (rect.Contains(Event.current.mousePosition))
 				{
+					activePositionHandleId = id;
 					GUIUtility.hotControl = controlID;
 					Event.current.Use();
 				}
@@ -42,6 +55,7 @@ public static class tk2dGuiUtility
 			{
 				if (GUIUtility.hotControl == controlID)
 				{
+					activePositionHandleId = 0;
 					GUIUtility.hotControl = 0;
 					Event.current.Use();
 				}
@@ -55,6 +69,7 @@ public static class tk2dGuiUtility
 					keyCode = Event.current.keyCode;
 					if (GUIUtility.hotControl == controlID)
 					{
+						activePositionHandleId = 0;
 						GUIUtility.hotControl = 0;
 						Event.current.Use();
 					}

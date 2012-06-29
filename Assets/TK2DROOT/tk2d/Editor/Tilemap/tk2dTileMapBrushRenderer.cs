@@ -15,12 +15,14 @@ namespace tk2dEditor
 	
 	public class BrushRenderer
 	{
+		tk2dTileMap tileMap;
 		tk2dSpriteCollectionData spriteCollection;
 		Dictionary<tk2dTileMapEditorBrush, BrushDictData> brushLookupDict = new  Dictionary<tk2dTileMapEditorBrush, BrushDictData>();
 		
-		public BrushRenderer(tk2dSpriteCollectionData spriteCollection)
+		public BrushRenderer(tk2dTileMap tileMap)
 		{
-			this.spriteCollection = spriteCollection;
+			this.tileMap = tileMap;
+			this.spriteCollection = tileMap.spriteCollection;
 		}
 		
 		public void Destroy()
@@ -40,11 +42,18 @@ namespace tk2dEditor
 			List<int> triangles = new List<int>();
 			
 			// bounds of tile
-			Vector3 tileSize = spriteCollection.FirstValidDefinition.untrimmedBoundsData[1];
+			Vector3 spriteBounds = spriteCollection.FirstValidDefinition.untrimmedBoundsData[1];
+			Vector3 tileSize = brush.overrideWithSpriteBounds?
+								spriteBounds:
+								tileMap.data.tileSize;
 			float layerOffset = 0.001f;
 			
 			Vector3 boundsMin = new Vector3(1.0e32f, 1.0e32f, 1.0e32f);
 			Vector3 boundsMax = new Vector3(-1.0e32f, -1.0e32f, -1.0e32f);
+		
+			float tileOffsetX = 0, tileOffsetY = 0;
+			if (!brush.overrideWithSpriteBounds)
+				tileMap.data.GetTileOffset(out tileOffsetX, out tileOffsetY);
 			
 			if (brush.type == tk2dTileMapEditorBrush.Type.MultiSelect)
 			{
@@ -53,10 +62,15 @@ namespace tk2dEditor
 				if ((brush.multiSelectTiles.Length % tilesPerRow) == 0) tileY -=1;
 				foreach (var uncheckedSpriteId in brush.multiSelectTiles)
 				{
+					float xOffset = (tileY & 1) * tileOffsetX;
+				
 					// The origin of the tile in mesh space
-					Vector3 tileOrigin = new Vector3(tileX * tileSize.x, tileY * tileSize.y, 0.0f);
-					boundsMin = Vector3.Min(boundsMin, tileOrigin);
-					boundsMax = Vector3.Max(boundsMax, tileOrigin + tileSize);
+					Vector3 tileOrigin = new Vector3((tileX + xOffset) * tileSize.x, tileY * tileSize.y, 0.0f);
+					//if (brush.overrideWithSpriteBounds)
+					{
+						boundsMin = Vector3.Min(boundsMin, tileOrigin);
+						boundsMax = Vector3.Max(boundsMax, tileOrigin + tileSize);
+					}
 
 					if (uncheckedSpriteId != -1)
 					{
@@ -71,6 +85,9 @@ namespace tk2dEditor
 							
 							// Offset so origin is at bottom left
 							Vector3 v = centeredSpriteVertex + sprite.untrimmedBoundsData[1] * 0.5f;
+							
+							boundsMin = Vector3.Min(boundsMin, tileOrigin + v);
+							boundsMax = Vector3.Max(boundsMax, tileOrigin + v);
 							
 							vertices.Add(tileOrigin + v);
 							uvs.Add(sprite.uvs[j]);
@@ -95,10 +112,17 @@ namespace tk2dEditor
 				// the brush is centered around origin, x to the right, y up
 				foreach (var tile in brush.tiles)
 				{
+					float xOffset = (tile.y & 1) * tileOffsetX;
+					
 					// The origin of the tile in mesh space
-					Vector3 tileOrigin = new Vector3(tile.x * tileSize.x, tile.y * tileSize.y, tile.layer * layerOffset);
-					boundsMin = Vector3.Min(boundsMin, tileOrigin);
-					boundsMax = Vector3.Max(boundsMax, tileOrigin + tileSize);
+					Vector3 tileOrigin = new Vector3((tile.x + xOffset) * tileSize.x, tile.y * tileSize.y, tile.layer * layerOffset);
+					
+					//if (brush.overrideWithSpriteBounds)
+					{
+						boundsMin = Vector3.Min(boundsMin, tileOrigin);
+						boundsMax = Vector3.Max(boundsMax, tileOrigin + tileSize);
+					}
+
 
 					if (tile.spriteId == -1)
 						continue;
@@ -114,6 +138,9 @@ namespace tk2dEditor
 						
 						// Offset so origin is at bottom left
 						Vector3 v = centeredSpriteVertex + sprite.untrimmedBoundsData[1] * 0.5f;
+
+						boundsMin = Vector3.Min(boundsMin, tileOrigin + v);
+						boundsMax = Vector3.Max(boundsMax, tileOrigin + v);
 						
 						vertices.Add(tileOrigin + v);
 						uvs.Add(sprite.uvs[j]);
@@ -126,9 +153,15 @@ namespace tk2dEditor
 				}
 			}
 			
-			Mesh mesh = (dictData.mesh != null)?dictData.mesh:new Mesh();
+			if (dictData.mesh == null)
+			{
+				dictData.mesh = new Mesh();
+				dictData.mesh.hideFlags = HideFlags.DontSave;
+			}
+			
+			Mesh mesh = dictData.mesh;
 			mesh.Clear();
-			mesh.vertices = vertices.ToArray();
+			mesh.vertices = vertices.ToArray(); 
 			mesh.uv = uvs.ToArray();
 			mesh.triangles = triangles.ToArray();
 			

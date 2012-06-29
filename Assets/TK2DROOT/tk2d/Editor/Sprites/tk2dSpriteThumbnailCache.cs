@@ -13,7 +13,6 @@ public class tk2dSpriteThumbnailCache
 	}
 
 	static List<SpriteThumbnailCache> thumbnailCache = new List<SpriteThumbnailCache>();
-	static Texture2D blankTexture = null;
 	
 	public static void ReleaseSpriteThumbnailCache()
 	{
@@ -82,28 +81,7 @@ public class tk2dSpriteThumbnailCache
 			}
 		}
 		
-		// Failed to get thumbnail
-		if (blankTexture == null)
-		{
-			int w = 64, h = 64;
-			blankTexture = new Texture2D(w, h);
-			for (int y = 0; y < h; ++y)
-			{
-				for (int x = 0; x < w; ++x)
-				{
-					blankTexture.SetPixel(x, y, Color.magenta);
-				}
-			}
-			blankTexture.Apply();
-		}
-		
-		SpriteThumbnailCache blankThumbnail = new SpriteThumbnailCache();
-		blankThumbnail.cachedTexture = blankTexture;
-		blankThumbnail.cachedSpriteCollection = gen;
-		blankThumbnail.cachedSpriteId = spriteId;
-		thumbnailCache.Add(blankThumbnail);
-		
-		return blankTexture;
+		return null;
 	}
 }
 

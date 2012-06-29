@@ -127,6 +127,9 @@ public class tk2dSlicedSprite : tk2dBaseSprite
 				_spriteId = 0;
 			
 			Build();
+			
+			if (boxCollider == null)
+				boxCollider = GetComponent<BoxCollider>();
 		}
 	}
 	

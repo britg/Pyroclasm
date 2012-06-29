@@ -22,6 +22,9 @@ class tk2dSpriteEditor : Editor
 		var newCollection = tk2dSpriteGuiUtility.SpriteCollectionPopup("Collection", sprite.collection, true, sprite.spriteId);
 		if (sprite.collection != newCollection)
 		{
+			if (sprite.collection == null)
+				sprite.collection = newCollection;
+			
 			int spriteId = sprite.spriteId;
 			if (sprite.spriteId < 0 || sprite.spriteId >= sprite.collection.Count 
 				|| !sprite.collection.spriteDefinitions[sprite.spriteId].Valid)
@@ -187,6 +190,9 @@ class tk2dSpriteEditor : Editor
 		sprite.collection = sprColl;
 		sprite.renderer.material = sprColl.FirstValidDefinition.material;
 		sprite.Build();
+		
+		Selection.activeGameObject = go;
+		Undo.RegisterCreatedObjectUndo(go, "Create Sprite");
     }
 }
 

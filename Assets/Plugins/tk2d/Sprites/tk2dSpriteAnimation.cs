@@ -35,13 +35,21 @@ public class tk2dSpriteAnimationFrame
 	
 	public void CopyFrom(tk2dSpriteAnimationFrame source)
 	{
+		CopyFrom(source, true);
+	}
+	
+	public void CopyFrom(tk2dSpriteAnimationFrame source, bool full)
+	{
 		spriteCollection = source.spriteCollection;
 		spriteId = source.spriteId;
 		
-		triggerEvent = source.triggerEvent;
-		eventInfo = source.eventInfo;
-		eventInt = source.eventInt;
-		eventFloat = source.eventFloat;
+		if (full)
+		{
+			triggerEvent = source.triggerEvent;
+			eventInfo = source.eventInfo;
+			eventInt = source.eventInt;
+			eventFloat = source.eventFloat;		
+		}
 	}
 }
 

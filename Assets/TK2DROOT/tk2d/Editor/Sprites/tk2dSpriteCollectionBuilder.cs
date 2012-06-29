@@ -275,11 +275,11 @@ public class tk2dSpriteCollectionBuilder
 		}
 	}
 
-	static Texture2D ProcessTexture(tk2dSpriteCollection settings, bool additive, bool stretchPad, Texture2D srcTex, int sx, int sy, int tw, int th, ref SpriteLut spriteLut, int padAmount)
+	static Texture2D ProcessTexture(tk2dSpriteCollection settings, bool additive, bool stretchPad, bool disableTrimming, bool isInjectedTexture, Texture2D srcTex, int sx, int sy, int tw, int th, ref SpriteLut spriteLut, int padAmount)
 	{
 		// Can't have additive without premultiplied alpha
 		if (!settings.premultipliedAlpha) additive = false;
-		bool allowTrimming = !settings.disableTrimming;
+		bool allowTrimming = !settings.disableTrimming && !disableTrimming;
 		var textureCompression = settings.textureCompression;
 		
 		int[] ww = new int[tw];
@@ -304,11 +304,15 @@ public class tk2dSpriteCollectionBuilder
 		if (numNotTransparent > 0)
 		{
 			int x0 = 0, x1 = 0, y0 = 0, y1 = 0;
-
+			
+			bool customSpriteGeometry = false;
+			if (!isInjectedTexture && settings.textureParams[spriteLut.source].customSpriteGeometry) customSpriteGeometry = true;
+			
 			// For custom geometry, use the bounds of the geometry
-			var textureParams = settings.textureParams[spriteLut.source];
-			if (textureParams.customSpriteGeometry)
+			if (customSpriteGeometry)
 			{
+				var textureParams = settings.textureParams[spriteLut.source];
+				
 				x0 = int.MaxValue;
 				y0 = int.MaxValue;
 				x1 = -1;
@@ -577,6 +581,17 @@ public class tk2dSpriteCollectionBuilder
 
 	static tk2dSpriteCollection currentBuild = null;
 	static Texture2D[] sourceTextures;
+	
+	// path is local (Assets/a/b/c.def)
+	static void BuildDirectoryToFile(string localPath)
+	{
+		string basePath = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
+		System.IO.FileInfo fileInfo = new System.IO.FileInfo(basePath + localPath);
+		if (!fileInfo.Directory.Exists)
+		{
+			fileInfo.Directory.Create();
+		}
+	}
 
     public static bool Rebuild(tk2dSpriteCollection gen)
     {
@@ -591,20 +606,17 @@ public class tk2dSpriteCollectionBuilder
 		string subDirName = Path.GetDirectoryName( path.Substring(7) );
 		if (subDirName.Length > 0) subDirName += "/";
 
-		string dataDirFullPath = Application.dataPath + "/" + subDirName + Path.GetFileNameWithoutExtension(path) + "_Data";
+		string dataDirFullPath = Application.dataPath + "/" + subDirName + Path.GetFileNameWithoutExtension(path) + " Data";
 		string dataDirName = "Assets/" + dataDirFullPath.Substring( Application.dataPath.Length + 1 ) + "/";
 		
-		if (gen.atlasTextures == null || gen.atlasTextures.Length == 0 ||
-		    gen.atlasMaterials == null || gen.atlasMaterials.Length == 0 ||
-			gen.altMaterials == null || gen.altMaterials.Length == 0 ||
-		    gen.spriteCollection == null)
-		{
-			if (!Directory.Exists(dataDirFullPath)) Directory.CreateDirectory(dataDirFullPath);
-			AssetDatabase.Refresh();
-		}
-
-		string prefabObjectPath = gen.spriteCollection?AssetDatabase.GetAssetPath(gen.spriteCollection):(dataDirName + "data.prefab");
-
+		string prefabObjectPath = "";
+		if (gen.spriteCollection)
+			prefabObjectPath = AssetDatabase.GetAssetPath(gen.spriteCollection);
+		else
+			prefabObjectPath = dataDirName + gen.name + ".prefab";
+		
+		BuildDirectoryToFile(prefabObjectPath);
+		
       	if (!CheckAndFixUpParams(gen))
 		{
 			// Params failed check
@@ -702,7 +714,7 @@ public class tk2dSpriteCollectionBuilder
 						diceLut.sourceTex = srcTex;
 						diceLut.isDuplicate = false; // duplicate diced textures can be chopped up differently, so don't detect dupes here
 
-						Texture2D dest = ProcessTexture(gen, gen.textureParams[i].additive, true, srcTex, sx, sy, tw, th, ref diceLut, GetPadAmount(gen, i));
+						Texture2D dest = ProcessTexture(gen, gen.textureParams[i].additive, true, gen.textureParams[i].disableTrimming, false, srcTex, sx, sy, tw, th, ref diceLut, GetPadAmount(gen, i));
 						if (dest)
 						{
 							diceLut.atlasIndex = numTexturesToAtlas++;
@@ -740,7 +752,7 @@ public class tk2dSpriteCollectionBuilder
 					bool stretchPad = false;
 					if (gen.textureParams[i].pad == tk2dSpriteCollectionDefinition.Pad.Extend) stretchPad = true;
 
-					Texture2D dest = ProcessTexture(gen, gen.textureParams[i].additive, stretchPad, currentTexture, 0, 0, currentTexture.width, currentTexture.height, ref lut, GetPadAmount(gen, i));
+					Texture2D dest = ProcessTexture(gen, gen.textureParams[i].additive, stretchPad, gen.textureParams[i].disableTrimming, false, currentTexture, 0, 0, currentTexture.width, currentTexture.height, ref lut, GetPadAmount(gen, i));
 					if (dest == null)
 					{
 						// fall back to a tiny blank texture
@@ -778,7 +790,7 @@ public class tk2dSpriteCollectionBuilder
 					SpriteLut lut = new SpriteLut();
 					
 					int cy = font.flipTextureY?c.y:(fontInfo.scaleH - c.y - c.height);
-					Texture2D dest = ProcessTexture(gen, false, false, 
+					Texture2D dest = ProcessTexture(gen, false, false, false, true,
 						font.texture, c.x, cy, c.width, c.height, 
 						ref lut, GetPadAmount(gen, -1));
 					if (dest == null)
@@ -927,6 +939,7 @@ public class tk2dSpriteCollectionBuilder
 			tex.Apply();
 
 			string texturePath = gen.atlasTextures[atlasIndex]?AssetDatabase.GetAssetPath(gen.atlasTextures[atlasIndex]):(dataDirName + "atlas" + atlasIndex + ".png");
+			BuildDirectoryToFile(texturePath);
 
 			// Write filled atlas to disk
 			byte[] bytes = tex.EncodeToPNG();
@@ -955,7 +968,9 @@ public class tk2dSpriteCollectionBuilder
 
 				mat.mainTexture = tex;
 
-				string materialPath = gen.atlasMaterials[atlasIndex]?AssetDatabase.GetAssetPath(gen.atlasMaterials[atlasIndex]):(dataDirName + "atlas" + atlasIndex + "_material.mat");
+				string materialPath = gen.atlasMaterials[atlasIndex]?AssetDatabase.GetAssetPath(gen.atlasMaterials[atlasIndex]):(dataDirName + "atlas" + atlasIndex + " material.mat");
+				BuildDirectoryToFile(materialPath);
+				
 	            AssetDatabase.CreateAsset(mat, materialPath);
 				AssetDatabase.SaveAssets();
 
@@ -970,6 +985,8 @@ public class tk2dSpriteCollectionBuilder
         // Create prefab
 		if (gen.spriteCollection == null)
 		{
+			prefabObjectPath = AssetDatabase.GenerateUniqueAssetPath(prefabObjectPath);
+			
 			GameObject go = new GameObject();
 			go.AddComponent<tk2dSpriteCollectionData>();
 #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
@@ -1121,23 +1138,27 @@ public class tk2dSpriteCollectionBuilder
 	{
 		foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
 		{
-			System.Type[] types = assembly.GetTypes();
-			foreach (var type in types)
+			try
 			{
-				if (type.GetInterface("tk2dRuntime.ISpriteCollectionForceBuild") != null)
+				System.Type[] types = assembly.GetTypes();
+				foreach (var type in types)
 				{
-					Object[] objects = Resources.FindObjectsOfTypeAll(type);
-					foreach (var o in objects)
+					if (type.GetInterface("tk2dRuntime.ISpriteCollectionForceBuild") != null)
 					{
-						if (tk2dEditorUtility.IsPrefab(o))
-							continue;
-						
-						tk2dRuntime.ISpriteCollectionForceBuild isc = o as tk2dRuntime.ISpriteCollectionForceBuild;
-						if (isc.UsesSpriteCollection(spriteCollectionData))
-							isc.ForceBuild();
+						Object[] objects = Resources.FindObjectsOfTypeAll(type);
+						foreach (var o in objects)
+						{
+							if (tk2dEditorUtility.IsPrefab(o))
+								continue;
+							
+							tk2dRuntime.ISpriteCollectionForceBuild isc = o as tk2dRuntime.ISpriteCollectionForceBuild;
+							if (isc.UsesSpriteCollection(spriteCollectionData))
+								isc.ForceBuild();
+						}
 					}
 				}
 			}
+			catch { }
 		}
 	}
 
@@ -1530,6 +1551,8 @@ public class tk2dSpriteCollectionBuilder
 					coll.spriteDefinitions[i].complexGeometry = true;
 				}
 				
+				// This doesn't seem to be necessary in UNITY_3_5
+#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
 				if (positions.Count > 0)
 				{
 					// http://forum.unity3d.com/threads/98781-Compute-mesh-inertia-tensor-failed-for-one-of-the-actor-Behaves-differently-in-3.4
@@ -1537,6 +1560,7 @@ public class tk2dSpriteCollectionBuilder
 					p.z -= 0.001f;
 					positions[positions.Count - 1] = p;
 				}
+#endif
 			
 				coll.spriteDefinitions[i].positions = new Vector3[positions.Count];
 				coll.spriteDefinitions[i].uvs = new Vector2[uvs.Count];
@@ -1672,7 +1696,6 @@ public class tk2dSpriteCollectionBuilder
 			{
 				List<Vector2> points = new List<Vector2>();
 				List<Vector2> points2D = new List<Vector2>();
-			
 				
 				// List all points
 				for (int i = 0; i < island.points.Length; ++i)
@@ -1698,12 +1721,36 @@ public class tk2dSpriteCollectionBuilder
 					int i2 = ((i + 1)%island.points.Length) * 2;
 					int i3 = i2 + 1;
 					
-					meshIndicesFwd.Add(baseIndex + i2);
-					meshIndicesFwd.Add(baseIndex + i1);
-					meshIndicesFwd.Add(baseIndex + i0);
-					meshIndicesFwd.Add(baseIndex + i2);
-					meshIndicesFwd.Add(baseIndex + i3);
-					meshIndicesFwd.Add(baseIndex + i1);
+					// Classify primary edge direction, and flip accordingly
+					bool flipIndices = false;
+					Vector2 grad = points2D[i] - points2D[(i + 1) % points2D.Count];
+					if (Mathf.Abs(grad.x) < Mathf.Abs(grad.y))
+					{
+						flipIndices = (grad.y > 0.0f);
+					}
+					else
+					{
+						flipIndices = (grad.x > 0.0f);
+					}
+					
+					if (flipIndices)
+					{
+						meshIndicesFwd.Add(baseIndex + i2);
+						meshIndicesFwd.Add(baseIndex + i3);
+						meshIndicesFwd.Add(baseIndex + i0);
+						meshIndicesFwd.Add(baseIndex + i0);
+						meshIndicesFwd.Add(baseIndex + i3);
+						meshIndicesFwd.Add(baseIndex + i1);
+					}
+					else
+					{
+						meshIndicesFwd.Add(baseIndex + i2);
+						meshIndicesFwd.Add(baseIndex + i1);
+						meshIndicesFwd.Add(baseIndex + i0);
+						meshIndicesFwd.Add(baseIndex + i2);
+						meshIndicesFwd.Add(baseIndex + i3);
+						meshIndicesFwd.Add(baseIndex + i1);
+					}
 				}
 
 				// cap if allowed and necessary

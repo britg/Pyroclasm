@@ -163,11 +163,78 @@ public class tk2dTileMap : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBuil
 	/// </summary>
 	public bool GetTileAtPosition(Vector3 position, out int x, out int y)
 	{
-		Vector3 localPosition = transform.worldToLocalMatrix.MultiplyPoint(position);
-		x = (int)((localPosition.x - data.tileOrigin.x) / data.tileSize.x);
-		y = (int)((localPosition.y - data.tileOrigin.y) / data.tileSize.y);
+		float ox, oy;
+		bool b = GetTileFracAtPosition(position, out ox, out oy);
+		x = (int)ox;
+		y = (int)oy;
+		return b;
+	}
+	
+	/// <summary>
+	/// Gets the tile coordinate at position. This can be used to obtain tile or color data explicitly from layers
+	/// The fractional value returned is the fraction into the current tile
+	/// Returns true if the position is within the tilemap bounds
+	/// </summary>
+	public bool GetTileFracAtPosition(Vector3 position, out float x, out float y)
+	{
+		switch (data.tileType)
+		{
+		case tk2dTileMapData.TileType.Rectangular:
+		{
+			Vector3 localPosition = transform.worldToLocalMatrix.MultiplyPoint(position);
+			x = (localPosition.x - data.tileOrigin.x) / data.tileSize.x;
+			y = (localPosition.y - data.tileOrigin.y) / data.tileSize.y;
+			return (x >= 0 && x <= width && y >= 0 && y <= height);
+		}
+		case tk2dTileMapData.TileType.Isometric:
+		{
+			if (data.tileSize.x == 0.0f)
+				break;
+
+			float tileAngle = Mathf.Atan2(data.tileSize.y, data.tileSize.x / 2.0f);
+			
+			Vector3 localPosition = transform.worldToLocalMatrix.MultiplyPoint(position);
+			x = (localPosition.x - data.tileOrigin.x) / data.tileSize.x;
+			y = ((localPosition.y - data.tileOrigin.y) / (data.tileSize.y));
+			
+			float fy = y * 0.5f;
+			int iy = (int)fy;
+			
+			float fry = fy - iy;
+			float frx = x % 1.0f;
+			
+			x = (int)x;
+			y = iy * 2;
+			
+			if (frx > 0.5f)
+			{
+				if (fry > 0.5f && Mathf.Atan2(1.0f - fry, (frx - 0.5f) * 2) < tileAngle)
+					y += 1;
+				else if (fry < 0.5f && Mathf.Atan2(fry, (frx - 0.5f) * 2) < tileAngle)
+					y -= 1;
+			}
+			else if (frx < 0.5f)
+			{
+				if (fry > 0.5f && Mathf.Atan2(fry - 0.5f, frx * 2) > tileAngle)
+				{
+					y += 1;
+					x -= 1;
+				}
+				
+				if (fry < 0.5f && Mathf.Atan2(fry, (0.5f - frx) * 2) < tileAngle)
+				{
+					y -= 1;
+					x -= 1;
+				}
+			}
+			
+			return (x >= 0 && x <= width && y >= 0 && y <= height);
+		}
+		}
 		
-		return (x >= 0 && x < width && y >= 0 && y < height);
+		x = 0.0f;
+		y = 0.0f;
+		return false;
 	}
 	
 	/// <summary>

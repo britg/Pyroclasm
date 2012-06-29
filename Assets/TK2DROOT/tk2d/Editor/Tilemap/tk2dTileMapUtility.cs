@@ -99,6 +99,20 @@ namespace tk2dEditor.TileMap
 			return tileMap.data.NumLayers - 1;
 		}
 		
+		public static int FindOrCreateLayer(tk2dTileMap tileMap, string name)
+		{
+			int index = 0;
+			foreach (var v in tileMap.data.Layers)
+			{
+				if (v.name == name)
+					return index;
+				++index;
+			}
+			index = AddNewLayer(tileMap);
+			tileMap.data.Layers[index].name = name;
+			return index;
+		}
+		
 		public static void DeleteLayer(tk2dTileMap tileMap, int layerToDelete)
 		{
 			// Just in case

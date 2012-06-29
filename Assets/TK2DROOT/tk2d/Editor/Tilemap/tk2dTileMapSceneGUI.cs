@@ -38,59 +38,16 @@ public class tk2dTileMapSceneGUI
 	{
 	}
 	
-	void DrawTileCursor(tk2dTileMapEditorBrush brush)
+	void DrawCursorAt(int x, int y)
 	{
-		float layerZ = 0.0f;
-			
-		if (brush.paintMode == tk2dTileMapEditorBrush.PaintMode.Random ||
-			brush.paintMode == tk2dTileMapEditorBrush.PaintMode.Edged ||
-			pickup ||
-			erase)
+		switch (tileMap.data.tileType)
 		{
-			int x0 = cursorX;
-			int y0 = cursorY;
-			int tilesX = 1;
-			int tilesY = 1;
-			x0 = Mathf.Min(cursorX, cursorX0);
-			int x1 = Mathf.Max(cursorX, cursorX0);
-			y0 = Mathf.Min(cursorY, cursorY0);
-			int y1 = Mathf.Max(cursorY, cursorY0);
-			tilesX = x1 - x0 + 1;
-			tilesY = y1 - y0 + 1;
-			
-			Vector3 p0 = new Vector3(tileMapData.tileOrigin.x + x0 * tileMapData.tileSize.x, tileMapData.tileOrigin.y + y0 * tileMapData.tileSize.y, layerZ);
-			Vector3 p1 = new Vector3(p0.x + tileMapData.tileSize.x * tilesX, p0.y + tileMapData.tileSize.y * tilesY, 0);
-			Vector3[] v = new Vector3[4];
-			v[0] = new Vector3(p0.x, p0.y, 0);
-			v[1] = new Vector3(p1.x, p0.y, 0);
-			v[2] = new Vector3(p1.x, p1.y, 0);
-			v[3] = new Vector3(p0.x, p1.y, 0);
-			
-			for (int i = 0; i < v.Length; ++i)
-				v[i] = tileMap.transform.TransformPoint(v[i]);
-			
-			Handles.DrawSolidRectangleWithOutline(v, tileSelectionFillColor, tileSelectionOutlineColor);		
-		}
-		else if (brush.type == tk2dTileMapEditorBrush.Type.MultiSelect)
-		{
-			Vector3 p0 = new Vector3(tileMapData.tileOrigin.x + (cursorX) * tileMapData.tileSize.x, tileMapData.tileOrigin.y + (cursorY) * tileMapData.tileSize.y, layerZ);
-			Vector3 p1 = new Vector3(p0.x + tileMapData.tileSize.x, p0.y + tileMapData.tileSize.y, 0);
-			Vector3[] v = new Vector3[4];
-			v[0] = new Vector3(p0.x, p0.y, 0);
-			v[1] = new Vector3(p1.x, p0.y, 0);
-			v[2] = new Vector3(p1.x, p1.y, 0);
-			v[3] = new Vector3(p0.x, p1.y, 0);
-			
-			for (int i = 0; i < v.Length; ++i)
-				v[i] = tileMap.transform.TransformPoint(v[i]);
-			
-			Handles.DrawSolidRectangleWithOutline(v, tileSelectionFillColor, tileSelectionOutlineColor);		
-		}
-		else
-		{
-			foreach (var tile in brush.tiles)
+		case tk2dTileMapData.TileType.Rectangular:
 			{
-				Vector3 p0 = new Vector3(tileMapData.tileOrigin.x + (cursorX + tile.x) * tileMapData.tileSize.x, tileMapData.tileOrigin.y + (cursorY + tile.y) * tileMapData.tileSize.y, layerZ);
+				float xOffsetMult, yOffsetMult;
+				tileMap.data.GetTileOffset(out xOffsetMult, out yOffsetMult);
+				float xOffset = (y & 1) * xOffsetMult;
+				Vector3 p0 = new Vector3(tileMapData.tileOrigin.x + (x + xOffset) * tileMapData.tileSize.x, tileMapData.tileOrigin.y + y * tileMapData.tileSize.y, 0);
 				Vector3 p1 = new Vector3(p0.x + tileMapData.tileSize.x, p0.y + tileMapData.tileSize.y, 0);
 				Vector3[] v = new Vector3[4];
 				v[0] = new Vector3(p0.x, p0.y, 0);
@@ -101,7 +58,70 @@ public class tk2dTileMapSceneGUI
 				for (int i = 0; i < v.Length; ++i)
 					v[i] = tileMap.transform.TransformPoint(v[i]);
 				
-				Handles.DrawSolidRectangleWithOutline(v, tileSelectionFillColor, tileSelectionOutlineColor);		
+				Handles.DrawSolidRectangleWithOutline(v, tileSelectionFillColor, tileSelectionOutlineColor);
+			}	
+			break;
+		case tk2dTileMapData.TileType.Isometric:
+			{
+				float xOffsetMult, yOffsetMult;
+				tileMap.data.GetTileOffset(out xOffsetMult, out yOffsetMult);
+				float xOffset = (y & 1) * xOffsetMult;
+				Vector3 p0 = new Vector3(tileMapData.tileOrigin.x + (x + xOffset) * tileMapData.tileSize.x, tileMapData.tileOrigin.y + y * tileMapData.tileSize.y, 0);
+				Vector3 p1 = new Vector3(p0.x + tileMapData.tileSize.x, p0.y + tileMapData.tileSize.y * 2, 0);
+				Vector3[] v = new Vector3[4];
+				v[0] = new Vector3(p0.x + (p1.x-p0.x)*0.5f, p0.y, 0);
+				v[1] = new Vector3(p1.x, p0.y + (p1.y-p0.y)*0.5f, 0);
+				v[2] = new Vector3(p1.x - (p1.x-p0.x)*0.5f, p1.y, 0);
+				v[3] = new Vector3(p0.x, p1.y - (p1.y-p0.y)*0.5f, 0);
+				
+				for (int i = 0; i < v.Length; ++i)
+					v[i] = tileMap.transform.TransformPoint(v[i]);
+				
+				Handles.DrawSolidRectangleWithOutline(v, tileSelectionFillColor, tileSelectionOutlineColor);
+			}	
+			break;
+		}
+	}
+	
+	void DrawTileCursor(tk2dTileMapEditorBrush brush)
+	{
+		float xOffsetMult, yOffsetMult;
+		tileMap.data.GetTileOffset(out xOffsetMult, out yOffsetMult);
+		
+		if (brush.paintMode == tk2dTileMapEditorBrush.PaintMode.Random ||
+			brush.paintMode == tk2dTileMapEditorBrush.PaintMode.Edged ||
+			pickup ||
+			erase)
+		{
+			int x0 = cursorX;
+			int y0 = cursorY;
+			x0 = Mathf.Min(cursorX, cursorX0);
+			y0 = Mathf.Min(cursorY, cursorY0);
+			int x1 = Mathf.Max(cursorX, cursorX0);
+			int y1 = Mathf.Max(cursorY, cursorY0);
+
+			for (int y = y0; y <= y1; ++y)
+			{
+				for (int x = x0; x <= x1; ++x)
+				{
+					DrawCursorAt(x, y);
+				}
+			}
+		}
+		else if (brush.type == tk2dTileMapEditorBrush.Type.MultiSelect)
+		{
+			DrawCursorAt(cursorX, cursorY);
+		}
+		else
+		{
+			int xoffset = 0;
+			if (tileMap.data.tileType == tk2dTileMapData.TileType.Isometric &&  (cursorY & 1) == 1) 
+				xoffset = 1;
+			
+			foreach (var tile in brush.tiles)
+			{
+				int thisRowXOffset = (((cursorY + tile.y) & 1) == 0)?xoffset:0;
+				DrawCursorAt(cursorX + tile.x + thisRowXOffset, cursorY + tile.y);
 			}
 		}
 	}
@@ -151,25 +171,21 @@ public class tk2dTileMapSceneGUI
 		
 		if (p.Raycast(r, out hitD))
 		{
-			Vector3 hitPoint = r.GetPoint(hitD);
-			Vector3 lsPoint = tileMap.transform.InverseTransformPoint(hitPoint);
-			
-			float fx = ((lsPoint.x - tileMapData.tileOrigin.x) / tileMapData.tileSize.x);
-			float fy = ((lsPoint.y - tileMapData.tileOrigin.y) / tileMapData.tileSize.y);
-			int x = (int)(fx);
-			int y = (int)(fy);
-			
-			if (x >= 0 && x < tileMap.width && y >= 0 && y < tileMap.height)
+			float fx, fy;
+			if (tileMap.GetTileFracAtPosition(r.GetPoint(hitD), out fx, out fy))
 			{
+				int x = (int)(fx);
+				int y = (int)(fy);
+				
+				cursorX = Mathf.Clamp(x, 0, tileMap.width - 1);
+				cursorY = Mathf.Clamp(y, 0, tileMap.height - 1);
+				vertexCursorX = (int)Mathf.Round(fx);
+				vertexCursorY = (int)Mathf.Round(fy);
+				
+				HandleUtility.Repaint();
+				
 				isInside = true;
 			}
-			
-			cursorX = Mathf.Clamp(x, 0, tileMap.width - 1);
-			cursorY = Mathf.Clamp(y, 0, tileMap.height - 1);
-			vertexCursorX = (int)Mathf.Round(fx);
-			vertexCursorY = (int)Mathf.Round(fy);
-			
-			HandleUtility.Repaint();
 		}
 		
 		return isInside;
@@ -225,6 +241,23 @@ public class tk2dTileMapSceneGUI
 		}
 	}
 	
+	void CheckVisible(int layer)
+	{
+		if (tileMap != null && 
+			tileMap.Layers != null &&
+			layer < tileMap.Layers.Length &&
+			tileMap.Layers[layer].gameObject != null &&
+			tileMap.Layers[layer].gameObject.active == false)
+		{
+			tileMap.Layers[layer].gameObject.SetActiveRecursively(true);
+		}
+	}
+	
+	void DrawTileProperties()
+	{
+		DrawCursorAt(0, 0);
+	}
+	
 	public void OnSceneGUI()
 	{
 		// Always draw the outline
@@ -232,6 +265,13 @@ public class tk2dTileMapSceneGUI
 		
 		if (Application.isPlaying || !tileMap.AllowEdit)
 			return;
+		
+		if (editorData.editMode == tk2dTileMapEditorData.EditMode.Settings)
+		{
+			if (editorData.setupMode == tk2dTileMapEditorData.SetupMode.TileProperties)
+				DrawTileProperties();
+			return;
+		}
 		
 		if (editorData.editMode != tk2dTileMapEditorData.EditMode.Paint && 
 			editorData.editMode != tk2dTileMapEditorData.EditMode.Color)
@@ -255,6 +295,8 @@ public class tk2dTileMapSceneGUI
 			
 			if (Event.current.type == EventType.MouseDown)
 			{
+				CheckVisible(editorData.layer);
+				
 				if (IsCursorInside() && !Event.current.shift)
 				{
 					bool pickupKeyDown = (Application.platform == RuntimePlatform.OSXEditor)?Event.current.control:Event.current.alt;
@@ -379,9 +421,14 @@ public class tk2dTileMapSceneGUI
 		}
 		else
 		{
+			int xoffset = 0;
+			if (tileMap.data.tileType == tk2dTileMapData.TileType.Isometric &&  (cursorY & 1) == 1) 
+				xoffset = 1;
+			
 			foreach (var tile in brush.tiles)
 			{
-				SplatTile(tile.x + cx, tile.y + cy, tile.layer + layer, tile.spriteId);
+				int thisRowXOffset = (((cursorY + tile.y) & 1) == 0)?xoffset:0;
+				SplatTile(tile.x + cx + thisRowXOffset, tile.y + cy, tile.layer + layer, tile.spriteId);
 			}
 		}
 	}
@@ -413,18 +460,42 @@ public class tk2dTileMapSceneGUI
 			endLayer = startLayer + 1;
 		}
 		
-		for (int layer = startLayer; layer < endLayer; ++layer)
+		if (tileMap.data.tileType == tk2dTileMapData.TileType.Rectangular)
 		{
-			for (int y = numTilesY - 1; y >= 0; --y)
+			for (int layer = startLayer; layer < endLayer; ++layer)
 			{
-				for (int x = 0; x < numTilesX; ++x)
+				for (int y = numTilesY - 1; y >= 0; --y)
 				{
-					int tile = tileMap.Layers[layer].GetTile(x0 + x, y0 + y);
-					tiles.Add(tile);
-					sparseTile.Add(new tk2dSparseTile(x, y, allLayers?layer:0, tile));
+					for (int x = 0; x < numTilesX; ++x)
+					{
+						int tile = tileMap.Layers[layer].GetTile(x0 + x, y0 + y);
+						tiles.Add(tile);
+						sparseTile.Add(new tk2dSparseTile(x, y, allLayers?layer:0, tile));
+					}
 				}
 			}
 		}
+		else if (tileMap.data.tileType == tk2dTileMapData.TileType.Isometric)
+		{
+			int xOffset = 0;
+			int yOffset = 0;
+			if ((y0 & 1) != 0)
+				yOffset -= 1;
+			
+			for (int layer = startLayer; layer < endLayer; ++layer)
+			{
+				for (int y = numTilesY - 1; y >= 0; --y)
+				{
+					for (int x = 0; x < numTilesX; ++x)
+					{
+						int tile = tileMap.Layers[layer].GetTile(x0 + x, y0 + y);
+						tiles.Add(tile);
+						sparseTile.Add(new tk2dSparseTile(x + xOffset, y + yOffset, allLayers?layer:0, tile));
+					}
+				}
+			}
+		}
+		
 		
 		brush.type = tk2dTileMapEditorBrush.Type.Custom;
 		

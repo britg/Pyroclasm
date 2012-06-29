@@ -6,6 +6,8 @@ using System.IO;
 [CustomEditor(typeof(tk2dSpriteCollection))]
 public class tk2dSpriteCollectionEditor : Editor
 {
+	const string defaultSpriteCollectionName = "SpriteCollection";
+	
     public override void OnInspectorGUI()
     {
         tk2dSpriteCollection gen = (tk2dSpriteCollection)target;
@@ -15,8 +17,15 @@ public class tk2dSpriteCollectionEditor : Editor
 		GUILayout.FlexibleSpace();
 		if (GUILayout.Button("Open Editor...", EditorStyles.miniButton, GUILayout.MinWidth(120)))
 		{
-			tk2dSpriteCollectionEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteCollectionEditorPopup), false, "Sprite Collection Editor" ) as tk2dSpriteCollectionEditorPopup;
-			v.SetGenerator(gen);
+			if (gen.name == defaultSpriteCollectionName)
+			{
+				EditorUtility.DisplayDialog("Invalid Sprite Collection name", "Please rename sprite collection before proceeding", "Ok");
+			}
+			else
+			{
+				tk2dSpriteCollectionEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteCollectionEditorPopup), false, "Sprite Collection Editor" ) as tk2dSpriteCollectionEditorPopup;
+				v.SetGenerator(gen);
+			}
 		}
 		GUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
@@ -26,7 +35,7 @@ public class tk2dSpriteCollectionEditor : Editor
 	[MenuItem("Assets/Create/tk2d/Sprite Collection", false, 10000)]
     static void DoCollectionCreate()
     {
-		string path = tk2dEditorUtility.CreateNewPrefab("SpriteCollection");
+		string path = tk2dEditorUtility.CreateNewPrefab(defaultSpriteCollectionName);
         if (path != null)
         {
             GameObject go = new GameObject();

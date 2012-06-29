@@ -162,7 +162,8 @@ namespace tk2dEditor.SpriteCollectionEditor
 			
 			GUILayout.EndHorizontal();
 			
-			if (doDelete)
+			if (doDelete &&
+				EditorUtility.DisplayDialog("Delete sprite", "Are you sure you want to delete the selected font?", "Yes", "No"))
 			{
 				font.active = false;
 				font.bmFont = null;

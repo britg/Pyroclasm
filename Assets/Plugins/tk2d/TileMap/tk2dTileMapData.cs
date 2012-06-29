@@ -12,12 +12,14 @@ namespace tk2dRuntime.TileMap
 		public bool generateCollider;
 		public float z = 0.1f;
 		public int unityLayer = 0;
+		public bool skipMeshGeneration = false;
 		
 		public LayerInfo()
 		{
 			unityLayer = 0;
 			useColor = true;
 			generateCollider = true;
+			skipMeshGeneration = false;
 		}
 	}
 	
@@ -41,8 +43,17 @@ public class tk2dTileMapData : ScriptableObject
 		TopRight,
 	}
 	
+	// Tile type
+	public enum TileType
+	{
+		Rectangular,
+		Isometric,		// isometric tiles, offset in horizontal axis
+	}
+	
 	public Vector3 tileSize;
 	public Vector3 tileOrigin;
+	
+	public TileType tileType = TileType.Rectangular;
 
 	public SortMethod sortMethod = SortMethod.BottomLeft;
 	
@@ -107,6 +118,19 @@ public class tk2dTileMapData : ScriptableObject
 #endif
 		
 		return tileInfo;
+	}
+	
+	public void GetTileOffset(out float x, out float y)
+	{
+		switch (tileType)
+		{
+		case TileType.Isometric: x = 0.5f; y = 0.0f; break;
+//		case TileType.HexHoritonal: x = 0.5f; y = 0.0f; break;
+		
+		case TileType.Rectangular: 
+		default:
+			x = 0.0f; y = 0.0f; break;
+		}
 	}
 	
 	void InitLayers()

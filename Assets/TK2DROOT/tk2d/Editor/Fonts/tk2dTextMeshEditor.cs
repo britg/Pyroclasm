@@ -168,4 +168,49 @@ class tk2dTextMeshEditor : Editor
 			}
 		}
 	}
+
+    [MenuItem("GameObject/Create Other/tk2d/TextMesh", false, 13905)]
+    static void DoCreateTextMesh()
+    {
+		tk2dFontData fontData = null;
+		Material material = null;
+		
+		// Find reference in scene
+        tk2dTextMesh dupeMesh = GameObject.FindObjectOfType(typeof(tk2dTextMesh)) as tk2dTextMesh;
+		if (dupeMesh) 
+		{
+			fontData = dupeMesh.font;
+			material = dupeMesh.GetComponent<MeshRenderer>().sharedMaterial;
+		}
+		
+		// Find in library
+		if (fontData == null)
+		{
+			tk2dFont[] allFontData = tk2dEditorUtility.GetOrCreateIndex().GetFonts();
+			foreach (var v in allFontData)
+			{
+				if (v.data != null)
+				{
+					fontData = v.data;
+					material = fontData.material;
+				}
+			}
+		}
+		
+		if (fontData == null)
+		{
+			EditorUtility.DisplayDialog("Create TextMesh", "Unable to create text mesh as no Fonts have been found.", "Ok");
+			return;
+		}
+
+		GameObject go = tk2dEditorUtility.CreateGameObjectInScene("TextMesh");
+        tk2dTextMesh textMesh = go.AddComponent<tk2dTextMesh>();
+		textMesh.font = fontData;
+		textMesh.text = "New TextMesh";
+		textMesh.Commit();
+		textMesh.GetComponent<MeshRenderer>().material = material;
+		
+		Selection.activeGameObject = go;
+		Undo.RegisterCreatedObjectUndo(go, "Create TextMesh");
+    }
 }

@@ -7,9 +7,10 @@ Shader "tk2d/LitSolidVertexColor"
 	
 	SubShader 
 	{
+		Tags {"IgnoreProjector"="True"}
 	    Pass 
 	    {
-			Tags {"LightMode" = "Vertex" "IgnoreProjector"="True" }
+			Tags {"LightMode" = "Vertex"}
 			LOD 100
 	    
 			Blend Off

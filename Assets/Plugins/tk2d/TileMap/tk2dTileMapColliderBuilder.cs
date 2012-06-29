@@ -18,25 +18,27 @@ namespace tk2dRuntime.TileMap
 	
 				for (int cellY = 0; cellY < layer.numRows; ++cellY)
 				{
+					int baseY = cellY * layer.divY;
 					for (int cellX = 0; cellX < layer.numColumns; ++cellX)
 					{
+						int baseX = cellX * layer.divX;
 						var chunk = layer.GetChunk(cellX, cellY);
 						
 						if (chunk.IsEmpty)
 							continue;
 						
-						BuildForChunk(tileMap, chunk);
+						BuildForChunk(tileMap, chunk, baseX, baseY);
 					}
 				}
 			}
 		}
 		
-		public static void BuildForChunk(tk2dTileMap tileMap, SpriteChunk chunk)
+		public static void BuildForChunk(tk2dTileMap tileMap, SpriteChunk chunk, int baseX, int baseY)
 		{
 			// Build local mesh
 			Vector3[] localMeshVertices = new Vector3[0];
 			int[] localMeshIndices = new int[0];
-			BuildLocalMeshForChunk(tileMap, chunk, ref localMeshVertices, ref localMeshIndices);
+			BuildLocalMeshForChunk(tileMap, chunk, baseX, baseY, ref localMeshVertices, ref localMeshIndices);
 			
 			// only process when there are more than two triangles
 			// avoids a lot of branches later
@@ -85,7 +87,7 @@ namespace tk2dRuntime.TileMap
 		}		
 		
 		// Builds an unoptimized mesh for this chunk
-		static void BuildLocalMeshForChunk(tk2dTileMap tileMap, SpriteChunk chunk, ref Vector3[] vertices, ref int[] indices)
+		static void BuildLocalMeshForChunk(tk2dTileMap tileMap, SpriteChunk chunk, int baseX, int baseY, ref Vector3[] vertices, ref int[] indices)
 		{
 			List<Vector3> vertexList = new List<Vector3>();
 			List<int> indexList = new List<int>();
@@ -95,13 +97,17 @@ namespace tk2dRuntime.TileMap
 			
 			var tilePrefabs = tileMap.data.tilePrefabs;
 			
+			float xOffsetMult = 0.0f, yOffsetMult = 0.0f;
+			tileMap.data.GetTileOffset(out xOffsetMult, out yOffsetMult);
+
 			var chunkData = chunk.spriteIds;
 			for (int y = 0; y < tileMap.partitionSizeY; ++y)
 			{
+				float xOffset = ((baseY + y) & 1) * xOffsetMult;
 				for (int x = 0; x < tileMap.partitionSizeX; ++x)
 				{
 					int tile = chunkData[y * tileMap.partitionSizeX + x];
-					Vector3 currentPos = new Vector3(tileSize.x * x, tileSize.y * y, 0);
+					Vector3 currentPos = new Vector3(tileSize.x * (x + xOffset), tileSize.y * y, 0);
 	
 					if (tile < 0 || tile >= spriteCount) 
 						continue;

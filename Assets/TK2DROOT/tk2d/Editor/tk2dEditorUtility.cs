@@ -5,8 +5,8 @@ using System.IO;
 
 public static class tk2dEditorUtility
 {
-	public static double version = 1.7;
-	public static int releaseId = 2; // negative = beta release, 0 = final, positive = final patch
+	public static double version = 1.75;
+	public static int releaseId = 0; // negative = beta release, 0 = final, positive = final patch
 	
 	public static string ReleaseStringIdentifier(double _version, int _releaseId)
 	{
@@ -41,13 +41,13 @@ public static class tk2dEditorUtility
 	[MenuItem(tk2dMenu.root + "Documentation", false, 10098)]
 	public static void LaunchWikiDocumentation()
 	{
-		Application.OpenURL("http://www.unikronsoftware.com/2dtoolkit/doc");
+		Application.OpenURL("http://www.2dtoolkit.com/doc");
 	}
 
 	[MenuItem(tk2dMenu.root + "Forum", false, 10099)]
 	public static void LaunchForum()
 	{
-		Application.OpenURL("http://www.unikronsoftware.com/2dtoolkit/forum");
+		Application.OpenURL("http://www.2dtoolkit.com/forum");
 	}
 
 	[MenuItem(tk2dMenu.root + "Rebuild Index", false, 1)]
@@ -259,6 +259,9 @@ public static class tk2dEditorUtility
 			
 			EditorUtility.ClearProgressBar();
 		}
+	
+		index = newIndex;
+		tk2dSpriteGuiUtility.ResetCache();
 	}
 	
 	[System.ObsoleteAttribute]

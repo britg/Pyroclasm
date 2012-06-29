@@ -10,6 +10,10 @@ class tk2dSlicedSpriteEditor : tk2dSpriteEditor
         tk2dSlicedSprite sprite = (tk2dSlicedSprite)target;
 		base.OnInspectorGUI();
 		
+		if (sprite.collection == null)
+			return;
+
+		
 		EditorGUILayout.BeginVertical();
 		
 		var spriteData = sprite.GetCurrentSpriteDef();
@@ -125,6 +129,8 @@ class tk2dSlicedSpriteEditor : tk2dSpriteEditor
 		sprite.collection = sprColl;
 		sprite.renderer.material = sprColl.FirstValidDefinition.material;
 		sprite.Build();
+		Selection.activeGameObject = go;
+		Undo.RegisterCreatedObjectUndo(go, "Create Sliced Sprite");
     }
 }
 

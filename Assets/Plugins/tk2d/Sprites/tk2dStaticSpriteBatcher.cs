@@ -5,12 +5,20 @@ using System.Collections.Generic;
 public class tk2dBatchedSprite
 {
 	public string name = ""; // for editing
+	public int parentId = -1;
 	public int spriteId = 0;
 	public Quaternion rotation = Quaternion.identity;
 	public Vector3 position = Vector3.zero;
 	public Vector3 localScale = Vector3.one;
 	public Color color = Color.white;
 	public bool alwaysPixelPerfect = false;
+	
+	public bool IsDrawn {  get { return spriteId != -1; } }
+	
+	public tk2dBatchedSprite()
+	{
+		parentId = -1;
+	}
 }
 
 [AddComponentMenu("2D Toolkit/Sprite/tk2dStaticSpriteBatcher")]
@@ -19,7 +27,7 @@ public class tk2dBatchedSprite
 [ExecuteInEditMode]
 public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBuild
 {
-	public static int CURRENT_VERSION = 1;
+	public static int CURRENT_VERSION = 2;
 	
 	public int version;
 	public tk2dBatchedSprite[] batchedSprites = null;
@@ -59,6 +67,17 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		if (version == CURRENT_VERSION) return false;
 		
 		if (_scale == Vector3.zero) _scale = Vector3.one;
+		
+		if (version < 2)
+		{
+			if (batchedSprites != null)
+			{
+				// Parented to this object
+				foreach (var sprite in batchedSprites)
+					sprite.parentId = -1;
+			}
+		}
+		
 		version = CURRENT_VERSION;
 		return true;
 	}
@@ -87,6 +106,7 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		}
 		else
 		{
+			SortBatchedSprites();
 			BuildRenderMesh();
 			BuildPhysicsMesh();
 		}
@@ -96,8 +116,15 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 	{
 		List<tk2dBatchedSprite> solidBatches = new List<tk2dBatchedSprite>();
 		List<tk2dBatchedSprite> otherBatches = new List<tk2dBatchedSprite>();
+		List<tk2dBatchedSprite> undrawnBatches = new List<tk2dBatchedSprite>();
 		foreach (var sprite in batchedSprites)
 		{
+			if (!sprite.IsDrawn)
+			{
+				undrawnBatches.Add(sprite);
+				continue;				
+			}
+			
 			var spriteData = spriteCollection.spriteDefinitions[sprite.spriteId];
 			if (spriteData.material.renderQueue == 2000)
 				solidBatches.Add(sprite);
@@ -105,9 +132,24 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 				otherBatches.Add(sprite);
 		}
 		
-		List<tk2dBatchedSprite> allBatches = new List<tk2dBatchedSprite>(solidBatches.Count + otherBatches.Count);
+		List<tk2dBatchedSprite> allBatches = new List<tk2dBatchedSprite>(solidBatches.Count + otherBatches.Count + undrawnBatches.Count);
 		allBatches.AddRange(solidBatches);
 		allBatches.AddRange(otherBatches);
+		allBatches.AddRange(undrawnBatches);
+		
+		// Re-index parents
+		Dictionary<tk2dBatchedSprite, int> lookup = new Dictionary<tk2dBatchedSprite, int>();
+		int index = 0;
+		foreach (var v in allBatches)
+			lookup[v] = index++;
+		
+		foreach (var v in allBatches)
+		{
+			if (v.parentId == -1)
+				continue;
+			v.parentId = lookup[ batchedSprites[v.parentId] ];
+		}
+		
 		batchedSprites = allBatches.ToArray();
 	}
 
@@ -116,13 +158,27 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		List<Material> materials = new List<Material>();
 		List<List<int>> indices = new List<List<int>>();
 		
+		bool needNormals = false;
+		bool needTangents = false;
+		if (batchedSprites.Length > 0)
+		{
+			var v = spriteCollection.FirstValidDefinition;
+			needNormals = v.normals != null && v.normals.Length > 0;
+			needTangents = v.tangents != null && v.tangents.Length > 0;
+		}
+		
 		int numVertices = 0;
 		foreach (var sprite in batchedSprites) 
 		{
+			if (!sprite.IsDrawn) // when the first non-drawn child is found, it signals the end of the drawn list
+				break;
+			
 			var spriteData = spriteCollection.spriteDefinitions[sprite.spriteId];
 			numVertices += spriteData.positions.Length;
 		}
 		
+		Vector3[] meshNormals = needNormals?new Vector3[numVertices]:null;
+		Vector4[] meshTangents = needTangents?new Vector4[numVertices]:null;
 		Vector3[] meshVertices = new Vector3[numVertices];
 		Color[] meshColors = new Color[numVertices];
 		Vector2[] meshUvs = new Vector2[numVertices];
@@ -133,10 +189,11 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		Material currentMaterial = null;
 		List<int> currentIndices = null;
 		
-		SortBatchedSprites();
-		
 		foreach (var sprite in batchedSprites)
 		{
+			if (!sprite.IsDrawn) // when the first non-drawn child is found, it signals the end of the drawn list
+				break;
+			
 			var spriteData = spriteCollection.spriteDefinitions[sprite.spriteId];
 			
 			if (spriteData.material != currentMaterial)
@@ -166,6 +223,20 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 				pos += sprite.position;
 				pos = new Vector3(pos.x * _scale.x, pos.y * _scale.y, pos.z * _scale.z);
 				meshVertices[currVertex + i] = pos;
+				
+				if (needNormals)
+				{
+					meshNormals[currVertex + i] = sprite.rotation * spriteData.normals[i];
+				}
+				
+				if (needTangents)
+				{
+					Vector4 tangent = spriteData.tangents[i];
+					Vector3 tangent3 = new Vector3(tangent.x, tangent.y, tangent.z);
+					Vector3 transformedTangent = sprite.rotation * tangent3;
+					meshTangents[currVertex + i] = new Vector4(transformedTangent.x, transformedTangent.y, transformedTangent.z, tangent.w);
+				}
+				
 				meshUvs[currVertex + i] = spriteData.uvs[i];
 				meshColors[currVertex + i] = color;
 			}
@@ -185,6 +256,10 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 			mesh.vertices = meshVertices;
 	        mesh.uv = meshUvs;
 	        mesh.colors = meshColors;
+			if (needNormals)
+				mesh.normals = meshNormals;
+			if (needTangents)
+				mesh.tangents = meshTangents;
 			
 			mesh.subMeshCount = indices.Count;
 			for (int i = 0; i < indices.Count; ++i)
@@ -211,6 +286,9 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		// first pass, count required vertices and indices
 		foreach (var sprite in batchedSprites) 
 		{
+			if (!sprite.IsDrawn) // when the first non-drawn child is found, it signals the end of the drawn list
+				break;
+			
 			var spriteData = spriteCollection.spriteDefinitions[sprite.spriteId];
 			if (spriteData.colliderType == tk2dSpriteDefinition.ColliderType.Box)
 			{
@@ -252,6 +330,9 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		
 		foreach (var sprite in batchedSprites) 
 		{
+			if (!sprite.IsDrawn) // when the first non-drawn child is found, it signals the end of the drawn list
+				break;
+			
 			var spriteData = spriteCollection.spriteDefinitions[sprite.spriteId];
 			if (spriteData.colliderType == tk2dSpriteDefinition.ColliderType.Box)
 			{

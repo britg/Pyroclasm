@@ -20,12 +20,14 @@ public class tk2dPreferences
 	
 	bool _displayTextureThumbs;
 	bool _horizontalAnimDisplay;
+	bool _groupAnimDisplay;
 	bool _autoRebuild;
 	bool _showIds;
 	bool _isProSkin;
 
 	public bool displayTextureThumbs { get { return _displayTextureThumbs; } set { if (_displayTextureThumbs != value) { _displayTextureThumbs = value; Write(); } } }
 	public bool horizontalAnimDisplay { get { return _horizontalAnimDisplay; } set { if (_horizontalAnimDisplay != value) { _horizontalAnimDisplay = value; Write(); } } }
+	public bool groupAnimDisplay { get { return _groupAnimDisplay; } set { if (_groupAnimDisplay != value) { _groupAnimDisplay = value; Write(); } } }
 	public bool autoRebuild { get { return _autoRebuild; } set { if (_autoRebuild != value) { _autoRebuild = value; Write(); } } }
 	public bool showIds { get { return _showIds; } set { if (_showIds != value) { _showIds = value; Write(); } } }
 	public bool isProSkin { get { return _isProSkin; } set { if (_isProSkin != value) { _isProSkin = value; Write(); } } }
@@ -34,6 +36,7 @@ public class tk2dPreferences
 	{
 		_displayTextureThumbs = EditorPrefs.GetBool("tk2d_displayTextureThumbs", true);
 		_horizontalAnimDisplay = EditorPrefs.GetBool("tk2d_horizontalAnimDisplay", false);
+		_groupAnimDisplay = EditorPrefs.GetBool("tk2d_groupAnimDisplay", false);
 		_autoRebuild = EditorPrefs.GetBool("tk2d_autoRebuild", true);
 		_showIds = EditorPrefs.GetBool("tk2d_showIds", false);
 		_isProSkin = EditorPrefs.GetBool("tk2d_proSkin", false);
@@ -46,6 +49,7 @@ public class tk2dPreferences
 		EditorPrefs.SetBool("tk2d_autoRebuild", _autoRebuild);
 		EditorPrefs.SetBool("tk2d_showIds", _showIds);
 		EditorPrefs.SetBool("tk2d_proSkin", _isProSkin);
+		EditorPrefs.SetBool("tk2d_groupAnimDisplay", _groupAnimDisplay);
 	}
 }
 
@@ -58,6 +62,7 @@ public class tk2dPreferencesEditor : EditorWindow
 	GUIContent label_animFrames_Vertical = new GUIContent("Vertical");
 	
 	GUIContent label_autoRebuild = new GUIContent("Auto Rebuild", "Auto rebuild sprite collections when source textures have changed.");
+	GUIContent label_groupAnimDisplay = new GUIContent("Group Animation Display", "Group frames, and allow changing frame count in SpriteAnimation inspector.");
 
 	GUIContent label_showIds = new GUIContent("Show Ids", "Show sprite and animation Ids.");
 	
@@ -74,6 +79,7 @@ public class tk2dPreferencesEditor : EditorWindow
 		
 		int had = EditorGUILayout.Popup(label_animationFrames, prefs.horizontalAnimDisplay?0:1, new GUIContent[] { label_animFrames_Horizontal, label_animFrames_Vertical } );
 		prefs.horizontalAnimDisplay = (had == 0)?true:false;
+		EditorGUILayout.Toggle(label_groupAnimDisplay, prefs.groupAnimDisplay);
 		
 		prefs.autoRebuild = EditorGUILayout.Toggle(label_autoRebuild, prefs.autoRebuild);
 		

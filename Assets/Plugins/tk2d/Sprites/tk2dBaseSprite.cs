@@ -226,6 +226,19 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		return collection.GetSpriteIdByName(name);
 	}
 	
+	/// <summary>
+	/// Adds a tk2dBaseSprite derived class as a component to the gameObject passed in, setting up necessary parameters
+	/// and building geometry.
+	/// </summary>
+	public static T AddComponent<T>(GameObject go, tk2dSpriteCollectionData spriteCollection, int spriteId) where T : tk2dBaseSprite
+	{
+		T sprite = go.AddComponent<T>();
+		sprite._spriteId = -1;
+		sprite.collection = spriteCollection;
+		sprite.spriteId = spriteId;
+		return sprite;
+	}
+	
 	protected int GetNumVertices()
 	{
 		return collection.spriteDefinitions[spriteId].positions.Length;
@@ -427,6 +440,13 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 #if UNITY_EDITOR
 	public void EditMode__CreateCollider()
 	{
+		// Revert to runtime behaviour when the game is running
+		if (Application.isPlaying)
+		{
+			UpdateCollider();
+			return;
+		}
+		
 		var sprite = collection.spriteDefinitions[_spriteId];
 		if (sprite.colliderType == tk2dSpriteDefinition.ColliderType.Unset)
 			return;

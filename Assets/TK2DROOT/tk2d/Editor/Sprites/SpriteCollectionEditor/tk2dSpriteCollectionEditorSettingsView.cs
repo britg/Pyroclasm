@@ -231,14 +231,43 @@ namespace tk2dEditor.SpriteCollectionEditor
 				
 				SpriteCollection.textureCompression = (tk2dSpriteCollection.TextureCompression)EditorGUILayout.EnumPopup("Compression", SpriteCollection.textureCompression);
 				
-				SpriteCollection.allowMultipleAtlases = EditorGUILayout.Toggle("Multiple Atlases", SpriteCollection.allowMultipleAtlases);
+				bool allowMultipleAtlases = EditorGUILayout.Toggle("Multiple Atlases", SpriteCollection.allowMultipleAtlases);
+				if (allowMultipleAtlases != SpriteCollection.allowMultipleAtlases)
+				{
+					// Disallow switching if using unsupported features
+					if (allowMultipleAtlases == true)
+					{
+						bool hasDicing = false;
+						for (int i = 0; i < SpriteCollection.textureRefs.Count; ++i)
+						{
+							if (SpriteCollection.textureRefs[i] != null &
+								SpriteCollection.textureParams[i].dice)
+							{
+								hasDicing = true;
+								break;
+							}
+						}
+						
+						if (SpriteCollection.fonts.Count > 0 || hasDicing)
+						{
+							EditorUtility.DisplayDialog("Multiple atlases", 
+										"Multiple atlases not allowed. This sprite collection contains fonts and/or " +
+										"contains diced sprites.", "Ok");
+							allowMultipleAtlases = false;
+						}
+					}
+					
+					SpriteCollection.allowMultipleAtlases = allowMultipleAtlases;
+				}
+
 				if (SpriteCollection.allowMultipleAtlases)
 				{
 					tk2dGuiUtility.InfoBox("Sprite collections with multiple atlas spanning enabled cannot be used with the Static Sprite" +
-						" Batcher, the TileMap Editor and doesn't support Sprite Dicing and material level optimizations.\n\n" +
+						" Batcher, Fonts, the TileMap Editor and doesn't support Sprite Dicing and material level optimizations.\n\n" +
 						"Avoid using it unless you are simply importing a" +
 						" large sequence of sprites for an animation.", tk2dGuiUtility.WarningLevel.Info);
 				}
+				
 				if (SpriteCollection.allowMultipleAtlases)
 				{
 					EditorGUILayout.LabelField("Num Atlases", SpriteCollection.atlasTextures.Length.ToString());

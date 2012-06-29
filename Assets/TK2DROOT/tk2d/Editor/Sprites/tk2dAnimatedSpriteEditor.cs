@@ -206,6 +206,9 @@ class tk2dAnimatedSpriteEditor : tk2dSpriteEditor
 		
 		sprite.spriteId = anim.clips[0].frames[0].spriteId;
 		sprite.anim = anim;
+		
+		Selection.activeGameObject = go;
+		Undo.RegisterCreatedObjectUndo(go, "Create AnimatedSprite");
     }
 }
 
