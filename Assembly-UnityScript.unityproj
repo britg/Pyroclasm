@@ -45,7 +45,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Camera\FollowFireball.js" />
+     <Compile Include="Assets\Scripts\Camera\FramerateTarget.js" />
+     <Compile Include="Assets\Scripts\Environment\RoomManager.js" />
+     <Compile Include="Assets\Scripts\Fireball\Control.js" />
+     <Compile Include="Assets\Scripts\Fireball\DistanceObserver.js" />
      <Compile Include="Assets\Scripts\Fireball\Propulsion.js" />
+     <Compile Include="Assets\Scripts\Room\RoomVisibilityObserver.js" />
+     <Compile Include="Assets\Scripts\Support\NotificationCenter.js" />
+     <Compile Include="Assets\Scripts\UI\FPS.js" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitSolidVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\SolidVertexColor.shader" />
      <None Include="Assets\Plugins\UIToolkit\Shaders\UIToolkit Premultiplied Alpha.shader" />

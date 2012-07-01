@@ -1,9 +1,9 @@
 #pragma strict
 
-var startForce : Vector3 = Vector3(5, 0, 0);
+var startVelocity : Vector3 = Vector3(5, 0, 0);
 
 function Start () {
-	rigidbody.AddForce(startForce);
+	rigidbody.velocity = startVelocity;
 }
 
 function Update () {
