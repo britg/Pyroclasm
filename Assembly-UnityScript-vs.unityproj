@@ -46,10 +46,10 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Camera\FollowFireball.js" />
      <Compile Include="Assets\Scripts\Camera\FramerateTarget.js" />
+     <Compile Include="Assets\Scripts\Camera\Propulsion.js" />
      <Compile Include="Assets\Scripts\Environment\RoomManager.js" />
      <Compile Include="Assets\Scripts\Fireball\Control.js" />
      <Compile Include="Assets\Scripts\Fireball\DistanceObserver.js" />
-     <Compile Include="Assets\Scripts\Fireball\Propulsion.js" />
      <Compile Include="Assets\Scripts\Room\RoomVisibilityObserver.js" />
      <Compile Include="Assets\Scripts\Support\NotificationCenter.js" />
      <Compile Include="Assets\Scripts\UI\FPS.js" />
