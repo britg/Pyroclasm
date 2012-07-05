@@ -38,7 +38,6 @@ function OnDistanceUpdate (n : Notification) {
 }
 
 function InstantiateNewRoom () {
-	Debug.Log("Instantiating a new room");
 	var room : GameObject = roomPool[Random.Range(0, roomPool.length)];
 	var start : Vector3 = currentRoom.transform.position;
 	var wall : GameObject = currentRoom.Find("BackWall");

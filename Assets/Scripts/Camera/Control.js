@@ -4,6 +4,7 @@ private var shouldControl : boolean = true;
 
 private var Fireball : GameObject;
 private var inputCurrentPosition : Vector3;
+private var inputCurrentScreenPosition : Vector3;
 private var cameraCurrentPosition : Vector3;
 
 private var fireballPixelToWorld : float;
@@ -23,6 +24,8 @@ var minX : float;
 var maxX : float;
 
 private var targetTransform : Transform;
+
+private var cameraMoveRatio : float = 0.2;
 
 
 function Start () {
@@ -50,7 +53,7 @@ function GetRatioFromZ ( z : float ) {
 function Update () {
 	if (shouldControl) {
 		RespondToTouch();
-		//RespondToMouse();
+		RespondToMouse();
 	}
 }
 
@@ -73,19 +76,14 @@ function RespondToMouse () {
 	var delta : Vector3;
 
 	if (Input.GetMouseButtonDown(0)) {
+		inputCurrentScreenPosition = Input.mousePosition;
 		SetCurrentPosition(Input.mousePosition);
 	}
 	
 	if (Input.GetMouseButton(0)) {
-		//var cameraX : float = Camera.main.transform.position.x;
-		var mousePos : Vector3 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		//var lastXDelta : float = inputCurrentPosition.x - cameraX;
-		//var thisXDelta : float =  mousePos.x - cameraX;
-		delta = mousePos - inputCurrentPosition;
-		//delta.x = (thisXDelta - lastXDelta);
-		Debug.Log(delta);
+		delta = Input.mousePosition - inputCurrentScreenPosition;
 		MoveWithDelta(delta);
-		//SetCurrentPosition(mousePos);
+		inputCurrentScreenPosition = Input.mousePosition;
 	}
 }
 
@@ -105,12 +103,15 @@ function MoveWithDelta (delta : Vector3) {
 	targetFireballPosition.x = Mathf.Clamp(targetFireballPosition.x, minX, maxX);
 	Fireball.transform.localPosition.x = targetFireballPosition.x;
 	
-	var targetCameraY : float = targetTransform.position.y + cameraDelta.y;
+	var targetCameraY : float = targetTransform.position.y + (cameraDelta.y * cameraMoveRatio);
 	transform.position.y = Mathf.Clamp(targetCameraY, minCameraY, maxCameraY);
 	
-	if (targetCameraY > maxCameraY || targetCameraY < minCameraY) {
+	var targetFireballY : float = Fireball.transform.localPosition.y + (fireballDelta.y * (1-cameraMoveRatio));
+	Fireball.transform.localPosition.y = Mathf.Clamp(targetFireballY, minFireballY, maxFireballY);
+	
+	if ((targetCameraY > maxCameraY) || (targetCameraY < minCameraY)) {
 		targetTransform = Fireball.transform;
-		var targetFireballY : float = Fireball.transform.localPosition.y + fireballDelta.y;
+		targetFireballY = Fireball.transform.localPosition.y + (fireballDelta.y * cameraMoveRatio);
 		Fireball.transform.localPosition.y = Mathf.Clamp(targetFireballY, minFireballY, maxFireballY);
 	} else {
 		targetTransform = transform;
