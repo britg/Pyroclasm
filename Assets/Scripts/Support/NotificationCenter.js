@@ -115,9 +115,19 @@ class Notification {
     	NotificationCenter.DefaultCenter().AddObserver(observer, name);
     }
     
+    // Distance
     static var DISTANCE_UPDATE : String = "OnDistanceUpdate";
     
+    // Environment
     static var ROOM_ONSCREEN : String = "OnRoomOnScreen";
     static var ROOM_OFFSCREEN : String = "OnRoomOffScreen";
+    
+    // Temperature
+    static var START_TEMP : String = "OnStartTemp";
+    static var TEMP_CHANGE : String = "OnTempChange";
+    static var TEMP_COLLISION : String = "OnTempCollision";
+    
+    // Game
+    static var GAME_OVER : String = "OnGameOver";
     
 }
