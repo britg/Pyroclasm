@@ -10,8 +10,10 @@ private var cameraCurrentPosition : Vector3;
 private var fireballPixelToWorld : float;
 private var cameraPixelToWorld : float;
 
-var fireballMultiplier : float = 4.0;
-var cameraMultiplier : float = 5.0;
+var fireballMultiplier : float;
+var cameraMultiplierRatio : float;
+private var cameraMultiplier : float;
+var cameraMoveRatio : float;
 
 
 var minCameraY : float;
@@ -25,7 +27,6 @@ var maxX : float;
 
 private var targetTransform : Transform;
 
-private var cameraMoveRatio : float = 0.2;
 
 
 function Start () {
@@ -35,6 +36,7 @@ function Start () {
 }
 
 function DeterminePixelToWorld () {
+	cameraMultiplier = cameraMultiplierRatio * fireballMultiplier;
 	fireballPixelToWorld = GetRatioFromZ(Fireball.transform.position.z) * fireballMultiplier;
 	cameraPixelToWorld = GetRatioFromZ(transform.position.z) * cameraMultiplier;
 	
