@@ -17,6 +17,7 @@ function OnTriggerEnter (collider : Collider) {
 		return;
 		
 	Notification.Post(this, Notification.TEMP_COLLISION, tempChange);
+	Notification.Post(this, Notification.GEM_COLLECTED);
 	
 	Destroy(gameObject.GetComponent("tk2dSprite"));
 	Destroy(gameObject.renderer);

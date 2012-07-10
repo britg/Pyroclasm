@@ -55,7 +55,7 @@ function PostTempChange (announce : boolean) {
 	tempChangeData["temp"] = currentTemp;
 	tempChangeData["announce"] = announce;
 	
-	Debug.Log("Temp change " + currentTemp);
+	//Debug.Log("Temp change " + currentTemp);
 	Notification.Post(this, Notification.TEMP_CHANGE, tempChangeData);
 }
 

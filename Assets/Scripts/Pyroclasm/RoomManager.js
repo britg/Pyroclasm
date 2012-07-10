@@ -42,7 +42,8 @@ function InstantiateNewRoom () {
 	var start : Vector3 = currentRoom.transform.position;
 	var wall : GameObject = currentRoom.Find("BackWall");
 	start.x += wall.renderer.bounds.size.x;
-	Instantiate(room, start, Quaternion.identity);
+	var newRoom : GameObject = Instantiate(room, start, Quaternion.identity);
+	Notification.Post(this, Notification.NEW_ROOM, newRoom);
 	triggerRoom = currentRoom;
 }
 

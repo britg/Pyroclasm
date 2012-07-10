@@ -1,5 +1,7 @@
 #pragma strict
 
+var tempToThrustRatio : float = 1.0/200.0;
+
 function Start () {
 	Notification.Observe(this, Notification.START_TEMP);
 	Notification.Observe(this, Notification.TEMP_CHANGE);
@@ -21,6 +23,6 @@ function OnTempChange (n : Notification) {
 }
 
 function SetVelocityFromTemp (temp : int) {
-	var newVel : float = temp/100.0;
+	var newVel : float = temp * tempToThrustRatio;
 	rigidbody.velocity = Vector3(newVel, 0, 0);
 }

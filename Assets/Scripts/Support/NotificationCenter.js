@@ -119,6 +119,7 @@ class Notification {
     static var DISTANCE_UPDATE : String = "OnDistanceUpdate";
     
     // Environment
+    static var NEW_ROOM : String = "OnNewRoom";
     static var ROOM_ONSCREEN : String = "OnRoomOnScreen";
     static var ROOM_OFFSCREEN : String = "OnRoomOffScreen";
     
@@ -126,6 +127,9 @@ class Notification {
     static var START_TEMP : String = "OnStartTemp";
     static var TEMP_CHANGE : String = "OnTempChange";
     static var TEMP_COLLISION : String = "OnTempCollision";
+    
+    // Gems
+    static var GEM_COLLECTED : String = "OnGemCollected";
     
     // Game
     static var GAME_OVER : String = "OnGameOver";
