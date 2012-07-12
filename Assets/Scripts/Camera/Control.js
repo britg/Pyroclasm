@@ -6,6 +6,10 @@ private var Fireball : GameObject;
 private var inputCurrentPosition : Vector3;
 private var inputCurrentScreenPosition : Vector3;
 private var cameraCurrentPosition : Vector3;
+private var lagPosition : Vector3;
+private var inputVelocity : Vector3;
+private var inputDelta : Vector3;
+var inputLag : float = 0.5;
 
 private var fireballPixelToWorld : float;
 private var cameraPixelToWorld : float;
@@ -54,12 +58,13 @@ function GetRatioFromZ ( z : float ) {
 
 function Update () {
 	if (shouldControl) {
-		RespondToTouch();
-		RespondToMouse();
+		TrackTouch();
+		TrackMouse();
+		MoveWithDelta(inputDelta);
 	}
 }
 
-function RespondToTouch () {
+function TrackTouch () {
 
 	if (Input.touchCount > 0) {
 		var touch : Touch = Input.GetTouch(0);
@@ -69,12 +74,14 @@ function RespondToTouch () {
 		}
 		
 		if (touch.phase == TouchPhase.Moved) {
-			MoveWithDelta(touch.deltaPosition);
+			lagPosition = Vector3.SmoothDamp(inputCurrentScreenPosition, touch.position, inputVelocity, inputLag);
+			inputDelta = lagPosition - inputCurrentScreenPosition;
+			//inputCurrentScreenPosition = touch.position;
 		}
 	}
 }
 
-function RespondToMouse () {
+function TrackMouse () {
 	var delta : Vector3;
 
 	if (Input.GetMouseButtonDown(0)) {
@@ -83,16 +90,17 @@ function RespondToMouse () {
 	}
 	
 	if (Input.GetMouseButton(0)) {
-		delta = Input.mousePosition - inputCurrentScreenPosition;
-		MoveWithDelta(delta);
-		inputCurrentScreenPosition = Input.mousePosition;
+		lagPosition = Vector3.SmoothDamp(inputCurrentScreenPosition, Input.mousePosition, inputVelocity, inputLag);
+		inputDelta = lagPosition - inputCurrentScreenPosition;
+		//inputCurrentScreenPosition = Input.mousePosition;
 	}
 }
+
 
 function SetCurrentPosition (position : Vector3) {
 	inputCurrentPosition = Camera.main.ScreenToWorldPoint(position);
 	cameraCurrentPosition = Camera.main.transform.position;
-	Debug.Log("Touch current position is " + inputCurrentPosition + " " + cameraCurrentPosition);
+	//Debug.Log("Touch current position is " + inputCurrentPosition + " " + cameraCurrentPosition);
 }
 
 function MoveWithDelta (delta : Vector3) {

@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fireball/GemObserver.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Camera/Control.js">
     <Files>
-      <File FileName="Assets/Scripts/Support/NotificationCenter.js" Line="132" Column="57" />
+      <File FileName="Assets/Scripts/Support/NotificationCenter.js" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Gems/Red.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Pyroclasm/GemPatternManager.js" Line="34" Column="3" />
+      <File FileName="Assets/Scripts/Pyroclasm/GemPatternManager.js" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Pyroclasm/RoomManager.js" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Fireball/Temperature.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Fireball/GemObserver.js" Line="10" Column="12" />
+      <File FileName="Assets/Scripts/Fireball/GemObserver.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/Control.js" Line="76" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
