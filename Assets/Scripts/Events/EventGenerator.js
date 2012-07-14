@@ -1,16 +1,19 @@
 #pragma strict
 
 private var fireBall : GameObject;
+private var distance : Distance;
 private var temp : Temperature;
 private var events : Array = ["Ghost", "Wraith", "GemDemon", "PolaritySwitch", "Dragon"];
-private var helpfulEvents : Array = ["Ghost", "GemDemon", "Dragon"];
-private var badEvents : Array = ["Ghost", "Wraith", "PolaritySwitch"];
+private var helpfulEvents : Array = ["Ghost", "Ghost", "Ghost", "GemDemon", "GemDemon", "Dragon"];
+private var badEvents : Array = ["Ghost", "Ghost", "Wraith", "Wraith", "Wraith", "Wraith", "PolaritySwitch"];
 
 var helpfulEventChance : float = 40.0;
 
 function Start () {
 	fireBall = GameObject.Find("Fireball");
 	temp = fireBall.GetComponent("Temperature");
+	distance = fireBall.GetComponent("Distance");
+	
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_REQUESTED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.GHOST_END);
@@ -24,6 +27,12 @@ function Update () {
 }
 
 function OnEventRequested() {
+
+	var dist = distance.distance;
+	
+	if (dist < 500) {
+		return;
+	}
 	
 	var e = ChooseEvent();
 	//e = "Dragon" // Override for development
@@ -31,6 +40,7 @@ function OnEventRequested() {
 	//e = "Ghost";
 	//e = "GemDemon";
 	//e = "Dragon";
+	//e = "Wraith";
 	
 	var msg : String = "Activate" + e;
 	Debug.Log(msg);

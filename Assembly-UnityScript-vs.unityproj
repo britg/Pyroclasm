@@ -92,6 +92,7 @@
      <Compile Include="Assets\Scripts\Fireball\Collector.js" />
      <Compile Include="Assets\Scripts\Fireball\Distance.js" />
      <Compile Include="Assets\Scripts\Fireball\Flare.js" />
+     <Compile Include="Assets\Scripts\Fireball\Follow.js" />
      <Compile Include="Assets\Scripts\Fireball\Lift.js" />
      <Compile Include="Assets\Scripts\Fireball\ScrollCollector.js" />
      <Compile Include="Assets\Scripts\Fireball\SteamEffect.js" />

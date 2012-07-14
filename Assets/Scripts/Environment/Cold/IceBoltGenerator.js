@@ -53,6 +53,7 @@ function ResetTimer () {
 	}
 	var delta : float = (startGenerationInterval - minGenerationInterval) * distPercent;
 	timeleft = startGenerationInterval - delta;
+	Debug.Log("Time left is " + timeleft);
 }
 
 function Update () {
