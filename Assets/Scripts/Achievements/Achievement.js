@@ -1,5 +1,5 @@
 
-static var PREFIX : String 					= "pyrodev.";
+static var PREFIX : String 					= "pyroclasm.";
 
 static var LEADERBOARD : String 			= PREFIX + "run";
 

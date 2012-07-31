@@ -10,14 +10,17 @@ private var endX : float;
 
 function Awake() {
 
+	numGems = Random.Range(10, 20);
 	var maxOffset : float = Offset(numGems);
+	var intensity : float = Random.Range(1.25, 1.75);
+	intensity = 2;
 
 	for(var i = 0; i < numGems; i++) {
 		gem = Instantiate( heatGem , transform.position, Quaternion.identity );
 		gem.parent = transform;
 		gem.position = transform.position;
 		gem.position.x += (i * xSpacing);
-		var yPos = Offset(i);
+		var yPos = Offset(i) * intensity;
 		gem.position.y = gem.position.y - yPos + maxOffset;
 		
 		endX = gem.localPosition.x;
@@ -26,7 +29,7 @@ function Awake() {
 }
 
 function Offset(i : int) {
-	return Mathf.Log10(i+1) * 1.5;
+	return Mathf.Log10(i+1);
 }
 
 function OnEnable () {

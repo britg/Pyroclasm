@@ -39,6 +39,8 @@ var blueHueAlpha : float = 39.0;
 private var shouldFadeBlueHue : boolean = false;
 private var currBlueHueFadeTime : float = 0.0;
 
+private var bossFight : boolean = false;
+
 function Awake() {
 	//Application.targetFrameRate = 30.0;
 	#if UNITY_IPHONE
@@ -74,6 +76,9 @@ function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.EVENT_ENDED);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.POLERIZE);
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.UNPOLERIZE);
+	
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_WRAITH);
+	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.WRAITH_END);
 }
 
 function Update () {
@@ -138,7 +143,12 @@ function FillScreen(screen : GameObject) {
 }
 
 function ChooseBackgroundPool() {
+
 	//return bg5Pool;
+	if (bossFight) {
+		return bg3Pool;
+	}
+	
 	if(activePool && currPoolCount <= poolRepeat) {
 		return activePool;
 	}
@@ -193,4 +203,12 @@ function FadeBlueHueOut() {
 	var color : Color = blueHue.renderer.material.color;
 	color.a -= 0.1f;
 	renderer.material.color = color;
+}
+
+function OnTriggerWraith () {
+	bossFight = true;
+}
+
+function OnWraithEnd () {
+	bossFight = false;
 }
