@@ -1,10 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/lib/GameObjectPool.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Environment/MoveGem.js">
     <Files>
-      <File FileName="Assets/Scripts/GUI/GameCenterManager.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Achievements/Achievement.js" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/lib/GameObjectPool.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Events/Dragon.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Cold/Gargoyle.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Events/Wraith.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Environment/Hot/HeatBarCollected.js" Line="12" Column="1" />
+      <File FileName="Assets/Scripts/Environment/FlowGenerator.js" Line="72" Column="86" />
+      <File FileName="Assets/Scripts/Environment/MoveGem.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -15,6 +15,11 @@ private var upPool : GameObjectPool;
 var zigzag : GameObject;
 private var zigzagPool : GameObjectPool;
 
+var moving1 : GameObject;
+private var moving1Pool : GameObjectPool;
+var moving2 : GameObject;
+private var moving2Pool : GameObjectPool;
+
 var startGenerationInterval : float = 1.8;
 var minGenerationInterval : float = 0.3;
 var distanceToMinGenerationInterval : int = 1200;
@@ -59,8 +64,12 @@ function Awake () {
 	downPool.PrePopulate(poolSize);
 	zigzagPool = GameObjectPool( zigzag, poolSize, true );
 	zigzagPool.PrePopulate(poolSize);
+	moving1Pool = GameObjectPool( moving1, poolSize, true );
+	moving1Pool.PrePopulate(poolSize);
+	moving2Pool = GameObjectPool( moving2, poolSize, true );
+	moving2Pool.PrePopulate(poolSize);
 	
-	Pools = [linePool, blockPool, upPool, downPool, zigzagPool];
+	Pools = [linePool, blockPool, upPool, downPool, zigzagPool, moving1Pool, moving2Pool];
 	//Pools = [blockPool];
 }
 

@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Environment\Cold\IceshardGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Cold\Icicle.js" />
      <Compile Include="Assets\Scripts\Environment\FlowGenerator.js" />
+     <Compile Include="Assets\Scripts\Environment\HeatGemPattern.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\Block.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BonusBlock.js" />
      <Compile Include="Assets\Scripts\Environment\Hot\BookcaseGenerator.js" />
@@ -74,6 +75,7 @@
      <Compile Include="Assets\Scripts\Environment\Hot\ZigZag.js" />
      <Compile Include="Assets\Scripts\Environment\InteractableGenerator.js" />
      <Compile Include="Assets\Scripts\Environment\Motor.js" />
+     <Compile Include="Assets\Scripts\Environment\MoveGem.js" />
      <Compile Include="Assets\Scripts\Environment\PositionReset.js" />
      <Compile Include="Assets\Scripts\Environment\Scenery.js" />
      <Compile Include="Assets\Scripts\Environment\Scroller.js" />
