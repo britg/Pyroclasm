@@ -22,6 +22,8 @@ private var currBreathDuration : float = 0.0;
 private var dir : Direction;
 private var thisTransform : Transform;
 
+var entranceSound : AudioClip;
+
 
 function Start () {
 	NotificationCenter.DefaultCenter().AddObserver(this, Notifications.TRIGGER_DRAGON);
@@ -130,4 +132,8 @@ function StopLeaving() {
 	shouldLeave = false;
 	transitionTime = 0.0;
 	NotificationCenter.DefaultCenter().PostNotification(this, Notifications.DRAGON_END);
+}
+
+function OnBecameVisible () {
+	gameObject.audio.PlayOneShot(entranceSound);
 }
