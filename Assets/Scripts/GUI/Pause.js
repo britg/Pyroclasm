@@ -11,13 +11,11 @@ function OnTouchPause ( notification : Notification ) {
 function TogglePause() {
 
 	if(paused) {
-		AudioListener.volume = 1;
 		Time.timeScale = 1;
-		AudioListener.volume = 1;
+		AudioListener.volume = 0.2;
 	} else {
-		AudioListener.volume = .3;
+		AudioListener.volume = 0.05;
 		Time.timeScale = 0;
-		AudioListener.volume = 0.3;
 	}
 	
 	paused = !paused;

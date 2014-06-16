@@ -21,7 +21,7 @@ private var timeleft : float;
 
 private var yMin : float = 0.1;
 private var yMax : float = 7.307953;
-private var xStart = 7.42;
+private var xStart = 9.42;
 private var nextObject : Transform;
 
 var warningTime : float = 1.5;

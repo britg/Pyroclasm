@@ -1,12 +1,16 @@
 
-private var originalX : float;
+//private var originalX : float;
+private var originalSet : boolean = false;
+private var originalV : Vector3;
 
 function OnEnable () {
 
-	if(!originalX) {
-		originalX = transform.localPosition.x;
+	if(!originalSet && transform.localPosition != Vector3.zero) {
+		originalV = transform.localPosition;
+		originalSet = true;
+	} else {
+		transform.localPosition = originalV;
 	}
 	
 	
-	transform.localPosition.x = originalX;
 }

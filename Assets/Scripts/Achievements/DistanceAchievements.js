@@ -16,6 +16,7 @@ function OnGameEnd (n : Notification) {
 	
 	UpdateLocal();
 
+	Debug.Log("Checking cheevos " + GameCenterBinding.isGameCenterAvailable());
 	if(!GameCenterBinding.isGameCenterAvailable()) return;
 		
 	UpdateLeaderboard();
@@ -25,7 +26,8 @@ function OnGameEnd (n : Notification) {
 function UpdateLocal() {
 	var prevDistance : int = PlayerPrefs.GetInt("distance");
 	
-	if(distance > prevDistance) {
+	Debug.Log("Update local " + prevDistance + " " + distance);
+	if(distance >= prevDistance) {
 		PlayerPrefs.SetInt("distance", distance);
 	}
 }
@@ -34,7 +36,9 @@ function UpdateLeaderboard() {
 	
 	var prevDistance : int = PlayerPrefs.GetInt("distance");
 		
-	if(distance > prevDistance) {
+	Debug.Log("Update leaderboard " + prevDistance + " " + distance + " " + Achievement.LEADERBOARD);
+	if(distance >= prevDistance) {
+		Debug.Log("Update leaderboard " + prevDistance + " " + distance + " " + Achievement.LEADERBOARD);
 		GameCenterBinding.reportScore(distance, Achievement.LEADERBOARD);
 	}
 }
